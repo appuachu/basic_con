@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Linux Hub — Complete Learning Platform{% endblock %}
+
+{% block content %}
+<section class="tcp-hero linux-hero">
+    <h1>🐧 <span class="gradient-text">Linux Learning Hub</span></h1>
+    <p>Master Linux from the ground up — filesystem, commands, permissions, users, sudo, and shells</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is Linux?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">{{ intro.what }}</p>
+    </div>
+
+    <h2 class="section-title" style="margin-top: 3rem;">💡 Why Linux?</h2>
+    <div class="feature-grid">
+        {% for reason in intro.why %}
+        <div class="feature-card">
+            <div class="fc-icon">✅</div>
+            <p>{{ reason }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🏗️ Linux Architecture</h2>
+    <p class="section-desc">From hardware to applications — how the layers stack up</p>
+
+    <div class="arch-stack">
+        {% for layer in intro.architecture %}
+        <div class="arch-layer" style="--layer-color: {{ layer.color }}">
+            <div class="arch-name">{{ layer.layer }}</div>
+            <div class="arch-desc">{{ layer.desc }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📦 Popular Distributions</h2>
+    <div class="distro-grid">
+        {% for d in intro.distributions %}
+        <div class="distro-card" style="--distro-color: {{ d.color }}">
+            <h3>{{ d.name }}</h3>
+            <p>{{ d.use }}</p>
+            <span class="distro-pkg">📦 {{ d.pkg }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🚀 Explore the Linux Modules</h2>
+    <div class="feature-grid-landing">
+        <a href="/linux/filesystem" class="feature-tile" style="--tile-color: #3498db">
+            <div class="tile-icon">📁</div>
+            <h3>Filesystem</h3>
+            <p>Every directory from / to /var explained</p>
+        </a>
+        <a href="/linux/commands" class="feature-tile" style="--tile-color: #27ae60">
+            <div class="tile-icon">⌨️</div>
+            <h3>Commands</h3>
+            <p>ls, cd, cp, grep, chmod, and more</p>
+        </a>
+        <a href="/linux/permissions" class="feature-tile" style="--tile-color: #f39c12">
+            <div class="tile-icon">🔐</div>
+            <h3>Permissions</h3>
+            <p>rwx, chmod, chown, umask explained</p>
+        </a>
+        <a href="/linux/users" class="feature-tile" style="--tile-color: #9b59b6">
+            <div class="tile-icon">👥</div>
+            <h3>Users & Groups</h3>
+            <p>/etc/passwd, /etc/shadow, groups</p>
+        </a>
+        <a href="/linux/sudo" class="feature-tile" style="--tile-color: #e74c3c">
+            <div class="tile-icon">⚡</div>
+            <h3>sudo & SUID</h3>
+            <p>Privilege escalation & sudoers</p>
+        </a>
+        <a href="/linux/shells" class="feature-tile" style="--tile-color: #16a085">
+            <div class="tile-icon">🐚</div>
+            <h3>Shells</h3>
+            <p>bash vs zsh vs sh vs fish</p>
+        </a>
+        <a href="/linux/processes" class="feature-tile" style="--tile-color: #e67e22">
+            <div class="tile-icon">📊</div>
+            <h3>Processes</h3>
+            <p>ps, top, kill, systemctl</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

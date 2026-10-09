@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}Online Brute Force — Hydra, Medusa, Burp{% endblock %}
+
+{% block content %}
+
+<!-- ============ TOOL DETAIL MODAL ============ -->
+<div class="modal-overlay" id="toolModal" onclick="closeToolModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeToolModal()">×</button>
+
+        <div class="modal-header" id="toolModalHeader">
+            <div class="modal-icon" id="toolModalIcon">🐉</div>
+            <div>
+                <h2 id="toolModalTitle">Tool Name</h2>
+                <p class="modal-subtitle" id="toolModalSubtitle">Tagline</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>📖 About</h3>
+                <p id="toolModalDesc"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📦 Install</h3>
+                <div class="modal-command-display" id="toolModalInstall"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🚩 Common Flags</h3>
+                <div class="flags-mini-grid" id="toolModalFlags"></div>
+            </div>
+
+            <!-- Success / Failure Tabs -->
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tabSuccessBtn" onclick="switchOutputTab('success', event)">
+                    ✅ Success Examples
+                </button>
+                <button class="modal-tab tab-failure" id="tabFailureBtn" onclick="switchOutputTab('failure', event)">
+                    ❌ Failure Examples
+                </button>
+            </div>
+
+            <div class="modal-section tab-content active" id="tab-content-success">
+                <h3>💡 Working Examples</h3>
+                <div id="toolModalExamples"></div>
+            </div>
+
+            <div class="modal-section tab-content" id="tab-content-failure">
+                <h3>❌ What Happens When It Fails</h3>
+                <div id="toolModalFailures"></div>
+            </div>
+
+            <!-- Simulation -->
+            <div class="modal-section">
+                <h3>🎬 Live Simulation</h3>
+                <div class="sim-player" id="modalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="simPlayBtn" onclick="toggleSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="tcp-hero bf-hero-online">
+    <h1>🌐 <span class="gradient-text">Online Brute Force</span></h1>
+    <p>Attack live services — SSH, FTP, HTTP, databases — with real network-based brute-force tools</p>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is Online Brute Force?</h2>
+    <div class="analogy-box">
+        <div class="analogy-grid">
+            <div class="analogy-item">
+                <div class="analogy-icon">🎯</div>
+                <h3>Live Target</h3>
+                <p>Sends passwords <strong>directly to a running service</strong> — SSH, web login, FTP.</p>
+            </div>
+            <div class="analogy-arrow">➡️</div>
+            <div class="analogy-item">
+                <div class="analogy-icon">🐢</div>
+                <h3>Slow but Real</h3>
+                <p>Limited by network speed & <strong>account lockouts</strong>. Typically 5–100 tries/sec.</p>
+            </div>
+            <div class="analogy-arrow">➡️</div>
+            <div class="analogy-item highlight">
+                <div class="analogy-icon">✅</div>
+                <h3>Instant Access</h3>
+                <p>When found — you can <strong>log in immediately</strong>. No hash extraction needed.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ TOOLS GRID ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🛠️ Online Brute Force Tools</h2>
+    <p class="section-desc">Click any tool to see commands, flags, sample output, failure cases, and a live simulation</p>
+
+    <div class="tools-grid">
+        {% for tool in tools %}
+        <div class="tool-card"
+             data-tool='{{ tool|tojson }}'
+             onclick="openToolModal(this)"
+             tabindex="0"
+             role="button"
+             aria-label="Open details for {{ tool.name }}"
+             style="--tool-color: {{ tool.color }}">
+            <div class="tool-card-header">
+                <div class="tool-icon">{{ tool.icon }}</div>
+                <div class="tool-badges">
+                    <span class="badge-difficulty diff-{{ tool.difficulty|lower }}">{{ tool.difficulty }}</span>
+                </div>
+            </div>
+            <h3>{{ tool.name }}</h3>
+            <p class="tool-tagline">{{ tool.tagline }}</p>
+            <p class="tool-desc">{{ tool.description[:130] }}...</p>
+            <div class="tool-meta">
+                <span>⚡ {{ tool.speed }}</span>
+                <span>🥷 {{ tool.stealth }}</span>
+            </div>
+            <div class="tool-card-footer">
+                <span>View Details</span>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ ETHICAL WARNING ============ -->
+<section class="tcp-section">
+    <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>Legal & Ethical Notice</h3>
+            <p>Only brute force systems <strong>you own</strong> or have <strong>written authorization</strong> to test. Unauthorized access attempts are illegal in most countries.</p>
+            <ul class="warning-list">
+                <li>✅ Practice on your own lab VMs</li>
+                <li>✅ Use HackTheBox, TryHackMe, or similar platforms</li>
+                <li>✅ Get signed engagement letters before client tests</li>
+                <li>❌ Never attack public systems without permission</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/bruteforce.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+{% block title %}Linux Processes & Services{% endblock %}
+
+{% block content %}
+
+<!-- ============ PROCESS MODAL ============ -->
+<div class="modal-overlay" id="procModal" onclick="closeProcModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeProcModal()">×</button>
+
+        <div class="modal-header" id="procModalHeader">
+            <div class="modal-icon port-icon" id="procModalIcon">⚙️</div>
+            <div>
+                <h2 id="procModalTitle">Command</h2>
+                <p class="modal-subtitle" id="procModalSubtitle">Description</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>💻 Full Command</h3>
+                <div class="modal-command-display" id="procModalCommand"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📖 What It Does</h3>
+                <p id="procModalExplanation"></p>
+            </div>
+
+            <div class="modal-section" id="procFlagsSection">
+                <h3>🚩 Common Flags</h3>
+                <div class="flags-mini-grid" id="procModalFlags"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Sample Output</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">terminal</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="procModalOutput"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section" id="procSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="procModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="procSimPlayBtn" onclick="toggleProcSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetProcSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero linux-hero">
+    <h1>📊 <span class="gradient-text">Processes & Services</span></h1>
+    <p>Monitor, control, and manage everything running on your system</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🔧 Process Management Commands</h2>
+    <p class="section-desc">Click any command to see flags, real output, and a live simulation</p>
+
+    <div class="concept-filters">
+        {% set cats = [] %}
+        {% for p in processes %}
+            {% if p.category not in cats %}{% set _ = cats.append(p.category) %}{% endif %}
+        {% endfor %}
+        <button class="concept-filter active" onclick="filterProcs('all', event)">All</button>
+        {% for cat in cats %}
+        <button class="concept-filter" onclick="filterProcs('{{ cat }}', event)">{{ cat }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="cmds-grid" id="procsGrid">
+        {% for p in processes %}
+        <div class="cmd-card cmd-clickable"
+             data-cat="{{ p.category }}"
+             data-process='{{ p|tojson }}'
+             onclick="openProcModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ p.command }}</code>
+                <span class="cmd-cat">{{ p.category }}</span>
+            </div>
+            <p class="cmd-desc">{{ p.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for details, output & simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let procSimSteps = [];
+let procSimIndex = 0;
+let procSimTimer = null;
+let isProcPaused = false;
+
+function openProcModal(card) {
+    let data;
+    try {
+        data = JSON.parse(card.getAttribute('data-process'));
+    } catch (e) {
+        console.error('Parse error:', e);
+        return;
+    }
+
+    const modal = document.getElementById('procModal');
+    if (!modal) return;
+
+    document.getElementById('procModalHeader').style.setProperty('--modal-color', '#3498db');
+    document.getElementById('procModalIcon').textContent = '⚙️';
+    document.getElementById('procModalIcon').style.background = '#3498db';
+    document.getElementById('procModalTitle').textContent = data.command;
+    document.getElementById('procModalSubtitle').textContent = data.desc;
+    document.getElementById('procModalCommand').textContent = '$ ' + data.command;
+    document.getElementById('procModalExplanation').textContent = data.explanation || '';
+    document.getElementById('procModalOutput').textContent = data.output || 'No output available';
+
+    const flagsSection = document.getElementById('procFlagsSection');
+    const flagsContainer = document.getElementById('procModalFlags');
+    if (data.flags && data.flags.length > 0) {
+        flagsContainer.innerHTML = '';
+        data.flags.forEach(f => {
+            const div = document.createElement('div');
+            div.className = 'flag-mini';
+            div.innerHTML = `<code>${escapeHtml(f.flag)}</code><span>${escapeHtml(f.desc)}</span>`;
+            flagsContainer.appendChild(div);
+        });
+        flagsSection.style.display = '';
+    } else {
+        flagsSection.style.display = 'none';
+    }
+
+    procSimSteps = data.simulation || [];
+    procSimIndex = 0;
+    isProcPaused = false;
+    if (procSimTimer) { clearInterval(procSimTimer); procSimTimer = null; }
+
+    const simSection = document.getElementById('procSimSection');
+    if (procSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateProcPlayBtn('▶ Play');
+        renderProcSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function renderProcSim() {
+    const player = document.getElementById('procModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+    if (procSimSteps.length === 0) {
+        player.innerHTML = '<p style="color: var(--text-dim); text-align:center;">No simulation available</p>';
+        return;
+    }
+    const step = procSimSteps[procSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from || 'Start')}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#3498db'}">${escapeHtml(step.data || '')}</div>
+            <div class="sim-action-label">${escapeHtml(step.title || '')} — ${escapeHtml(step.desc || '')}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${procSimIndex + 1} / ${procSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to || 'End')}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    procSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= procSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleProcSim() {
+    if (procSimSteps.length === 0) return;
+    if (procSimTimer && !isProcPaused) { pauseProcSim(); return; }
+    if (isProcPaused) { resumeProcSim(); return; }
+    startProcSim();
+}
+
+function startProcSim() {
+    if (procSimTimer) clearInterval(procSimTimer);
+    procSimIndex = 0;
+    isProcPaused = false;
+    renderProcSim();
+    updateProcPlayBtn('⏸ Pause');
+    procSimTimer = setInterval(() => {
+        procSimIndex++;
+        if (procSimIndex >= procSimSteps.length) {
+            clearInterval(procSimTimer);
+            procSimTimer = null;
+            procSimIndex = procSimSteps.length - 1;
+            renderProcSim();
+            updateProcPlayBtn('▶ Replay');
+            return;
+        }
+        renderProcSim();
+    }, 1800);
+}
+
+function pauseProcSim() {
+    if (!procSimTimer) return;
+    clearInterval(procSimTimer);
+    procSimTimer = null;
+    isProcPaused = true;
+    updateProcPlayBtn('▶ Resume');
+}
+
+function resumeProcSim() {
+    if (!isProcPaused) return;
+    isProcPaused = false;
+    updateProcPlayBtn('⏸ Pause');
+    procSimTimer = setInterval(() => {
+        procSimIndex++;
+        if (procSimIndex >= procSimSteps.length) {
+            clearInterval(procSimTimer);
+            procSimTimer = null;
+            procSimIndex = procSimSteps.length - 1;
+            renderProcSim();
+            updateProcPlayBtn('▶ Replay');
+            return;
+        }
+        renderProcSim();
+    }, 1800);
+}
+
+function updateProcPlayBtn(label) {
+    const btn = document.getElementById('procSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetProcSim() {
+    if (procSimTimer) clearInterval(procSimTimer);
+    procSimTimer = null;
+    isProcPaused = false;
+    procSimIndex = 0;
+    updateProcPlayBtn('▶ Play');
+    renderProcSim();
+}
+
+function closeProcModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('procModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (procSimTimer) clearInterval(procSimTimer);
+    procSimTimer = null;
+}
+
+function filterProcs(cat, event) {
+    document.querySelectorAll('.concept-filter').forEach(b => b.classList.remove('active'));
+    if (event) event.target.classList.add('active');
+    document.querySelectorAll('.cmd-card').forEach(c => {
+        c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+    });
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProcModal(); });
+</script>
+{% endblock %}

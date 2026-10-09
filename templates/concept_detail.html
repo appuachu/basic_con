@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}{{ concept.title }} — Network Concepts{% endblock %}
+
+{% block content %}
+<section class="concept-hero" style="--concept-color: {{ concept.color }}">
+    <div class="breadcrumb">
+        <a href="/concepts">Concepts</a> <span>/</span> <span>{{ concept.title }}</span>
+    </div>
+    <div class="concept-hero-icon">{{ concept.icon }}</div>
+    <h1>{{ concept.title }}</h1>
+    <div class="concept-meta">
+        <span class="badge-category">{{ concept.category }}</span>
+        <span class="badge-difficulty diff-{{ concept.difficulty|lower }}">{{ concept.difficulty }}</span>
+    </div>
+    <p class="concept-hero-summary">{{ concept.summary }}</p>
+</section>
+
+<section class="layer-content">
+    <div class="content-grid">
+
+        <div class="content-card highlight">
+            <h2>💡 Why Is It Needed?</h2>
+            <p class="real-world-text">{{ concept.why_needed }}</p>
+        </div>
+
+        <div class="content-card">
+            <h2>⚙️ How It Works</h2>
+            <ol class="step-list">
+                {% for step in concept.how_it_works %}
+                <li>
+                    <span class="step-num">{{ loop.index }}</span>
+                    <span>{{ step }}</span>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="content-card">
+            <h2>🎯 Types / Variants</h2>
+            <div class="types-list">
+                {% for t in concept.types %}
+                <div class="type-item">
+                    <h4>{{ t.name }}</h4>
+                    <p>{{ t.desc }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="content-card highlight">
+            <h2>🌍 Real-World Example</h2>
+            <p class="real-world-text">{{ concept.real_example }}</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- ============ VISUAL SIMULATION ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🎬 Visual Walkthrough</h2>
+    <p class="section-desc">Watch how {{ concept.title }} processes data step by step</p>
+
+    <div class="concept-sim-container">
+        <div class="concept-sim-diagram">
+            {% for step in concept.diagram_steps %}
+            <div class="concept-sim-node" data-step="{{ loop.index }}" style="--step-color: {{ step.color }}">
+                <div class="cnode-step">{{ loop.index }}</div>
+                <div class="cnode-label">{{ step.label }}</div>
+                <code class="cnode-data">{{ step.data }}</code>
+                {% if not loop.last %}
+                <div class="cnode-arrow">↓</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="sim-controls" style="justify-content:center;margin-top:2rem;">
+            <button class="sim-btn" onclick="playConceptSim()">▶ Play Simulation</button>
+            <button class="sim-btn sim-reset" onclick="resetConceptSim()">↺ Reset</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PROS / CONS ============ -->
+<section class="layer-content">
+    <div class="pros-cons-grid">
+        <div class="pros-card">
+            <div class="pc-header">
+                <span class="pc-icon">✅</span>
+                <h3>Key Benefits</h3>
+            </div>
+            <ul class="pc-list">
+                {% for b in concept.key_benefits %}
+                <li>{{ b }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="cons-card">
+            <div class="pc-header">
+                <span class="pc-icon">⚠️</span>
+                <h3>Drawbacks / Limitations</h3>
+            </div>
+            <ul class="pc-list">
+                {% for d in concept.key_drawbacks %}
+                <li>{{ d }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============ NAVIGATE TO OTHER CONCEPTS ============ -->
+<section class="all-layers-nav">
+    <h2 class="section-title">🧠 Explore Other Concepts</h2>
+    <div class="concepts-mini-grid">
+        {% for key, c in all_concepts.items() %}
+        {% if c.id != concept.id %}
+        <a href="/concept/{{ c.id }}" class="concept-mini-card" style="--c: {{ c.color }}">
+            <span class="cmc-icon">{{ c.icon }}</span>
+            <div>
+                <h4>{{ c.title }}</h4>
+                <p>{{ c.category }} • {{ c.difficulty }}</p>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let conceptStep = -1;
+let conceptTimer = null;
+
+function playConceptSim() {
+    const nodes = document.querySelectorAll('.concept-sim-node');
+    if (!nodes.length) return;
+
+    if (conceptTimer) clearInterval(conceptTimer);
+    conceptStep = -1;
+    nodes.forEach(n => n.classList.remove('active'));
+
+    conceptTimer = setInterval(() => {
+        conceptStep++;
+        if (conceptStep >= nodes.length) {
+            clearInterval(conceptTimer);
+            conceptTimer = null;
+            return;
+        }
+        nodes[conceptStep].classList.add('active');
+        nodes[conceptStep].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1500);
+}
+
+function resetConceptSim() {
+    if (conceptTimer) clearInterval(conceptTimer);
+    conceptTimer = null;
+    conceptStep = -1;
+    document.querySelectorAll('.concept-sim-node').forEach(n => n.classList.remove('active'));
+}
+</script>
+{% endblock %}

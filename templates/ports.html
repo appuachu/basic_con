@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Common Network Ports{% endblock %}
+
+{% block content %}
+<!-- PORT SIMULATION MODAL -->
+<div class="modal-overlay" id="portModal" onclick="closePortModal(event)">
+    <div class="modal-content port-modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closePortModal()">×</button>
+        <div class="modal-header" id="portModalHeader">
+            <div class="modal-icon port-icon" id="portModalIcon">80</div>
+            <div>
+                <h2 id="portModalTitle">HTTP</h2>
+                <p class="modal-subtitle" id="portModalSubtitle">Port 80 • TCP</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>🎬 How It Works — Step by Step</h3>
+                <div class="port-sim-player" id="portSimPlayer"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="portSimPlay" onclick="playPortSim()">▶ Play Simulation</button>
+                    <button class="sim-btn sim-reset" onclick="resetPortSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero ports-hero">
+    <h1>🚪 <span class="gradient-text">Common Network Ports</span></h1>
+    <p>Click any port row to see a live simulation of how the protocol works</p>
+</section>
+
+<section class="ports-section">
+    <div class="search-box">
+        <input type="text" id="portSearch" placeholder="🔍 Search by port, service, or description..." onkeyup="filterPorts()">
+    </div>
+
+    <div class="filter-buttons">
+        <button class="filter-btn active" onclick="filterByProto('all', event)">All</button>
+        <button class="filter-btn" onclick="filterByProto('TCP', event)">TCP</button>
+        <button class="filter-btn" onclick="filterByProto('UDP', event)">UDP</button>
+        <button class="filter-btn" onclick="filterByProto('TCP/UDP', event)">Both</button>
+    </div>
+
+    <div class="ports-table-wrapper">
+        <table class="ports-table" id="portsTable">
+            <thead>
+                <tr>
+                    <th>Port</th>
+                    <th>Protocol</th>
+                    <th>Service</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in ports %}
+                <tr data-proto="{{ p.protocol }}"
+                    data-port="{{ p.port }}"
+                    data-service="{{ p.service }}"
+                    onclick="openPortModal({{ p.port }}, '{{ p.service }}', '{{ p.protocol }}', '{{ p.description }}')"
+                    class="port-row">
+                    <td><span class="port-num">{{ p.port }}</span></td>
+                    <td><span class="proto-badge proto-{{ p.protocol|replace('/', '-') }}">{{ p.protocol }}</span></td>
+                    <td><strong>{{ p.service }}</strong></td>
+                    <td>{{ p.description }}</td>
+                    <td><span class="sim-trigger">▶ Simulate</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="port-ranges">
+    <h2 class="section-title">📊 Port Ranges Explained</h2>
+    <div class="range-grid">
+        <div class="range-card">
+            <div class="range-num">0 – 1023</div>
+            <h3>Well-Known Ports</h3>
+            <p>Assigned to common, system-level services. Require admin privileges to bind.</p>
+            <div class="range-examples">HTTP (80), HTTPS (443), SSH (22), DNS (53)</div>
+        </div>
+        <div class="range-card">
+            <div class="range-num">1024 – 49151</div>
+            <h3>Registered Ports</h3>
+            <p>Used by applications and services not requiring system privileges.</p>
+            <div class="range-examples">MySQL (3306), RDP (3389), PostgreSQL (5432)</div>
+        </div>
+        <div class="range-card">
+            <div class="range-num">49152 – 65535</div>
+            <h3>Dynamic / Private Ports</h3>
+            <p>Ephemeral ports assigned temporarily to client connections.</p>
+            <div class="range-examples">Used by OS for outbound connections</div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/modals.js') }}"></script>
+<script src="{{ url_for('static', filename='js/simulations.js') }}"></script>
+{% endblock %}

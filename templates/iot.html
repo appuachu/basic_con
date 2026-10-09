@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}IoT Protocols{% endblock %}
+
+{% block content %}
+<section class="tcp-hero iot-hero">
+    <h1>📡 <span class="gradient-text">IoT Protocols</span></h1>
+    <p>Communication protocols powering the Internet of Things</p>
+</section>
+
+<section class="iot-section">
+    <div class="iot-grid">
+        {% for proto in protocols %}
+        <div class="iot-card" style="--proto-color: {{ proto.color }}">
+            <div class="iot-header">
+                <div class="iot-icon">{{ proto.name[0] }}</div>
+                <div>
+                    <h3>{{ proto.name }}</h3>
+                    <p class="iot-fullname">{{ proto.full_name }}</p>
+                </div>
+            </div>
+            <div class="iot-meta">
+                <span class="iot-meta-item">🔌 {{ proto.port }}</span>
+                <span class="iot-meta-item">📚 {{ proto.layer }}</span>
+            </div>
+            <p class="iot-desc">{{ proto.description }}</p>
+
+            <div class="iot-section-block">
+                <h4>🎯 Use Cases</h4>
+                <div class="tag-list">
+                    {% for uc in proto.use_cases %}
+                    <span class="iot-tag">{{ uc }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="iot-pros-cons">
+                <div class="iot-pros">
+                    <h5>✅ Pros</h5>
+                    <ul>
+                        {% for p in proto.pros %}
+                        <li>{{ p }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="iot-cons">
+                    <h5>⚠️ Cons</h5>
+                    <ul>
+                        {% for c in proto.cons %}
+                        <li>{{ c }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

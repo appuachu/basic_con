@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}sudo, sudoers & SUID — Privilege Escalation{% endblock %}
+
+{% block content %}
+<section class="tcp-hero linux-hero">
+    <h1>⚡ <span class="gradient-text">sudo, sudoers & SUID</span></h1>
+    <p>How privilege escalation works on Linux — and how attackers abuse it</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is sudo?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">{{ sudo_data.what_is_sudo }}</p>
+    </div>
+
+    <h3 class="subsection-title">⚖️ sudo vs su</h3>
+    <div class="comparison-table">
+        <table>
+            <thead><tr><th>su</th><th>sudo</th></tr></thead>
+            <tbody>
+                {% for r in sudo_data.vs_su %}
+                <tr>
+                    <td>{{ r.su }}</td>
+                    <td>{{ r.sudo }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">📝 The sudoers File Syntax</h2>
+    <div class="cmds-grid">
+        {% for s in sudo_data.sudoers_syntax %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ s.line }}</code>
+            <p class="cmd-desc">{{ s.explain }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">➕ Adding Users to sudo</h3>
+    <div class="cmds-grid">
+        {% for cmd in sudo_data.adding_user_to_sudo %}
+        <div class="cmd-card"><code class="cmd-code">{{ cmd }}</code></div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">💣 SUID — Privilege Escalation</h2>
+    <div class="content-card highlight">
+        <h3 style="color: #e74c3c; margin-bottom: 1rem;">What Is SUID?</h3>
+        <p class="real-world-text">{{ sudo_data.suid_explained.what }}</p>
+        <p class="real-world-text" style="margin-top: 1rem;"><strong>Why it exists:</strong> {{ sudo_data.suid_explained.why }}</p>
+    </div>
+
+    <h3 class="subsection-title">🔍 How to Spot It</h3>
+    <div class="terminal-body">
+        <pre style="color: #c0ffc0; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; white-space: pre-wrap;">{{ sudo_data.suid_explained.how_to_spot }}</pre>
+    </div>
+
+    <h3 class="subsection-title">🎯 Find All SUID Binaries</h3>
+    <div class="cmd-card">
+        <code class="cmd-code">{{ sudo_data.suid_explained.finding_suid }}</code>
+        <p class="cmd-desc">Run as any user — lists all SUID files on the system</p>
+    </div>
+
+    <h3 class="subsection-title">⚠️ Dangerous SUID Binaries</h3>
+    <div class="cmds-grid">
+        {% for b in sudo_data.suid_explained.dangerous_suid %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ b }}</code>
+            <p class="cmd-desc">Can be abused to spawn a root shell if SUID is set</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">💥 Exploitation Example</h3>
+    <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>{{ sudo_data.suid_explained.exploitation_example.scenario }}</h3>
+            <pre style="color: #ffb8b8; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.7; white-space: pre-wrap;">{{ sudo_data.suid_explained.exploitation_example.command }}</pre>
+            <p style="margin-top: 1rem;"><strong>Explanation:</strong> {{ sudo_data.suid_explained.exploitation_example.explanation }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🛡️ Defense Against SUID Abuse</h2>
+    <div class="feature-grid">
+        <div class="feature-card"><div class="fc-icon">🔍</div><h3>Audit Regularly</h3><p>Run <code>find / -perm -4000</code> to spot unexpected SUID binaries</p></div>
+        <div class="feature-card"><div class="fc-icon">🚫</div><h3>Remove Unnecessary SUID</h3><p>Use <code>chmod u-s</code> on binaries that don't need it</p></div>
+        <div class="feature-card"><div class="fc-icon">🔒</div><h3>Mount nosuid</h3><p>For /home, /tmp, /var — use <code>nosuid</code> mount option</p></div>
+        <div class="feature-card"><div class="fc-icon">📊</div><h3>Monitor with auditd</h3><p>Log any execution of SUID binaries for anomaly detection</p></div>
+    </div>
+</section>
+{% endblock %}

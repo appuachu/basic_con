@@ -1,0 +1,521 @@
+{% extends "base.html" %}
+{% block title %}How the Web Works — URLs, HTTP, Headers{% endblock %}
+
+{% block content %}
+<section class="tcp-hero web-hero">
+    <h1>🌐 <span class="gradient-text">How the Web Works</span></h1>
+    <p>URLs, HTTP methods, headers, status codes, and the complete request-response lifecycle</p>
+</section>
+
+<!-- ============ URL ANATOMY ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🔍 Anatomy of a URL</h2>
+    <p class="section-desc">Every part of a URL has a specific purpose, hover over each colored section to learn</p>
+
+    <div class="url-breakdown">
+        <div class="url-full">
+            {% for p in url.parts %}
+            <span class="url-part" style="--url-color: {{ p.color }}" data-part='{{ p|tojson }}' onclick="showUrlPart(this)">
+                {{ p.part }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="url-parts-grid">
+        {% for p in url.parts %}
+        <div class="url-info-card" style="--url-color: {{ p.color }}">
+            <div class="url-part-num">{{ p.position }}</div>
+            <code class="url-part-val">{{ p.part }}</code>
+            <h4>{{ p.name }}</h4>
+            <p>{{ p.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ REQUEST FLOW SIMULATION ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🎬 Complete Request-Response Flow</h2>
+    <p class="section-desc">What happens when you type <code>https://shop.example.com/products</code> in the browser</p>
+
+    <div class="ip-sim-container">
+        <div class="arp-steps" id="flowSteps">
+            {% for s in flow %}
+            <div class="arp-step" data-step="{{ s.step }}">
+                <div class="arp-step-num" style="background: {{ s.color }}; color: #000;">{{ s.step }}</div>
+                <div class="arp-step-content">
+                    <h4>{{ s.title }}</h4>
+                    <p>{{ s.desc }}</p>
+                    <div class="arp-step-flow">
+                        <span class="arp-from">{{ s.from }}</span>
+                        <span class="arp-arrow">→</span>
+                        <span class="arp-to">{{ s.to }}</span>
+                    </div>
+                    <div class="arp-step-data" style="border-color: {{ s.color }}">{{ s.data }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="sim-controls" style="justify-content:center;margin-top:2rem;">
+            <button class="sim-btn" id="flowPlayBtn" onclick="toggleFlow()">▶ Play Simulation</button>
+            <button class="sim-btn sim-reset" onclick="resetFlow()">↺ Reset</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============ HTTP METHODS ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">📨 HTTP Methods</h2>
+    <p class="section-desc">Every HTTP request uses one of these methods, click any card to see full request, response, and how it works with real URLs</p>
+
+    <div class="http-methods-grid">
+        {% for m in methods %}
+        <div class="http-method-card"
+             style="--method-color: {{ m.color }}"
+             data-method='{{ m|tojson }}'
+             onclick="openMethodModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="hmc-header">
+                <span class="method-badge method-{{ m.method|lower }}">{{ m.method }}</span>
+                <div class="hmc-badges">
+                    <span class="hmc-badge">{{ '✅ Safe' if m.safe else '❌ Unsafe' }}</span>
+                    <span class="hmc-badge">{{ '✅ Idempotent' if m.idempotent else '❌ Not Idempotent' }}</span>
+                </div>
+            </div>
+            <p class="hmc-purpose">{{ m.purpose }}</p>
+            <div class="hmc-url">
+                <span class="hmc-url-label">URL:</span>
+                <code>{{ m.url_example }}</code>
+            </div>
+            <div class="hmc-data">
+                <span class="hmc-data-label">Data goes in:</span>
+                <strong>{{ m.data_location }}</strong>
+            </div>
+            <span class="cmd-click-hint">👆 Click to see full request & response</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ HTTP HEADERS ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">📋 HTTP Headers</h2>
+    <p class="section-desc">Metadata sent with every request/response</p>
+
+    <div class="cmds-grid">
+        {% for h in headers %}
+        <div class="cmd-card">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ h.header }}</code>
+            </div>
+            <pre class="cmd-example">{{ h.example }}</pre>
+            <p class="cmd-desc">{{ h.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ STATUS CODES ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🔢 HTTP Status Codes</h2>
+    <p class="section-desc">Numeric responses from the server, grouped by family</p>
+
+    <div class="status-grid">
+        {% for s in status %}
+        <div class="status-card" style="--status-color: {{ s.color }}">
+            <div class="status-code">{{ s.code }}</div>
+            <h4>{{ s.name }}</h4>
+            <p>{{ s.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ SAMPLE REQUEST ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">📄 A Complete HTTP Request & Response</h2>
+    <div class="nmap-terminal">
+        <div class="terminal-bar">
+            <span class="term-dot red"></span>
+            <span class="term-dot yellow"></span>
+            <span class="term-dot green"></span>
+            <span class="term-title">curl -v https://example.com</span>
+        </div>
+        <div class="terminal-body">
+<pre><span class="t-open">> GET / HTTP/1.1</span>
+<span class="t-open">> Host: example.com</span>
+<span class="t-open">> User-Agent: curl/8.0.1</span>
+<span class="t-open">> Accept: */*</span>
+<span class="t-open">> Cookie: session=abc123</span>
+>
+<span class="t-open">&lt; HTTP/1.1 200 OK</span>
+<span class="t-open">&lt; Content-Type: text/html; charset=UTF-8</span>
+<span class="t-open">&lt; Content-Length: 1256</span>
+<span class="t-open">&lt; Server: nginx</span>
+<span class="t-open">&lt; Set-Cookie: session=xyz789; HttpOnly; Secure</span>
+<span class="t-open">&lt; X-Frame-Options: DENY</span>
+<span class="t-open">&lt; Strict-Transport-Security: max-age=31536000</span>
+&lt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Example Domain&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Example Domain&lt;/h1&gt;
+  &lt;p&gt;This domain is for use in examples...&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+    </div>
+</section>
+
+<!-- ============ URL PART MODAL ============ -->
+<div class="modal-overlay" id="urlModal" onclick="closeUrlModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeUrlModal()">×</button>
+        <div class="modal-header" id="urlModalHeader">
+            <div class="modal-icon" id="urlModalIcon" style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem;">URL</div>
+            <div>
+                <h2 id="urlModalTitle">Part</h2>
+                <p class="modal-subtitle" id="urlModalSubtitle">Description</p>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>📖 Explanation</h3>
+                <p id="urlModalDesc"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ HTTP METHOD MODAL ============ -->
+<div class="modal-overlay" id="methodModal" onclick="closeMethodModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeMethodModal()">×</button>
+
+        <div class="modal-header" id="methodModalHeader">
+            <div class="modal-icon" id="methodModalIcon" style="font-family: 'JetBrains Mono', monospace;">GET</div>
+            <div>
+                <h2 id="methodModalTitle">METHOD</h2>
+                <p class="modal-subtitle" id="methodModalSubtitle">Purpose</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>🎯 What It Does</h3>
+                <p id="methodModalPurpose"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🔍 URL Example</h3>
+                <div class="modal-command-display" id="methodModalUrl"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Full Request (sent by client)</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">request</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="methodModalRequest"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📬 Full Response (from server)</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">response</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="methodModalResponse"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📍 Where the Data Goes</h3>
+                <p class="modal-example" id="methodModalData"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>⚠️ Security Note</h3>
+                <p id="methodModalSecurity"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎯 When To Use</h3>
+                <ul class="modal-list" id="methodModalWhen"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="methodModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="methodSimPlayBtn" onclick="toggleMethodSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetMethodSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// ==================== URL PART MODAL ====================
+function showUrlPart(el) {
+    const data = JSON.parse(el.getAttribute('data-part'));
+    const modal = document.getElementById('urlModal');
+    document.getElementById('urlModalHeader').style.setProperty('--modal-color', data.color);
+    document.getElementById('urlModalIcon').textContent = '#' + data.position;
+    document.getElementById('urlModalIcon').style.background = data.color;
+    document.getElementById('urlModalTitle').textContent = data.part;
+    document.getElementById('urlModalSubtitle').textContent = data.name;
+    document.getElementById('urlModalDesc').textContent = data.desc;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeUrlModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('urlModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ==================== REQUEST FLOW SIMULATION ====================
+let flowIndex = -1;
+let flowTimer = null;
+
+function toggleFlow() {
+    const steps = document.querySelectorAll('#flowSteps .arp-step');
+    if (!steps.length) return;
+
+    if (flowTimer) {
+        clearInterval(flowTimer);
+        flowTimer = null;
+        document.getElementById('flowPlayBtn').textContent = '▶ Resume';
+        return;
+    }
+
+    if (flowIndex >= 0 && flowIndex < steps.length - 1) {
+        document.getElementById('flowPlayBtn').textContent = '⏸ Pause';
+    } else {
+        flowIndex = -1;
+        steps.forEach(s => s.classList.remove('active'));
+        document.getElementById('flowPlayBtn').textContent = '⏸ Pause';
+    }
+
+    flowTimer = setInterval(() => {
+        flowIndex++;
+        if (flowIndex >= steps.length) {
+            clearInterval(flowTimer);
+            flowTimer = null;
+            document.getElementById('flowPlayBtn').textContent = '▶ Replay';
+            return;
+        }
+        steps[flowIndex].classList.add('active');
+        steps[flowIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1500);
+}
+
+function resetFlow() {
+    if (flowTimer) clearInterval(flowTimer);
+    flowTimer = null;
+    flowIndex = -1;
+    document.querySelectorAll('#flowSteps .arp-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('flowPlayBtn').textContent = '▶ Play Simulation';
+}
+
+// ==================== HTTP METHOD MODAL ====================
+let methodSimSteps = [];
+let methodSimIndex = 0;
+let methodSimTimer = null;
+let isMethodPaused = false;
+
+function openMethodModal(card) {
+    const data = JSON.parse(card.getAttribute('data-method'));
+
+    const modal = document.getElementById('methodModal');
+    if (!modal) return;
+
+    // Header
+    document.getElementById('methodModalHeader').style.setProperty('--modal-color', data.color);
+    document.getElementById('methodModalIcon').textContent = data.method;
+    document.getElementById('methodModalIcon').style.background = data.color;
+    document.getElementById('methodModalTitle').textContent = data.method;
+    document.getElementById('methodModalSubtitle').textContent = data.purpose;
+
+    // Content
+    document.getElementById('methodModalPurpose').textContent = data.purpose;
+    document.getElementById('methodModalUrl').textContent = data.url_example;
+    document.getElementById('methodModalRequest').textContent = data.full_request;
+    document.getElementById('methodModalResponse').textContent = data.full_response;
+    document.getElementById('methodModalData').textContent = data.data_location;
+    document.getElementById('methodModalSecurity').textContent = data.security_note;
+
+    // When to use
+    const whenList = document.getElementById('methodModalWhen');
+    whenList.innerHTML = '';
+    (data.when_to_use || []).forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        whenList.appendChild(li);
+    });
+
+    // Simulation
+    methodSimSteps = [
+        { step: 1, title: "Client prepares request", desc: `Building ${data.method} request`, from: "Browser", to: "HTTP Client", data: data.method, color: data.color },
+        { step: 2, title: "Send to server", desc: "TCP/TLS connection established", from: "Browser", to: "Web Server", data: "Encrypted request", color: "#3498db" },
+        { step: 3, title: "Server processes", desc: "Application handles the request", from: "Web Server", to: "Application", data: "Processing...", color: "#f39c12" },
+        { step: 4, title: "Server responds", desc: "Response with status + data", from: "Web Server", to: "Browser", data: "Response received", color: "#27ae60" },
+        { step: 5, title: "Browser handles response", desc: "Renders, redirects, or updates state", from: "Browser", to: "User", data: "Done", color: "#16a085" }
+    ];
+    methodSimIndex = 0;
+    isMethodPaused = false;
+    if (methodSimTimer) { clearInterval(methodSimTimer); methodSimTimer = null; }
+    updateMethodPlayBtn('▶ Play');
+    renderMethodSim();
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function renderMethodSim() {
+    const player = document.getElementById('methodModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+
+    if (methodSimSteps.length === 0) {
+        player.innerHTML = '<p style="color: var(--text-dim); text-align:center;">No simulation available</p>';
+        return;
+    }
+
+    const step = methodSimSteps[methodSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${step.from}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color}">${step.data}</div>
+            <div class="sim-action-label">${step.title} - ${step.desc}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${methodSimIndex + 1} / ${methodSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${step.to}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    methodSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= methodSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleMethodSim() {
+    if (methodSimSteps.length === 0) return;
+    if (methodSimTimer && !isMethodPaused) { pauseMethodSim(); return; }
+    if (isMethodPaused) { resumeMethodSim(); return; }
+    startMethodSim();
+}
+
+function startMethodSim() {
+    if (methodSimTimer) clearInterval(methodSimTimer);
+    methodSimIndex = 0;
+    isMethodPaused = false;
+    renderMethodSim();
+    updateMethodPlayBtn('⏸ Pause');
+    methodSimTimer = setInterval(() => {
+        methodSimIndex++;
+        if (methodSimIndex >= methodSimSteps.length) {
+            clearInterval(methodSimTimer);
+            methodSimTimer = null;
+            methodSimIndex = methodSimSteps.length - 1;
+            renderMethodSim();
+            updateMethodPlayBtn('▶ Replay');
+            return;
+        }
+        renderMethodSim();
+    }, 1800);
+}
+
+function pauseMethodSim() {
+    if (!methodSimTimer) return;
+    clearInterval(methodSimTimer);
+    methodSimTimer = null;
+    isMethodPaused = true;
+    updateMethodPlayBtn('▶ Resume');
+}
+
+function resumeMethodSim() {
+    if (!isMethodPaused) return;
+    isMethodPaused = false;
+    updateMethodPlayBtn('⏸ Pause');
+    methodSimTimer = setInterval(() => {
+        methodSimIndex++;
+        if (methodSimIndex >= methodSimSteps.length) {
+            clearInterval(methodSimTimer);
+            methodSimTimer = null;
+            methodSimIndex = methodSimSteps.length - 1;
+            renderMethodSim();
+            updateMethodPlayBtn('▶ Replay');
+            return;
+        }
+        renderMethodSim();
+    }, 1800);
+}
+
+function updateMethodPlayBtn(label) {
+    const btn = document.getElementById('methodSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.indexOf('Pause') !== -1) btn.classList.add('is-playing');
+    if (label.indexOf('Resume') !== -1) btn.classList.add('is-paused');
+}
+
+function resetMethodSim() {
+    if (methodSimTimer) clearInterval(methodSimTimer);
+    methodSimTimer = null;
+    isMethodPaused = false;
+    methodSimIndex = 0;
+    updateMethodPlayBtn('▶ Play');
+    renderMethodSim();
+}
+
+function closeMethodModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('methodModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (methodSimTimer) clearInterval(methodSimTimer);
+    methodSimTimer = null;
+}
+
+// Escape key closes both modals
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        closeUrlModal();
+        closeMethodModal();
+    }
+});
+</script>
+{% endblock %}

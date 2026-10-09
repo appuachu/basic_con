@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Linux Users & Groups — passwd, shadow, group{% endblock %}
+
+{% block content %}
+<section class="tcp-hero linux-hero">
+    <h1>👥 <span class="gradient-text">Users, Groups & Passwords</span></h1>
+    <p>Deep dive into /etc/passwd, /etc/shadow, /etc/group — field by field</p>
+</section>
+
+<!-- PASSWD -->
+<section class="tcp-section">
+    <h2 class="section-title">📄 /etc/passwd</h2>
+    <div class="content-card highlight">
+        <p><strong>Path:</strong> <code>{{ passwd_data.path }}</code></p>
+        <p><strong>Readable by:</strong> {{ passwd_data.readable_by }}</p>
+        <p><strong>Purpose:</strong> {{ passwd_data.purpose }}</p>
+    </div>
+
+    <h3 class="subsection-title">📋 The 7 Fields</h3>
+    <div class="comparison-table">
+        <table>
+            <thead><tr><th>#</th><th>Field</th><th>Example</th><th>Description</th></tr></thead>
+            <tbody>
+                {% for f in passwd_data.fields %}
+                <tr>
+                    <td><strong>{{ f.num }}</strong></td>
+                    <td>{{ f.name }}</td>
+                    <td><code>{{ f.example }}</code></td>
+                    <td>{{ f.desc }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="subsection-title">📖 Real Example Lines</h3>
+    <div class="cmds-grid">
+        {% for e in passwd_data.example_lines %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ e.line }}</code>
+            <p class="cmd-desc">{{ e.explain }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">🚨 Attack: Changing UID to 0</h3>
+    <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>{{ passwd_data.attack_scenario.title }}</h3>
+            <pre style="color: #ffb8b8; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.7; white-space: pre-wrap;">{{ passwd_data.attack_scenario.example }}</pre>
+            <p style="margin-top: 1rem;"><strong>Result:</strong> {{ passwd_data.attack_scenario.result }}</p>
+            <p style="margin-top: 0.8rem;"><strong>Defense:</strong> {{ passwd_data.attack_scenario.defense }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- SHADOW -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🔒 /etc/shadow</h2>
+    <div class="content-card highlight">
+        <p><strong>Path:</strong> <code>{{ shadow_data.path }}</code></p>
+        <p><strong>Readable by:</strong> {{ shadow_data.readable_by }}</p>
+        <p><strong>Purpose:</strong> {{ shadow_data.purpose }}</p>
+    </div>
+
+    <h3 class="subsection-title">📋 The 9 Fields</h3>
+    <div class="comparison-table">
+        <table>
+            <thead><tr><th>#</th><th>Field</th><th>Example</th><th>Description</th></tr></thead>
+            <tbody>
+                {% for f in shadow_data.fields %}
+                <tr>
+                    <td><strong>{{ f.num }}</strong></td>
+                    <td>{{ f.name }}</td>
+                    <td><code>{{ f.example }}</code></td>
+                    <td>{{ f.desc }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="subsection-title">🔑 Hash Algorithm Prefixes</h3>
+    <div class="cmds-grid">
+        {% for h in shadow_data.hash_types %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ h.prefix }}</code>
+            <p class="cmd-desc"><strong>{{ h.algorithm }}</strong><br>{{ h.security }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">📖 Example Lines</h3>
+    <div class="cmds-grid">
+        {% for e in shadow_data.example_lines %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ e.line }}</code>
+            <p class="cmd-desc">{{ e.explain }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">🚨 Attack: Cracking Shadow</h3>
+    <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>{{ shadow_data.attack_scenario.title }}</h3>
+            <pre style="color: #ffb8b8; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.7; white-space: pre-wrap;">{{ shadow_data.attack_scenario.example }}</pre>
+            <p style="margin-top: 1rem;"><strong>Result:</strong> {{ shadow_data.attack_scenario.result }}</p>
+            <p style="margin-top: 0.8rem;"><strong>Defense:</strong> {{ shadow_data.attack_scenario.defense }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- GROUPS -->
+<section class="tcp-section">
+    <h2 class="section-title">👨‍👩‍👧‍👦 /etc/group</h2>
+    <div class="content-card highlight">
+        <p><strong>Path:</strong> <code>{{ groups_data.path }}</code></p>
+        <p><strong>Purpose:</strong> {{ groups_data.purpose }}</p>
+    </div>
+
+    <h3 class="subsection-title">📋 The 4 Fields</h3>
+    <div class="comparison-table">
+        <table>
+            <thead><tr><th>#</th><th>Field</th><th>Example</th><th>Description</th></tr></thead>
+            <tbody>
+                {% for f in groups_data.fields %}
+                <tr>
+                    <td><strong>{{ f.num }}</strong></td>
+                    <td>{{ f.name }}</td>
+                    <td><code>{{ f.example }}</code></td>
+                    <td>{{ f.desc if f.desc else '—' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3 class="subsection-title">📖 Example Lines</h3>
+    <div class="cmds-grid">
+        {% for e in groups_data.example_lines %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ e.line }}</code>
+            <p class="cmd-desc">{{ e.explain }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">⭐ Important Groups</h3>
+    <div class="comparison-table">
+        <table>
+            <thead><tr><th>Group</th><th>GID</th><th>Privilege</th></tr></thead>
+            <tbody>
+                {% for g in groups_data.important_groups %}
+                <tr>
+                    <td><code>{{ g.name }}</code></td>
+                    <td>{{ g.gid }}</td>
+                    <td>{{ g.privilege }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- USER COMMANDS -->
+<section class="tcp-section dark">
+    <h2 class="section-title">💻 User Management Commands</h2>
+    <div class="cmds-grid">
+        <div class="cmd-card"><code class="cmd-code">sudo useradd -m -s /bin/bash alice</code><p class="cmd-desc">Create user with home dir and bash shell</p></div>
+        <div class="cmd-card"><code class="cmd-code">sudo passwd alice</code><p class="cmd-desc">Set password for alice</p></div>
+        <div class="cmd-card"><code class="cmd-code">sudo usermod -aG sudo alice</code><p class="cmd-desc">Add to sudo group</p></div>
+        <div class="cmd-card"><code class="cmd-code">sudo usermod -L alice</code><p class="cmd-desc">Lock the account</p></div>
+        <div class="cmd-card"><code class="cmd-code">sudo userdel -r alice</code><p class="cmd-desc">Delete user + home directory</p></div>
+        <div class="cmd-card"><code class="cmd-code">sudo groupadd devs</code><p class="cmd-desc">Create a new group</p></div>
+        <div class="cmd-card"><code class="cmd-code">sudo gpasswd -a alice devs</code><p class="cmd-desc">Add user to group</p></div>
+        <div class="cmd-card"><code class="cmd-code">groups alice</code><p class="cmd-desc">List all groups for alice</p></div>
+    </div>
+</section>
+{% endblock %}

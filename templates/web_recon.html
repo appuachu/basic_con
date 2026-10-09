@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+{% block title %}Web Recon Tools — 8 Essential Tools{% endblock %}
+
+{% block content %}
+
+<!-- ============ TOOL MODAL ============ -->
+<div class="modal-overlay" id="toolModal" onclick="closeToolModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeToolModal()">×</button>
+
+        <div class="modal-header" id="toolModalHeader">
+            <div class="modal-icon" id="toolModalIcon">🔍</div>
+            <div>
+                <h2 id="toolModalTitle">Tool</h2>
+                <p class="modal-subtitle" id="toolModalSubtitle">Tagline</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>📖 About</h3>
+                <p id="toolModalDesc"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📦 Install</h3>
+                <div class="modal-command-display" id="toolModalInstall"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🚩 Common Flags</h3>
+                <div class="flags-mini-grid" id="toolModalFlags"></div>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tabSuccessBtn" onclick="switchOutputTab('success', event)">
+                    ✅ Working Examples
+                </button>
+                <button class="modal-tab tab-failure" id="tabFailureBtn" onclick="switchOutputTab('failure', event)">
+                    ❌ Failure Cases
+                </button>
+            </div>
+
+            <div class="modal-section tab-content active" id="tab-content-success">
+                <div id="toolModalExamples"></div>
+            </div>
+
+            <div class="modal-section tab-content" id="tab-content-failure">
+                <div id="toolModalFailures"></div>
+            </div>
+
+            <div class="modal-section" id="toolSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="toolModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="toolSimPlayBtn" onclick="toggleToolSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetToolSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero web-hero">
+    <h1>🔍 <span class="gradient-text">Web Reconnaissance Tools</span></h1>
+    <p>Discover, fingerprint, and enumerate web applications — click any tool for full details</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🛠️ Recon Tools</h2>
+    <p class="section-desc">8 essential tools with real commands, output, failures, and simulations</p>
+
+    <div class="tools-grid">
+        {% for tool in tools %}
+        <div class="tool-card"
+             data-tool='{{ tool|tojson }}'
+             onclick="openToolModal(this)"
+             tabindex="0"
+             role="button"
+             style="--tool-color: {{ tool.color }}">
+            <div class="tool-card-header">
+                <div class="tool-icon">{{ tool.icon }}</div>
+                <div class="tool-badges">
+                    <span class="badge-category">{{ tool.category }}</span>
+                </div>
+            </div>
+            <h3>{{ tool.name }}</h3>
+            <p class="tool-tagline">{{ tool.tagline }}</p>
+            <p class="tool-desc">{{ tool.description[:140] }}...</p>
+            <div class="tool-card-footer">
+                <span>View Details</span>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🎓 Recon Methodology</h2>
+    <div class="learning-path-landing">
+        <div class="path-step">
+            <div class="path-num">1</div>
+            <div class="path-content">
+                <h4>🛡️ WAF Detection</h4>
+                <p>wafw00f — know what defenses you're up against</p>
+            </div>
+        </div>
+        <div class="path-step">
+            <div class="path-num">2</div>
+            <div class="path-content">
+                <h4>🔍 Tech Fingerprinting</h4>
+                <p>whatweb — identify the tech stack</p>
+            </div>
+        </div>
+        <div class="path-step">
+            <div class="path-num">3</div>
+            <div class="path-content">
+                <h4>🎯 Vulnerability Scanning</h4>
+                <p>nikto — find misconfigs and exposed files</p>
+            </div>
+        </div>
+        <div class="path-step">
+            <div class="path-num">4</div>
+            <div class="path-content">
+                <h4>📂 Directory Brute Force</h4>
+                <p>gobuster, dirb, dirsearch — find hidden paths</p>
+            </div>
+        </div>
+        <div class="path-step">
+            <div class="path-num">5</div>
+            <div class="path-content">
+                <h4>🔗 Subdomain Enumeration</h4>
+                <p>sublist3r — find forgotten subdomains</p>
+            </div>
+        </div>
+        <div class="path-step">
+            <div class="path-num">6</div>
+            <div class="path-content">
+                <h4>⏳ Historical URLs</h4>
+                <p>waybackurls — recover old endpoints</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let currentTool = null;
+let toolSimSteps = [];
+let toolSimIndex = 0;
+let toolSimTimer = null;
+let isToolPaused = false;
+
+function openToolModal(card) {
+    const tool = JSON.parse(card.getAttribute('data-tool'));
+    currentTool = tool;
+
+    const modal = document.getElementById('toolModal');
+    if (!modal) return;
+
+    document.getElementById('toolModalHeader').style.setProperty('--modal-color', tool.color);
+    document.getElementById('toolModalIcon').textContent = tool.icon;
+    document.getElementById('toolModalIcon').style.background = tool.color;
+    document.getElementById('toolModalTitle').textContent = tool.name;
+    document.getElementById('toolModalSubtitle').textContent = tool.tagline;
+    document.getElementById('toolModalDesc').textContent = tool.description;
+    document.getElementById('toolModalInstall').textContent = '$ ' + tool.install;
+
+    // Flags
+    const flagsContainer = document.getElementById('toolModalFlags');
+    flagsContainer.innerHTML = '';
+    (tool.common_flags || []).forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'flag-mini';
+        div.innerHTML = `<code>${escapeHtml(f.flag)}</code><span>${escapeHtml(f.desc)}</span>`;
+        flagsContainer.appendChild(div);
+    });
+
+    // Success examples
+    renderExamples('toolModalExamples', tool.examples, false);
+    // Failure examples
+    renderExamples('toolModalFailures', tool.failures, true);
+
+    // Reset tabs
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tabSuccessBtn').classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-content-success').classList.add('active');
+
+    // Simulation
+    toolSimSteps = tool.simulation || [];
+    toolSimIndex = 0;
+    isToolPaused = false;
+    if (toolSimTimer) { clearInterval(toolSimTimer); toolSimTimer = null; }
+
+    const simSection = document.getElementById('toolSimSection');
+    if (toolSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateToolPlayBtn('▶ Play');
+        renderToolSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function renderExamples(containerId, examples, isFailure) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = '';
+
+    (examples || []).forEach(ex => {
+        const div = document.createElement('div');
+        div.className = 'example-block' + (isFailure ? ' example-failure' : '');
+        const formatted = escapeHtml(ex.command || '').replace(/\n/g, '<br>$ ');
+        div.innerHTML = `
+            <h4>${isFailure ? '❌' : '✅'} ${escapeHtml(ex.title)}</h4>
+            <div class="modal-command-display">$ ${formatted}</div>
+            <p class="example-explain">${escapeHtml(ex.explanation)}</p>
+            <div class="scan-terminal-mini ${isFailure ? 'terminal-failure' : ''}">
+                <div class="terminal-bar-mini">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span class="term-title-mini">${isFailure ? 'error' : 'output'}</span>
+                </div>
+                <pre class="terminal-output-mini">${escapeHtml(ex.output)}</pre>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function switchOutputTab(tab, event) {
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    if (event) event.currentTarget.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-content-' + tab).classList.add('active');
+}
+
+function renderToolSim() {
+    const player = document.getElementById('toolModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+    if (toolSimSteps.length === 0) return;
+    const step = toolSimSteps[toolSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from)}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#3498db'}">${escapeHtml(step.data)}</div>
+            <div class="sim-action-label">${escapeHtml(step.title)} — ${escapeHtml(step.desc)}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${toolSimIndex + 1} / ${toolSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to)}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    toolSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= toolSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleToolSim() {
+    if (toolSimSteps.length === 0) return;
+    if (toolSimTimer && !isToolPaused) { pauseToolSim(); return; }
+    if (isToolPaused) { resumeToolSim(); return; }
+    startToolSim();
+}
+
+function startToolSim() {
+    if (toolSimTimer) clearInterval(toolSimTimer);
+    toolSimIndex = 0;
+    isToolPaused = false;
+    renderToolSim();
+    updateToolPlayBtn('⏸ Pause');
+    toolSimTimer = setInterval(() => {
+        toolSimIndex++;
+        if (toolSimIndex >= toolSimSteps.length) {
+            clearInterval(toolSimTimer);
+            toolSimTimer = null;
+            toolSimIndex = toolSimSteps.length - 1;
+            renderToolSim();
+            updateToolPlayBtn('▶ Replay');
+            return;
+        }
+        renderToolSim();
+    }, 1800);
+}
+
+function pauseToolSim() {
+    if (!toolSimTimer) return;
+    clearInterval(toolSimTimer);
+    toolSimTimer = null;
+    isToolPaused = true;
+    updateToolPlayBtn('▶ Resume');
+}
+
+function resumeToolSim() {
+    if (!isToolPaused) return;
+    isToolPaused = false;
+    updateToolPlayBtn('⏸ Pause');
+    toolSimTimer = setInterval(() => {
+        toolSimIndex++;
+        if (toolSimIndex >= toolSimSteps.length) {
+            clearInterval(toolSimTimer);
+            toolSimTimer = null;
+            toolSimIndex = toolSimSteps.length - 1;
+            renderToolSim();
+            updateToolPlayBtn('▶ Replay');
+            return;
+        }
+        renderToolSim();
+    }, 1800);
+}
+
+function updateToolPlayBtn(label) {
+    const btn = document.getElementById('toolSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetToolSim() {
+    if (toolSimTimer) clearInterval(toolSimTimer);
+    toolSimTimer = null;
+    isToolPaused = false;
+    toolSimIndex = 0;
+    updateToolPlayBtn('▶ Play');
+    renderToolSim();
+}
+
+function closeToolModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('toolModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (toolSimTimer) clearInterval(toolSimTimer);
+    toolSimTimer = null;
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeToolModal(); });
+</script>
+{% endblock %}

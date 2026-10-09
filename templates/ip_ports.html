@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block title %}IP Addresses & Ports — How They Work{% endblock %}
+
+{% block content %}
+<section class="tcp-hero ip-hero">
+    <h1>🎯 <span class="gradient-text">IP Addresses & Ports</span></h1>
+    <p>Understand how data finds its way from your computer to the right server and service</p>
+</section>
+
+<!-- ============ THE BIG PICTURE ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🏠 The Big Picture — Like Sending a Letter</h2>
+    <div class="analogy-box">
+        <div class="analogy-grid">
+            <div class="analogy-item">
+                <div class="analogy-icon">🏠</div>
+                <h3>IP Address</h3>
+                <p>Like a <strong>house address</strong>. It tells the network WHERE the destination is (e.g., 142.250.185.78).</p>
+            </div>
+            <div class="analogy-arrow">➕</div>
+            <div class="analogy-item">
+                <div class="analogy-icon">🚪</div>
+                <h3>Port Number</h3>
+                <p>Like a <strong>room number</strong>. It tells which service on that computer should receive the data (e.g., Port 443 for HTTPS).</p>
+            </div>
+            <div class="analogy-arrow">🟰</div>
+            <div class="analogy-item highlight">
+                <div class="analogy-icon">📬</div>
+                <h3>Full Address</h3>
+                <p><strong>IP + Port</strong> together deliver data to the exact right place (e.g., 142.250.185.78:<strong>443</strong>).</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ LIVE SIMULATION ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🎬 Live Simulation — What Happens When You Open a Website</h2>
+    <p class="section-desc">Click Play to watch how IP and Port work together step by step</p>
+
+    <div class="ip-sim-container">
+        <div class="ip-sim-diagram">
+            <div class="ip-sim-endpoint client">
+                <div class="endpoint-icon">💻</div>
+                <h4>Your Computer</h4>
+                <code>192.168.1.100</code>
+            </div>
+
+            <div class="ip-sim-middle">
+                <div class="ip-sim-steps" id="ipSimSteps">
+                    {% for step in simulation %}
+                    <div class="ip-sim-step" data-step="{{ step.step }}">
+                        <div class="step-number">{{ step.step }}</div>
+                        <div class="step-content">
+                            <h4>{{ step.title }}</h4>
+                            <p>{{ step.description }}</p>
+                            <div class="step-route">
+                                <span class="route-from">{{ step.from }}</span>
+                                <span class="route-arrow">→</span>
+                                <span class="route-to">{{ step.to }}</span>
+                            </div>
+                            <code class="step-data" style="border-color: {{ step.packet_color }}">{{ step.data }}</code>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="ip-sim-endpoint server">
+                <div class="endpoint-icon">🖥️</div>
+                <h4>Google Server</h4>
+                <code>142.250.185.78</code>
+            </div>
+        </div>
+
+        <div class="sim-controls" style="justify-content:center;margin-top:2rem;">
+            <button class="sim-btn" id="ipPlayBtn" onclick="playIPSim()">▶ Play Full Simulation</button>
+            <button class="sim-btn sim-reset" onclick="resetIPSim()">↺ Reset</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============ IP ADDRESSES ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">📍 IP Address Types</h2>
+
+    <div class="ip-tabs">
+        <button class="ip-tab active" onclick="showIPTab('private', event)">🏠 Private IPs</button>
+        <button class="ip-tab" onclick="showIPTab('special', event)">⭐ Special IPs</button>
+        <button class="ip-tab" onclick="showIPTab('ipv6', event)">🌐 IPv6</button>
+    </div>
+
+    <div class="ip-tab-content active" id="tab-private">
+        <div class="ip-cards">
+            {% for ip in ip_addresses.private %}
+            <div class="ip-card">
+                <div class="ip-range">{{ ip.range }}</div>
+                <div class="ip-details">
+                    <span class="ip-tag">Subnet: {{ ip.subnet }}</span>
+                    <span class="ip-tag">Hosts: {{ ip.hosts }}</span>
+                </div>
+                <p>{{ ip.use }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p class="ip-note">💡 <strong>Private IPs</strong> are used inside your home/office network. Your router translates them to a public IP when accessing the internet (NAT).</p>
+    </div>
+
+    <div class="ip-tab-content" id="tab-special">
+        <div class="ip-cards">
+            {% for ip in ip_addresses.special %}
+            <div class="ip-card">
+                <div class="ip-range">{{ ip.address }}</div>
+                <div class="ip-details">
+                    <span class="ip-tag highlight-tag">{{ ip.name }}</span>
+                </div>
+                <p>{{ ip.use }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="ip-tab-content" id="tab-ipv6">
+        <div class="ip-cards">
+            {% for ip in ip_addresses.ipv6 %}
+            <div class="ip-card">
+                <div class="ip-range">{{ ip.range }}</div>
+                <div class="ip-details">
+                    <span class="ip-tag highlight-tag">{{ ip.name }}</span>
+                </div>
+                <p>{{ ip.use }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <p class="ip-note">💡 IPv6 uses 128-bit addresses (vs IPv4's 32-bit). It provides virtually unlimited addresses to solve IPv4 exhaustion.</p>
+    </div>
+</section>
+
+<!-- ============ PORT CATEGORIES ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🚪 Port Categories — Grouped by Purpose</h2>
+    <p class="section-desc">Click any category to see which ports it uses and why</p>
+
+    <div class="port-category-grid">
+        {% for cat in port_categories %}
+        <div class="port-category-card" style="--cat-color: {{ cat.color }}" onclick="toggleCategory(this)">
+            <div class="cat-header">
+                <div class="cat-icon">{{ cat.icon }}</div>
+                <div>
+                    <h3>{{ cat.name }}</h3>
+                    <p class="cat-desc">{{ cat.description }}</p>
+                </div>
+                <div class="cat-chevron">▼</div>
+            </div>
+            <div class="cat-body">
+                <div class="cat-ports">
+                    {% for port in cat.ports %}
+                    <a href="/ports" class="cat-port-badge">{{ port }}</a>
+                    {% endfor %}
+                </div>
+                <p class="cat-explanation">{{ cat.explanation }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ SUMMARY ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">📝 Quick Summary</h2>
+    <div class="summary-grid">
+        <div class="summary-card">
+            <div class="summary-icon">📍</div>
+            <h3>IP Address = WHERE</h3>
+            <p>Identifies a device on the network. Like a house address — it gets data to the right building.</p>
+        </div>
+        <div class="summary-card">
+            <div class="summary-icon">🚪</div>
+            <h3>Port = WHICH SERVICE</h3>
+            <p>Identifies a specific service on that device. Like a room number — it gets data to the right person.</p>
+        </div>
+        <div class="summary-card highlight-summary">
+            <div class="summary-icon">🎯</div>
+            <h3>Together = Full Delivery</h3>
+            <p>IP + Port ensures data reaches the right device AND the right application. Example: <code>192.168.1.1:443</code></p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/ip_ports.js') }}"></script>
+{% endblock %}

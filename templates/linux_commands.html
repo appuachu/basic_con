@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% block title %}Linux Commands — Reference & Examples{% endblock %}
+
+{% block content %}
+
+<!-- ============ COMMAND MODAL ============ -->
+<div class="modal-overlay" id="cmdModal" onclick="closeCmdModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeCmdModal()">×</button>
+
+        <div class="modal-header" id="cmdModalHeader">
+            <div class="modal-icon port-icon" id="cmdModalIcon">⌨️</div>
+            <div>
+                <h2 id="cmdModalTitle">Command</h2>
+                <p class="modal-subtitle" id="cmdModalSubtitle">Description</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>💻 Full Command</h3>
+                <div class="modal-command-display" id="cmdModalCommand"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📖 What It Does</h3>
+                <p id="cmdModalExplanation"></p>
+            </div>
+
+            <div class="modal-section" id="cmdFlagsSection">
+                <h3>🚩 Common Flags</h3>
+                <div class="flags-mini-grid" id="cmdModalFlags"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Sample Output</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">terminal</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="cmdModalOutput"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section" id="cmdSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="cmdModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="cmdSimPlayBtn" onclick="toggleCmdSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetCmdSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero linux-hero">
+    <h1>⌨️ <span class="gradient-text">Linux Commands</span></h1>
+    <p>Every essential command with real examples, flags, output, and interactive simulations</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📚 Command Reference</h2>
+    <p class="section-desc">Click any category to filter, click any command for full details</p>
+
+    <div class="concept-filters">
+        {% set cats = [] %}
+        {% for c in commands %}
+            {% if c.category not in cats %}{% set _ = cats.append(c.category) %}{% endif %}
+        {% endfor %}
+        <button class="concept-filter active" onclick="filterCmds('all', event)">All</button>
+        {% for cat in cats %}
+        <button class="concept-filter" onclick="filterCmds('{{ cat }}', event)">{{ cat }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="cmds-grid">
+        {% for cmd in commands %}
+        <div class="cmd-card cmd-clickable"
+             data-cat="{{ cmd.category }}"
+             data-process='{{ cmd|tojson }}'
+             onclick="openCmdModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ cmd.command }}</code>
+                <span class="cmd-cat">{{ cmd.category }}</span>
+            </div>
+            <p class="cmd-desc">{{ cmd.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for details, output & simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let cmdSimSteps = [];
+let cmdSimIndex = 0;
+let cmdSimTimer = null;
+let isCmdPaused = false;
+
+function openCmdModal(card) {
+    let data;
+    try {
+        data = JSON.parse(card.getAttribute('data-process'));
+    } catch (e) {
+        console.error('Parse error:', e);
+        return;
+    }
+
+    const modal = document.getElementById('cmdModal');
+    if (!modal) return;
+
+    document.getElementById('cmdModalHeader').style.setProperty('--modal-color', '#27ae60');
+    document.getElementById('cmdModalIcon').textContent = '⌨️';
+    document.getElementById('cmdModalIcon').style.background = '#27ae60';
+    document.getElementById('cmdModalTitle').textContent = data.command;
+    document.getElementById('cmdModalSubtitle').textContent = data.desc;
+    document.getElementById('cmdModalCommand').textContent = '$ ' + data.command;
+    document.getElementById('cmdModalExplanation').textContent = data.explanation || '';
+    document.getElementById('cmdModalOutput').textContent = data.output || 'No output available';
+
+    // Flags
+    const flagsSection = document.getElementById('cmdFlagsSection');
+    const flagsContainer = document.getElementById('cmdModalFlags');
+    if (data.flags && data.flags.length > 0) {
+        flagsContainer.innerHTML = '';
+        data.flags.forEach(f => {
+            const div = document.createElement('div');
+            div.className = 'flag-mini';
+            div.innerHTML = `<code>${escapeHtml(f.flag)}</code><span>${escapeHtml(f.desc)}</span>`;
+            flagsContainer.appendChild(div);
+        });
+        flagsSection.style.display = '';
+    } else {
+        flagsSection.style.display = 'none';
+    }
+
+    // Simulation
+    cmdSimSteps = data.simulation || [];
+    cmdSimIndex = 0;
+    isCmdPaused = false;
+    if (cmdSimTimer) { clearInterval(cmdSimTimer); cmdSimTimer = null; }
+
+    const simSection = document.getElementById('cmdSimSection');
+    if (cmdSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateCmdPlayBtn('▶ Play');
+        renderCmdSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function renderCmdSim() {
+    const player = document.getElementById('cmdModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+    if (cmdSimSteps.length === 0) {
+        player.innerHTML = '<p style="color: var(--text-dim); text-align:center;">No simulation available</p>';
+        return;
+    }
+    const step = cmdSimSteps[cmdSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from || 'Start')}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#27ae60'}">${escapeHtml(step.data || '')}</div>
+            <div class="sim-action-label">${escapeHtml(step.title || '')} — ${escapeHtml(step.desc || '')}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${cmdSimIndex + 1} / ${cmdSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to || 'End')}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    cmdSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= cmdSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleCmdSim() {
+    if (cmdSimSteps.length === 0) return;
+    if (cmdSimTimer && !isCmdPaused) { pauseCmdSim(); return; }
+    if (isCmdPaused) { resumeCmdSim(); return; }
+    startCmdSim();
+}
+
+function startCmdSim() {
+    if (cmdSimTimer) clearInterval(cmdSimTimer);
+    cmdSimIndex = 0;
+    isCmdPaused = false;
+    renderCmdSim();
+    updateCmdPlayBtn('⏸ Pause');
+    cmdSimTimer = setInterval(() => {
+        cmdSimIndex++;
+        if (cmdSimIndex >= cmdSimSteps.length) {
+            clearInterval(cmdSimTimer);
+            cmdSimTimer = null;
+            cmdSimIndex = cmdSimSteps.length - 1;
+            renderCmdSim();
+            updateCmdPlayBtn('▶ Replay');
+            return;
+        }
+        renderCmdSim();
+    }, 1800);
+}
+
+function pauseCmdSim() {
+    if (!cmdSimTimer) return;
+    clearInterval(cmdSimTimer);
+    cmdSimTimer = null;
+    isCmdPaused = true;
+    updateCmdPlayBtn('▶ Resume');
+}
+
+function resumeCmdSim() {
+    if (!isCmdPaused) return;
+    isCmdPaused = false;
+    updateCmdPlayBtn('⏸ Pause');
+    cmdSimTimer = setInterval(() => {
+        cmdSimIndex++;
+        if (cmdSimIndex >= cmdSimSteps.length) {
+            clearInterval(cmdSimTimer);
+            cmdSimTimer = null;
+            cmdSimIndex = cmdSimSteps.length - 1;
+            renderCmdSim();
+            updateCmdPlayBtn('▶ Replay');
+            return;
+        }
+        renderCmdSim();
+    }, 1800);
+}
+
+function updateCmdPlayBtn(label) {
+    const btn = document.getElementById('cmdSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetCmdSim() {
+    if (cmdSimTimer) clearInterval(cmdSimTimer);
+    cmdSimTimer = null;
+    isCmdPaused = false;
+    cmdSimIndex = 0;
+    updateCmdPlayBtn('▶ Play');
+    renderCmdSim();
+}
+
+function closeCmdModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('cmdModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (cmdSimTimer) clearInterval(cmdSimTimer);
+    cmdSimTimer = null;
+}
+
+function filterCmds(cat, event) {
+    document.querySelectorAll('.concept-filter').forEach(b => b.classList.remove('active'));
+    if (event) event.target.classList.add('active');
+    document.querySelectorAll('.cmd-card').forEach(c => {
+        c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+    });
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCmdModal(); });
+</script>
+{% endblock %}

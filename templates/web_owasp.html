@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}OWASP Top 10 — 2021 Edition{% endblock %}
+
+{% block content %}
+<section class="tcp-hero web-hero">
+    <h1>🛡️ <span class="gradient-text">OWASP Top 10</span></h1>
+    <p>The 10 most critical web application security risks — 2021 edition</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is OWASP?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">
+            The <strong>Open Worldwide Application Security Project (OWASP)</strong> is a nonprofit foundation that works to improve software security.
+            Their <strong>Top 10</strong> is the globally recognized awareness document for web application security — updated every 3-4 years by hundreds of security experts.
+        </p>
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📋 The Top 10 Vulnerabilities</h2>
+    <p class="section-desc">Click any card to see detailed explanation, examples, payloads, defenses, and simulation</p>
+
+    <div class="owasp-grid">
+        {% for v in owasp %}
+        <a href="/web/owasp/{{ v.id }}" class="owasp-card" style="--owasp-color: {{ v.color }}">
+            <div class="owasp-rank">{{ v.rank }}</div>
+            <div class="owasp-icon">{{ v.icon }}</div>
+            <h3>{{ v.title }}</h3>
+            <p class="owasp-summary">{{ v.summary }}</p>
+            <div class="owasp-severity severity-{{ v.severity|lower }}">{{ v.severity }}</div>
+            <div class="owasp-footer">
+                <span>View Details</span>
+                <span class="arrow">→</span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🎓 Practice on Live Vulnerable Apps</h2>
+    <p class="section-desc">Real targets to test your skills — each covers different OWASP Top 10 categories</p>
+
+    <div class="feature-grid">
+        <a href="https://vuln-web-r68k.onrender.com/" target="_blank" rel="noopener" class="feature-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="fc-icon">🛒</div>
+            <h3>VulnShop</h3>
+            <p>Vulnerable e-commerce site — practice SQLi, XSS, IDOR, payment manipulation, and business logic flaws.</p>
+            
+        </a>
+        <a href="https://vulnsocial-328w.onrender.com/" target="_blank" rel="noopener" class="feature-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="fc-icon">💬</div>
+            <h3>VulnSocial</h3>
+            <p>Vulnerable social media platform — practice auth bypass, IDOR, XSS in profiles, and SQLi in login flows.</p>
+
+        </a>
+        <a href="https://app-n89d.onrender.com/" target="_blank" rel="noopener" class="feature-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="fc-icon">📦</div>
+            <h3>Movie site</h3>
+            <p>Third vulnerable app — currently cold-starting on Render free tier (may show 503 for ~30 seconds).</p>
+
+        </a>
+        <a href="https://portswigger.net/web-security" target="_blank" rel="noopener" class="feature-card" style="text-decoration: none; color: inherit; cursor: pointer;">
+            <div class="fc-icon">🏆</div>
+            <h3>PortSwigger Web Academy</h3>
+            <p>Free, in-browser labs from the makers of Burp Suite — guided walkthroughs for every OWASP category.</p>
+        </a>
+    </div>
+
+    <div class="ip-note" style="margin-top: 1.5rem;">
+        💡 <strong>Tip:</strong> The Render free-tier apps sleep after 15 minutes of inactivity. First request may take 30-60 seconds to spin up — just refresh the page if you see a 503.
+    </div>
+</section>
+{% endblock %}

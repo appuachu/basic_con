@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% block title %}Port Scanning — How Nmap Works{% endblock %}
+
+{% block content %}
+<!-- ============ NMAP COMMAND DETAIL MODAL ============ -->
+<div class="modal-overlay" id="nmapModal" onclick="closeNmapModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeNmapModal()">×</button>
+
+        <div class="modal-header" id="nmapModalHeader">
+            <div class="modal-icon port-icon" id="nmapModalIcon">nmap</div>
+            <div>
+                <h2 id="nmapModalTitle">Command</h2>
+                <p class="modal-subtitle" id="nmapModalSubtitle">Description</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>💻 Full Command</h3>
+                <div class="modal-command-display" id="nmapModalCommand"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📖 What It Does</h3>
+                <p id="nmapModalExplanation"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Sample Output</h3>
+                <div class="scan-terminal-mini modal-terminal">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">nmap scan</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="nmapModalOutput"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎯 Typical Scenario</h3>
+                <p class="modal-example" id="nmapModalScenario"></p>
+            </div>
+
+            <div class="modal-section">
+                <button class="sim-btn" onclick="copyCurrentCommand()">📋 Copy Command</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero scan-hero">
+    <h1>🔍 <span class="gradient-text">Port Scanning</span></h1>
+    <p>Learn how tools like Nmap discover open ports using TCP flags, SYN/ACK packets, and stealth techniques</p>
+</section>
+
+<!-- ============ TOP: SCAN RESULT SCENARIOS ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🎯 What Happens When You Scan?</h2>
+    <p class="section-desc">Real-world scan outcomes — click any scenario to see the packet flow</p>
+
+    <div class="scenario-tabs">
+        {% for scen in scan_scenarios %}
+        <button class="scenario-tab {% if loop.first %}active{% endif %}"
+                onclick="selectScenario('{{ scen.id }}', event)"
+                data-scenario-id="{{ scen.id }}"
+                style="--scen-color: {{ scen.color }}">
+            <span class="scenario-tab-icon">{{ scen.icon }}</span>
+            <span class="scenario-tab-name">{{ scen.title }}</span>
+        </button>
+        {% endfor %}
+    </div>
+
+    <div class="scenario-display" id="scenarioDisplay">
+        <!-- Filled by JS -->
+    </div>
+</section>
+
+<!-- ============ WHAT IS PORT SCANNING ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is Port Scanning?</h2>
+    <div class="analogy-box">
+        <div class="analogy-grid">
+            <div class="analogy-item">
+                <div class="analogy-icon">🏢</div>
+                <h3>The Building</h3>
+                <p>Each IP address is like a <strong>building</strong>. It has 65,535 "doors" (ports).</p>
+            </div>
+            <div class="analogy-arrow">➡️</div>
+            <div class="analogy-item">
+                <div class="analogy-icon">🚪</div>
+                <h3>Knocking Doors</h3>
+                <p>Port scanning is like <strong>knocking on each door</strong> to see which ones open.</p>
+            </div>
+            <div class="analogy-arrow">➡️</div>
+            <div class="analogy-item highlight">
+                <div class="analogy-icon">🔓</div>
+                <h3>Finding Entry</h3>
+                <p>Open ports reveal <strong>running services</strong> — and potential entry points.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ WHY PORT SCANNING ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">💼 Why Do We Scan Ports?</h2>
+    <div class="feature-grid">
+        <div class="feature-card"><div class="fc-icon">🛡️</div><h3>Security Auditing</h3><p>Find open ports that shouldn't be exposed</p></div>
+        <div class="feature-card"><div class="fc-icon">🔍</div><h3>Reconnaissance</h3><p>Ethical hackers map target systems</p></div>
+        <div class="feature-card"><div class="fc-icon">📊</div><h3>Asset Inventory</h3><p>Track what services are running</p></div>
+        <div class="feature-card"><div class="fc-icon">🐛</div><h3>Troubleshooting</h3><p>Verify services are listening</p></div>
+        <div class="feature-card"><div class="fc-icon">⚠️</div><h3>Attack Simulation</h3><p>Red teams test defenses</p></div>
+        <div class="feature-card"><div class="fc-icon">✅</div><h3>Compliance</h3><p>Meet PCI-DSS, HIPAA, ISO 27001</p></div>
+    </div>
+</section>
+
+<!-- ============ SCAN TYPE SIMULATOR ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎬 Interactive Scan Simulator</h2>
+    <p class="section-desc">Choose a scan type below and watch how packets flow between attacker and target</p>
+
+    <div class="scan-type-tabs">
+        {% for scan in scan_types %}
+        <button class="scan-tab {% if loop.first %}active{% endif %}"
+                onclick="selectScanType('{{ scan.id }}', event)"
+                data-scan-id="{{ scan.id }}"
+                style="--scan-color: {{ scan.color }}">
+            <span class="scan-tab-icon">{{ scan.icon }}</span>
+            <span class="scan-tab-name">{{ scan.name }}</span>
+            <code class="scan-tab-flag">{{ scan.nmap_flag }}</code>
+        </button>
+        {% endfor %}
+    </div>
+
+    <div class="scan-simulator">
+        <div class="scan-endpoint attacker">
+            <div class="endpoint-icon-big">💻</div>
+            <h3>Attacker</h3>
+            <code class="endpoint-ip">192.168.1.100</code>
+            <div class="endpoint-tool">nmap</div>
+        </div>
+
+        <div class="scan-flow">
+            <div class="scan-packets" id="scanPackets"></div>
+            <div class="scan-controls">
+                <button class="sim-btn" id="scanPlayBtn" onclick="toggleScanSim()">▶ Start Scan</button>
+                <button class="sim-btn sim-reset" onclick="resetScanSim()">↺ Reset</button>
+            </div>
+        </div>
+
+        <div class="scan-endpoint target">
+            <div class="endpoint-icon-big">🖥️</div>
+            <h3>Target</h3>
+            <code class="endpoint-ip">192.168.1.1</code>
+            <div class="endpoint-tool">Server</div>
+        </div>
+    </div>
+
+    <div class="scan-info-panel" id="scanInfoPanel"></div>
+</section>
+
+<!-- ============ TCP FLAG SCAN MATRIX ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🚩 TCP Flags vs Scan Type Matrix</h2>
+    <p class="section-desc">Which flags does each scan type use? How does the target respond?</p>
+
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Flags Sent</th>
+                    <th>Nmap Flag</th>
+                    <th>Open Port Response</th>
+                    <th>Closed Port Response</th>
+                    <th>Detectable?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in flag_matrix %}
+                <tr>
+                    <td><strong>{{ row.flags }}</strong></td>
+                    <td><code>{{ row.scan }}</code></td>
+                    <td class="response-open">{{ row.open_response }}</td>
+                    <td class="response-closed">{{ row.closed_response }}</td>
+                    <td>{% if row.detectable == 'No' %}🥷 Stealthy{% else %}{{ row.detectable }}{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ============ NMAP COMMAND REFERENCE (CLICKABLE) ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">💻 Nmap Command Reference</h2>
+    <p class="section-desc">Click any command to see its full explanation, output, and use case</p>
+
+    <div class="nmap-categories">
+        {% set cats = [] %}
+        {% for cmd in nmap_commands %}
+            {% if cmd.category not in cats %}
+                {% set _ = cats.append(cmd.category) %}
+            {% endif %}
+        {% endfor %}
+
+        {% for cat in cats %}
+        <div class="nmap-category-block">
+            <h3 class="nmap-cat-title">{{ cat }}</h3>
+            <div class="nmap-commands-grid">
+                {% for cmd in nmap_commands %}
+                {% if cmd.category == cat %}
+                <div class="nmap-command-card"
+                     data-command='{{ cmd|tojson }}'
+                     onclick="openNmapModal(this)"
+                     tabindex="0"
+                     role="button"
+                     aria-label="View details for {{ cmd.command }}"
+                     style="--cmd-color: {{ cmd.color }}">
+                    <code class="nmap-cmd-text">{{ cmd.command }}</code>
+                    <p>{{ cmd.description }}</p>
+                    <span class="copy-hint">👆 Click for details</span>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ PORT STATE LEGEND ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🎨 Port State Legend</h2>
+    <div class="port-states-grid">
+        {% for ps in port_states %}
+        <div class="port-state-card" style="--state-color: {{ ps.color }}">
+            <div class="ps-icon">{{ ps.icon }}</div>
+            <h3>{{ ps.state }}</h3>
+            <p>{{ ps.meaning }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ LEGAL WARNING ============ -->
+<section class="tcp-section">
+    <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>Legal & Ethical Notice</h3>
+            <p>Port scanning systems <strong>you don't own</strong> or <strong>don't have written permission to test</strong> is <strong>illegal</strong> in most countries.</p>
+            <ul class="warning-list">
+                <li>✅ Scan only your own systems</li>
+                <li>✅ Get written authorization before testing client networks</li>
+                <li>✅ Use scanning responsibly for security research</li>
+                <li>❌ Never scan public IPs you don't own</li>
+                <li>❌ Never use port scanning to attack or harass</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const SCAN_TYPES = {{ scan_types|tojson }};
+const SCAN_SCENARIOS = {{ scan_scenarios|tojson }};
+const NMAP_COMMANDS = {{ nmap_commands|tojson }};
+</script>
+<script src="{{ url_for('static', filename='js/port_scan.js') }}"></script>
+{% endblock %}

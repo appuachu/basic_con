@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}UDP Protocol{% endblock %}
+
+{% block content %}
+<section class="tcp-hero udp-hero">
+    <h1>⚡ <span class="gradient-text">UDP Protocol</span> Deep Dive</h1>
+    <p>User Datagram Protocol — Fast, connectionless, lightweight communication</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🔑 UDP Key Features</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="fc-icon">🚀</div>
+            <h3>Connectionless</h3>
+            <p>No handshake — data sent immediately without establishing connection</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">⚡</div>
+            <h3>Fast</h3>
+            <p>Minimal overhead makes UDP faster than TCP</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">📦</div>
+            <h3>Lightweight</h3>
+            <p>Only 8-byte header vs TCP's 20+ bytes</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">❌</div>
+            <h3>No Guarantee</h3>
+            <p>Packets may be lost, duplicated, or arrive out of order</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">📡</div>
+            <h3>Broadcast/Multicast</h3>
+            <p>Supports one-to-many communication</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">🎮</div>
+            <h3>Real-time</h3>
+            <p>Ideal for gaming, streaming, VoIP where speed matters</p>
+        </div>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">⚖️ TCP vs UDP Comparison</h2>
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th class="tcp-col">TCP</th>
+                    <th class="udp-col">UDP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Connection</td><td>Connection-oriented</td><td>Connectionless</td></tr>
+                <tr><td>Reliability</td><td>High (guaranteed)</td><td>Low (best effort)</td></tr>
+                <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+                <tr><td>Header Size</td><td>20-60 bytes</td><td>8 bytes</td></tr>
+                <tr><td>Ordering</td><td>Guaranteed</td><td>Not guaranteed</td></tr>
+                <tr><td>Error Checking</td><td>Extensive</td><td>Basic (checksum)</td></tr>
+                <tr><td>Flow Control</td><td>Yes</td><td>No</td></tr>
+                <tr><td>Handshake</td><td>3-way</td><td>None</td></tr>
+                <tr><td>Use Cases</td><td>Web, Email, File Transfer</td><td>Streaming, Gaming, DNS, VoIP</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📦 UDP Datagram Structure</h2>
+    <div class="segment-visual udp-segment">
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:2">Source Port (16)</div>
+            <div class="seg-cell" style="flex:2">Destination Port (16)</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:2">Length (16)</div>
+            <div class="seg-cell" style="flex:2">Checksum (16)</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell data-cell" style="flex:4">DATA PAYLOAD</div>
+        </div>
+    </div>
+    <p class="caption">UDP header is only 8 bytes — minimal overhead!</p>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🎯 Common UDP Applications</h2>
+    <div class="app-grid">
+        <div class="app-card"><span class="app-icon">🌐</span><h4>DNS</h4><p>Port 53 — Fast domain resolution</p></div>
+        <div class="app-card"><span class="app-icon">🎮</span><h4>Online Gaming</h4><p>Low latency game data</p></div>
+        <div class="app-card"><span class="app-icon">📹</span><h4>Video Streaming</h4><p>Real-time media delivery</p></div>
+        <div class="app-card"><span class="app-icon">📞</span><h4>VoIP</h4><p>Voice over IP calls</p></div>
+        <div class="app-card"><span class="app-icon">📺</span><h4>DHCP</h4><p>Ports 67/68 — IP assignment</p></div>
+        <div class="app-card"><span class="app-icon">⏰</span><h4>NTP</h4><p>Port 123 — Time sync</p></div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NetLearnOSI — Interactive Networking Learning{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modals.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <span class="logo-icon">🌐</span>
+                <span class="logo-text">NetLearn<span class="accent">OSI</span></span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+
+                <!-- ============ NETWORK DROPDOWN ============ -->
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
+                        🌐 Network <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/osi" class="dropdown-link">
+                                <span class="dd-icon">📚</span>
+                                <span>
+                                    <strong>OSI Model</strong>
+                                    <small>7 layers explained</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tcp" class="dropdown-link">
+                                <span class="dd-icon">🤝</span>
+                                <span>
+                                    <strong>TCP Protocol</strong>
+                                    <small>Handshake, flags, connection</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/udp" class="dropdown-link">
+                                <span class="dd-icon">⚡</span>
+                                <span>
+                                    <strong>UDP Protocol</strong>
+                                    <small>Connectionless, fast</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/concepts" class="dropdown-link">
+                                <span class="dd-icon">🧠</span>
+                                <span>
+                                    <strong>Concepts</strong>
+                                    <small>Basic Network Concepts</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/subnetting" class="dropdown-link">
+                                <span class="dd-icon">🧮</span>
+                                <span>
+                                    <strong>Subnetting & ARP</strong>
+                                    <small>Binary math, ARP tables</small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ============ IP & PORTS DROPDOWN ============ -->
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
+                        🎯 IP & Ports <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/ip-ports" class="dropdown-link">
+                                <span class="dd-icon">🌐</span>
+                                <span>
+                                    <strong>IP & Ports</strong>
+                                    <small>Addresses + ports explained</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/ports" class="dropdown-link">
+                                <span class="dd-icon">🚪</span>
+                                <span>
+                                    <strong>Common Ports</strong>
+                                    <small>Reference + simulations</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/port-scan" class="dropdown-link">
+                                <span class="dd-icon">🔍</span>
+                                <span>
+                                    <strong>Port Scanning</strong>
+                                    <small>Nmap, SYN/FIN/XMAS scans</small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ============ LINUX DROPDOWN ============ -->
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
+                        🐧 Linux <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-wide">
+                        <li>
+                            <a href="/linux" class="dropdown-link">
+                                <span class="dd-icon">🏠</span>
+                                <span>
+                                    <strong>Linux Hub</strong>
+                                    <small>Everything in one place</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/filesystem" class="dropdown-link">
+                                <span class="dd-icon">📁</span>
+                                <span>
+                                    <strong>Filesystem (/ to /)</strong>
+                                    <small>Every directory explained</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/commands" class="dropdown-link">
+                                <span class="dd-icon">⌨️</span>
+                                <span>
+                                    <strong>Basic Commands</strong>
+                                    <small>ls, cd, cp, mv, grep...</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/permissions" class="dropdown-link">
+                                <span class="dd-icon">🔐</span>
+                                <span>
+                                    <strong>Permissions & chmod</strong>
+                                    <small>rwx, chmod, chown, umask</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/users" class="dropdown-link">
+                                <span class="dd-icon">👥</span>
+                                <span>
+                                    <strong>Users & Groups</strong>
+                                    <small>/etc/passwd, shadow, group</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/sudo" class="dropdown-link">
+                                <span class="dd-icon">⚡</span>
+                                <span>
+                                    <strong>sudo & SUID</strong>
+                                    <small>Privilege escalation, sudoers</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/shells" class="dropdown-link">
+                                <span class="dd-icon">🐚</span>
+                                <span>
+                                    <strong>Shells (bash/zsh/sh)</strong>
+                                    <small>Differences & scripts</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/processes" class="dropdown-link">
+                                <span class="dd-icon">📊</span>
+                                <span>
+                                    <strong>Processes & Services</strong>
+                                    <small>ps, top, systemctl</small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ============ WEB HACKING DROPDOWN ============ -->
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
+                        🕸️ Web Hacking <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-wide">
+                        <li>
+                            <a href="/web" class="dropdown-link">
+                                <span class="dd-icon">🏠</span>
+                                <span>
+                                    <strong>Web Hub</strong>
+                                    <small>Everything in one place</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/web/how-it-works" class="dropdown-link">
+                                <span class="dd-icon">🌐</span>
+                                <span>
+                                    <strong>How the Web Works</strong>
+                                    <small>URLs, HTTP, headers, methods</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/web/owasp" class="dropdown-link">
+                                <span class="dd-icon">🛡️</span>
+                                <span>
+                                    <strong>OWASP Top 10</strong>
+                                    <small>2025 edition + simulations</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/web/recon" class="dropdown-link">
+                                <span class="dd-icon">🔍</span>
+                                <span>
+                                    <strong>Recon Tools</strong>
+                                    <small>nikto, gobuster, dirb, whatweb</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/web/exploit" class="dropdown-link">
+                                <span class="dd-icon">💥</span>
+                                <span>
+                                    <strong>Exploit Tools</strong>
+                                    <small>sqlmap, xsstrike, nuclei</small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ============ BRUTE FORCE DROPDOWN ============ -->
+                <li class="nav-dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
+                        🔐 Brute Force <span class="dropdown-arrow">▼</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/bruteforce/online" class="dropdown-link">
+                                <span class="dd-icon">🌐</span>
+                                <span>
+                                    <strong>Online Attacks</strong>
+                                    <small>Hydra • Medusa • Burp</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/bruteforce/offline" class="dropdown-link">
+                                <span class="dd-icon">💾</span>
+                                <span>
+                                    <strong>Offline Attacks</strong>
+                                    <small>John • Hashcat • Crunch</small>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ============ IoT ============ -->
+                <li><a href="/iot" class="nav-link">IoT</a></li>
+
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>🎓 NetLearnOSI — Interactive Networking Education Platform</p>
+            <p class="footer-sub">Master the OSI Model, TCP/IP, and IoT protocols through visual learning</p>
+        </div>
+    </footer>
+
+    <!-- ============ CORE SCRIPTS — LOADED ONCE ============ -->
+    <script src="{{ url_for('static', filename='js/modals.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/simulations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bruteforce.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- ============ PAGE-SPECIFIC SCRIPTS ============ -->
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

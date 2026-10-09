@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}Web Hacking Hub — Complete Learning Platform{% endblock %}
+
+{% block content %}
+<section class="tcp-hero web-hero">
+    <h1>🕸️ <span class="gradient-text">Web Hacking Hub</span></h1>
+    <p>Master web security from the fundamentals — HTTP, OWASP Top 10, reconnaissance, and exploitation</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What You'll Learn</h2>
+    <div class="feature-grid-landing">
+        <a href="/web/how-it-works" class="feature-tile" style="--tile-color: #3498db">
+            <div class="tile-icon">🌐</div>
+            <h3>How the Web Works</h3>
+            <p>URL anatomy, HTTP methods, headers, status codes, and request flow with interactive simulations</p>
+            <div class="tile-tags">
+                <span>URL</span><span>HTTP</span><span>Headers</span>
+            </div>
+        </a>
+
+        <a href="/web/owasp" class="feature-tile" style="--tile-color: #e74c3c">
+            <div class="tile-icon">🛡️</div>
+            <h3>OWASP Top 10</h3>
+            <p>Every 2021 vulnerability with real-world examples, payloads, defenses, and step-by-step simulations</p>
+            <div class="tile-tags">
+                <span>SQLi</span><span>XSS</span><span>SSRF</span>
+            </div>
+        </a>
+
+        <a href="/web/recon" class="feature-tile" style="--tile-color: #27ae60">
+            <div class="tile-icon">🔍</div>
+            <h3>Recon Tools</h3>
+            <p>nikto, wafw00f, whatweb, gobuster, dirb, dirsearch, sublist3r, waybackurls — full walkthroughs</p>
+            <div class="tile-tags">
+                <span>Recon</span><span>Fingerprint</span><span>Brute</span>
+            </div>
+        </a>
+
+        <a href="/web/exploit" class="feature-tile" style="--tile-color: #f39c12">
+            <div class="tile-icon">💥</div>
+            <h3>Exploit Tools</h3>
+            <p>sqlmap and xsstrike — automated SQL injection and XSS exploitation with real outputs</p>
+            <div class="tile-tags">
+                <span>SQLMap</span><span>XSStrike</span>
+            </div>
+        </a>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🎓 Why Learn Web Hacking?</h2>
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="why-icon">💼</div>
+            <h3>High Demand Career</h3>
+            <p>Web app pentesters are among the highest-paid security professionals</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🎯</div>
+            <h3>Real-World Skills</h3>
+            <p>Web attacks account for ~40% of all reported breaches</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🛡️</div>
+            <h3>Defense Starts Here</h3>
+            <p>You can't defend what you don't understand</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🏆</div>
+            <h3>Bug Bounties</h3>
+            <p>Top hunters earn $100k-$500k+/year finding web vulnerabilities</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">📚</div>
+            <h3>Foundation for Everything</h3>
+            <p>APIs, mobile apps, IoT — all use HTTP underneath</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🔬</div>
+            <h3>Hands-On Learning</h3>
+            <p>Every concept here has real commands + simulations</p>
+        </div>
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📖 Suggested Learning Path</h2>
+    <div class="learning-path-landing">
+        <a href="/web/how-it-works" class="path-step">
+            <div class="path-num">1</div>
+            <div class="path-content">
+                <h4>🌐 How the Web Works</h4>
+                <p>Foundation — URLs, HTTP, headers, cookies</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/web/owasp" class="path-step">
+            <div class="path-num">2</div>
+            <div class="path-content">
+                <h4>🛡️ OWASP Top 10</h4>
+                <p>Learn the 10 most critical web vulnerabilities</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/web/recon" class="path-step">
+            <div class="path-num">3</div>
+            <div class="path-content">
+                <h4>🔍 Reconnaissance Tools</h4>
+                <p>Discover what's running on the target</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/web/exploit" class="path-step">
+            <div class="path-num">4</div>
+            <div class="path-content">
+                <h4>💥 Exploitation Tools</h4>
+                <p>sqlmap, xsstrike, and manual exploitation</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+    </div>
+</section>
+
+<section class="tcp-section">
+    <div class="warning-box">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>Legal & Ethical Warning</h3>
+            <p>All techniques taught here are for <strong>authorized testing only</strong>. Attacking systems without permission is illegal in virtually every country.</p>
+            <ul class="warning-list">
+                <li>✅ Practice on your own lab (DVWA, Juice Shop, HackTheBox)</li>
+                <li>✅ Get written authorization for client work</li>
+                <li>✅ Use these skills to defend, not attack</li>
+                <li>❌ Never test without explicit permission</li>
+                <li>❌ Never use these techniques for theft or extortion</li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

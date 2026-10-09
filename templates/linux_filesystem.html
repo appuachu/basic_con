@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% block title %}Linux Filesystem — Every Directory Explained{% endblock %}
+
+{% block content %}
+
+<!-- ============ FILESYSTEM MODAL ============ -->
+<div class="modal-overlay" id="fsModal" onclick="closeFSModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeFSModal()">×</button>
+
+        <div class="modal-header" id="fsModalHeader">
+            <div class="modal-icon" id="fsModalIcon">📁</div>
+            <div>
+                <h2 id="fsModalTitle">/path</h2>
+                <p class="modal-subtitle" id="fsModalSubtitle">Directory name</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>💻 Full Path</h3>
+                <div class="modal-command-display" id="fsModalPath"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📖 What It Is</h3>
+                <p id="fsModalDesc"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>⚙️ What It Does</h3>
+                <p id="fsModalExplanation"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📂 Typical Contents</h3>
+                <ul class="modal-list" id="fsModalContents"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Sample Output</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">terminal</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="fsModalOutput"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>⚠️ Why It Matters</h3>
+                <p class="modal-example" id="fsModalImportance"></p>
+            </div>
+
+            <div class="modal-section" id="fsSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="fsModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="fsSimPlayBtn" onclick="toggleFsSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetFsSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero linux-hero">
+    <h1>📁 <span class="gradient-text">Linux Filesystem</span></h1>
+    <p>Everything in Linux starts at <code>/</code>. Click any directory to explore what's inside</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🌳 The Filesystem Hierarchy</h2>
+    <p class="section-desc">Click any directory card for full breakdown, output, and simulation</p>
+
+    <div class="fs-grid">
+        {% for d in filesystem %}
+        <div class="fs-card cmd-clickable"
+             style="--fs-color: {{ d.color }}"
+             data-process='{{ d|tojson }}'
+             onclick="openFsModal(this)"
+             tabindex="0"
+             role="button"
+             aria-label="Open details for {{ d.path }}">
+            <div class="fs-icon">{{ d.icon }}</div>
+            <div class="fs-info">
+                <code class="fs-path">{{ d.path }}</code>
+                <h3>{{ d.name }}</h3>
+                <p>{{ d.description[:90] }}...</p>
+            </div>
+            <span class="cmd-click-hint">👆 Click for details, output & simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let fsSimSteps = [];
+let fsSimIndex = 0;
+let fsSimTimer = null;
+let isFsPaused = false;
+
+function openFsModal(card) {
+    let data;
+    try {
+        data = JSON.parse(card.getAttribute('data-process'));
+    } catch (e) {
+        console.error('Parse error:', e);
+        return;
+    }
+
+    const modal = document.getElementById('fsModal');
+    if (!modal) return;
+
+    document.getElementById('fsModalHeader').style.setProperty('--modal-color', data.color || '#3498db');
+    document.getElementById('fsModalIcon').textContent = data.icon || '📁';
+    document.getElementById('fsModalIcon').style.background = data.color || '#3498db';
+    document.getElementById('fsModalTitle').textContent = data.path;
+    document.getElementById('fsModalSubtitle').textContent = data.name;
+    document.getElementById('fsModalPath').textContent = data.path;
+    document.getElementById('fsModalDesc').textContent = data.description || '';
+    document.getElementById('fsModalExplanation').textContent = data.explanation || '';
+    document.getElementById('fsModalImportance').textContent = data.importance || '';
+    document.getElementById('fsModalOutput').textContent = data.output || 'No output available';
+
+    const list = document.getElementById('fsModalContents');
+    list.innerHTML = '';
+    (data.contains || []).forEach(c => {
+        const li = document.createElement('li');
+        li.textContent = c;
+        list.appendChild(li);
+    });
+
+    // Simulation
+    fsSimSteps = data.simulation || [];
+    fsSimIndex = 0;
+    isFsPaused = false;
+    if (fsSimTimer) { clearInterval(fsSimTimer); fsSimTimer = null; }
+    const simSection = document.getElementById('fsSimSection');
+    if (fsSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateFsPlayBtn('▶ Play');
+        renderFsSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function renderFsSim() {
+    const player = document.getElementById('fsModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+    if (fsSimSteps.length === 0) {
+        player.innerHTML = '<p style="color: var(--text-dim); text-align:center;">No simulation available</p>';
+        return;
+    }
+    const step = fsSimSteps[fsSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from || 'Start')}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#3498db'}">${escapeHtml(step.data || '')}</div>
+            <div class="sim-action-label">${escapeHtml(step.title || '')} — ${escapeHtml(step.desc || '')}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${fsSimIndex + 1} / ${fsSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to || 'End')}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    fsSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= fsSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleFsSim() {
+    if (fsSimSteps.length === 0) return;
+    if (fsSimTimer && !isFsPaused) { pauseFsSim(); return; }
+    if (isFsPaused) { resumeFsSim(); return; }
+    startFsSim();
+}
+
+function startFsSim() {
+    if (fsSimTimer) clearInterval(fsSimTimer);
+    fsSimIndex = 0;
+    isFsPaused = false;
+    renderFsSim();
+    updateFsPlayBtn('⏸ Pause');
+    fsSimTimer = setInterval(() => {
+        fsSimIndex++;
+        if (fsSimIndex >= fsSimSteps.length) {
+            clearInterval(fsSimTimer);
+            fsSimTimer = null;
+            fsSimIndex = fsSimSteps.length - 1;
+            renderFsSim();
+            updateFsPlayBtn('▶ Replay');
+            return;
+        }
+        renderFsSim();
+    }, 1800);
+}
+
+function pauseFsSim() {
+    if (!fsSimTimer) return;
+    clearInterval(fsSimTimer);
+    fsSimTimer = null;
+    isFsPaused = true;
+    updateFsPlayBtn('▶ Resume');
+}
+
+function resumeFsSim() {
+    if (!isFsPaused) return;
+    isFsPaused = false;
+    updateFsPlayBtn('⏸ Pause');
+    fsSimTimer = setInterval(() => {
+        fsSimIndex++;
+        if (fsSimIndex >= fsSimSteps.length) {
+            clearInterval(fsSimTimer);
+            fsSimTimer = null;
+            fsSimIndex = fsSimSteps.length - 1;
+            renderFsSim();
+            updateFsPlayBtn('▶ Replay');
+            return;
+        }
+        renderFsSim();
+    }, 1800);
+}
+
+function updateFsPlayBtn(label) {
+    const btn = document.getElementById('fsSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetFsSim() {
+    if (fsSimTimer) clearInterval(fsSimTimer);
+    fsSimTimer = null;
+    isFsPaused = false;
+    fsSimIndex = 0;
+    updateFsPlayBtn('▶ Play');
+    renderFsSim();
+}
+
+function closeFSModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('fsModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (fsSimTimer) clearInterval(fsSimTimer);
+    fsSimTimer = null;
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFSModal(); });
+</script>
+{% endblock %}

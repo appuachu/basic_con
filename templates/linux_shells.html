@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Linux Shells — sh, bash, zsh, fish{% endblock %}
+
+{% block content %}
+<section class="tcp-hero linux-hero">
+    <h1>🐚 <span class="gradient-text">Linux Shells</span></h1>
+    <p>Compare sh, bash, zsh, fish, ksh, and dash — features, pros, cons, and real differences</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is a Shell?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">A shell is a command-line interpreter that reads your commands, expands variables, executes programs, and returns their output. It's the interface between YOU and the Linux kernel. Every login gives you a shell (usually bash on Linux, zsh on macOS).</p>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🔍 Shell Comparison</h2>
+    <div class="shell-grid">
+        {% for s in shells %}
+        <div class="shell-card" style="--shell-color: {{ s.color }}">
+            <div class="shell-header">
+                <div class="shell-name">{{ s.name }}</div>
+                <div class="shell-year">{{ s.year }}</div>
+            </div>
+            <p class="shell-full">{{ s.full }}</p>
+            <div class="shell-section">
+                <h4>✨ Features</h4>
+                <ul>
+                    {% for f in s.features %}
+                    <li>{{ f }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="shell-pros-cons">
+                <div><strong>✅ Pros:</strong> {{ s.pros }}</div>
+                <div><strong>❌ Cons:</strong> {{ s.cons }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📝 Same Task, Different Shells</h2>
+    <p class="section-desc">Here's how each shell handles a simple task — printing numbers 1 to 3</p>
+
+    <div class="cmds-grid">
+        <div class="cmd-card">
+            <code class="cmd-code">sh</code>
+            <pre class="cmd-example">#!/bin/sh
+i=1
+while [ $i -le 3 ]; do
+  echo $i
+  i=$((i+1))
+done</pre>
+        </div>
+
+        <div class="cmd-card">
+            <code class="cmd-code">bash</code>
+            <pre class="cmd-example">#!/bin/bash
+for i in {1..3}; do
+  echo $i
+done</pre>
+        </div>
+
+        <div class="cmd-card">
+            <code class="cmd-code">zsh</code>
+            <pre class="cmd-example">#!/bin/zsh
+for i in {1..3}; do
+  echo $i
+done</pre>
+        </div>
+
+        <div class="cmd-card">
+            <code class="cmd-code">fish</code>
+            <pre class="cmd-example">#!/usr/bin/fish
+for i in (seq 1 3)
+    echo $i
+end</pre>
+        </div>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🔧 Managing Shells</h2>
+    <div class="cmds-grid">
+        <div class="cmd-card"><code class="cmd-code">cat /etc/shells</code><p class="cmd-desc">List all installed shells on the system</p></div>
+        <div class="cmd-card"><code class="cmd-code">echo $SHELL</code><p class="cmd-desc">Show your current shell</p></div>
+        <div class="cmd-card"><code class="cmd-code">chsh -s /bin/zsh</code><p class="cmd-desc">Change your default shell</p></div>
+        <div class="cmd-card"><code class="cmd-code">bash</code><p class="cmd-desc">Spawn a bash sub-shell (type exit to return)</p></div>
+        <div class="cmd-card"><code class="cmd-code">bash script.sh</code><p class="cmd-desc">Run a script explicitly with bash</p></div>
+        <div class="cmd-card"><code class="cmd-code">head -1 script.sh</code><p class="cmd-desc">See the shebang (#!/bin/bash) — the interpreter</p></div>
+    </div>
+</section>
+{% endblock %}

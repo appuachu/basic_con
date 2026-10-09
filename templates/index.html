@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% block title %}NetLearnOSI — Interactive Networking & Security Learning{% endblock %}
+
+{% block content %}
+
+<!-- ============ HERO ============ -->
+<section class="landing-hero">
+    <div class="hero-content">
+        <div class="hero-badge">🎓 Interactive Learning Platform</div>
+        <h1 class="hero-title">
+            Master <span class="gradient-text">Networking & Cybersecurity</span><br>
+            Through Visual Learning By Aswan
+        </h1>
+        <p class="hero-subtitle">
+            From the OSI Model to Nmap port scanning, from TCP handshakes to brute-force attacks —
+            learn every concept with interactive simulations, real commands, and hands-on examples.
+        </p>
+        <div class="hero-cta">
+            <a href="#modules" class="btn btn-primary">🚀 Start Learning</a>
+            <a href="/concepts" class="btn btn-secondary">📖 Browse Concepts</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num">10+</span><span class="stat-label">Modules</span></div>
+            <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Simulations</span></div>
+            <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Real Commands</span></div>
+            <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Free & Interactive</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ WHAT YOU'LL LEARN ============ -->
+<section class="landing-section" id="modules">
+    <h2 class="section-title">🎯 What You'll Learn</h2>
+    <p class="section-desc">A complete curriculum covering networking fundamentals to offensive security techniques</p>
+
+    <div class="feature-grid-landing">
+
+        <a href="/layer/7" class="feature-tile" style="--tile-color: #e74c3c">
+            <div class="tile-icon">📚</div>
+            <h3>OSI Model</h3>
+            <p>Deep dive into all 7 layers with interactive device popups, real images, and packet flow simulations.</p>
+            <div class="tile-tags">
+                <span>7 Layers</span>
+                <span>Devices</span>
+                <span>Protocols</span>
+            </div>
+        </a>
+
+        <a href="/tcp" class="feature-tile" style="--tile-color: #27ae60">
+            <div class="tile-icon">🤝</div>
+            <h3>TCP Protocol</h3>
+            <p>Master the 3-way handshake, 4-way termination, TCP flags (SYN, ACK, PSH, RST), and segment structure.</p>
+            <div class="tile-tags">
+                <span>Handshake</span>
+                <span>Flags</span>
+                <span>Segments</span>
+            </div>
+        </a>
+
+        <a href="/udp" class="feature-tile" style="--tile-color: #3498db">
+            <div class="tile-icon">⚡</div>
+            <h3>UDP Protocol</h3>
+            <p>Understand connectionless communication, when to use UDP vs TCP, and real-world applications.</p>
+            <div class="tile-tags">
+                <span>Connectionless</span>
+                <span>Fast</span>
+                <span>Datagrams</span>
+            </div>
+        </a>
+
+        <a href="/ip-ports" class="feature-tile" style="--tile-color: #16a085">
+            <div class="tile-icon">🎯</div>
+            <h3>IP & Ports</h3>
+            <p>Learn how IP addresses and port numbers work together to deliver data to the exact right service.</p>
+            <div class="tile-tags">
+                <span>Addressing</span>
+                <span>IPv4/IPv6</span>
+                <span>Ports</span>
+            </div>
+        </a>
+
+        <a href="/ports" class="feature-tile" style="--tile-color: #f39c12">
+            <div class="tile-icon">🚪</div>
+            <h3>Common Ports</h3>
+            <p>Searchable reference of 40+ well-known ports — click any port to see a live protocol simulation.</p>
+            <div class="tile-tags">
+                <span>40+ Ports</span>
+                <span>Simulations</span>
+                <span>Search</span>
+            </div>
+        </a>
+
+        <a href="/concepts" class="feature-tile" style="--tile-color: #9b59b6">
+            <div class="tile-icon">🧠</div>
+            <h3>Network Concepts</h3>
+            <p>NAT, VLANs, Subnetting, DHCP, DNS, Proxy, Firewall, Load Balancing — with visual diagrams.</p>
+            <div class="tile-tags">
+                <span>11 Concepts</span>
+                <span>Diagrams</span>
+                <span>Examples</span>
+            </div>
+        </a>
+
+        <a href="/port-scan" class="feature-tile" style="--tile-color: #c0392b">
+            <div class="tile-icon">🔍</div>
+            <h3>Port Scanning</h3>
+            <p>Nmap SYN/FIN/XMAS/NULL/ACK scans with real commands, output samples, and packet simulations.</p>
+            <div class="tile-tags">
+                <span>Nmap</span>
+                <span>6 Scan Types</span>
+                <span>Firewalls</span>
+            </div>
+        </a>
+
+        <a href="/bruteforce/online" class="feature-tile" style="--tile-color: #e74c3c">
+            <div class="tile-icon">🌐</div>
+            <h3>Online Brute Force</h3>
+            <p>Hydra, Medusa, Burp Suite, Nmap NSE — attack live services with realistic commands and simulations.</p>
+            <div class="tile-tags">
+                <span>Hydra</span>
+                <span>Medusa</span>
+                <span>Burp</span>
+            </div>
+        </a>
+
+        <a href="/bruteforce/offline" class="feature-tile" style="--tile-color: #16a085">
+            <div class="tile-icon">💾</div>
+            <h3>Offline Brute Force</h3>
+            <p>John, Hashcat, Crunch, Stegseek, PDF/ZIP/Office cracking, Wi-Fi handshake — GPU-speed cracking.</p>
+            <div class="tile-tags">
+                <span>John</span>
+                <span>Hashcat</span>
+                <span>Wi-Fi</span>
+            </div>
+        </a>
+
+        <a href="/iot" class="feature-tile" style="--tile-color: #8e44ad">
+            <div class="tile-icon">📡</div>
+            <h3>IoT Protocols</h3>
+            <p>MQTT, CoAP, Zigbee, LoRaWAN, BLE, AMQP — the protocols powering billions of connected devices.</p>
+            <div class="tile-tags">
+                <span>MQTT</span>
+                <span>Zigbee</span>
+                <span>LoRaWAN</span>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+<!-- ============ WHY THIS PLATFORM ============ -->
+<section class="landing-section dark">
+    <h2 class="section-title">✨ Why NetLearnOSI?</h2>
+    <p class="section-desc">Built for students, self-learners, and professionals who want to truly <em>understand</em> networks</p>
+
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="why-icon">🎬</div>
+            <h3>Interactive Simulations</h3>
+            <p>Watch packets flow between attacker and target. Play, pause, and step through every scenario — not just read about it.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">💻</div>
+            <h3>Real Commands & Output</h3>
+            <p>Every tool includes actual commands, expected output, and failure cases — so you know what really happens in the field.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🎨</div>
+            <h3>Visual Learning</h3>
+            <p>Color-coded diagrams, animated packet flows, and interactive cards make abstract concepts concrete.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🛡️</div>
+            <h3>Security-Focused</h3>
+            <p>From OSI layers to Nmap scans to brute-force tools — covering both defensive and offensive side of networks.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">📱</div>
+            <h3>Works Everywhere</h3>
+            <p>Fully responsive design — study on desktop, tablet, or phone. No installation needed.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">🆓</div>
+            <h3>Free & Open</h3>
+            <p>No signup, no paywall, no limits. Learn at your own pace, anytime.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ LEARNING PATH ============ -->
+<section class="landing-section">
+    <h2 class="section-title">🛤️ Suggested Learning Path</h2>
+    <p class="section-desc">New to networking? Follow this order to build strong foundations</p>
+
+    <div class="learning-path-landing">
+        <a href="/layer/7" class="path-step">
+            <div class="path-num">1</div>
+            <div class="path-content">
+                <h4>🌐 Start with OSI Model</h4>
+                <p>Learn the 7 layers — the foundation of everything else</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/tcp" class="path-step">
+            <div class="path-num">2</div>
+            <div class="path-content">
+                <h4>🤝 Master TCP / UDP</h4>
+                <p>Understand how data actually travels between machines</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/ip-ports" class="path-step">
+            <div class="path-num">3</div>
+            <div class="path-content">
+                <h4>🎯 Learn IP & Ports</h4>
+                <p>How data finds the right machine AND the right service</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/concepts" class="path-step">
+            <div class="path-num">4</div>
+            <div class="path-content">
+                <h4>🧠 Study Concepts</h4>
+                <p>NAT, VLANs, DNS, DHCP, Firewalls — real-world networking</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/port-scan" class="path-step">
+            <div class="path-num">5</div>
+            <div class="path-content">
+                <h4>🔍 Learn Port Scanning</h4>
+                <p>Enter cybersecurity — recon with Nmap</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+        <a href="/bruteforce/online" class="path-step">
+            <div class="path-num">6</div>
+            <div class="path-content">
+                <h4>🔐 Explore Brute Force</h4>
+                <p>Online & offline password attacks with real tools</p>
+            </div>
+            <span class="path-arrow">→</span>
+        </a>
+    </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="landing-cta">
+    <h2>Ready to Start?</h2>
+    <p>Pick any topic and dive in — no signup, no waiting</p>
+    <div class="hero-cta">
+        <a href="/layer/7" class="btn btn-primary">📚 OSI Model</a>
+        <a href="/port-scan" class="btn btn-primary">🔍 Port Scanning</a>
+        <a href="/bruteforce/offline" class="btn btn-primary">💾 Brute Force</a>
+    </div>
+</section>
+
+{% endblock %}

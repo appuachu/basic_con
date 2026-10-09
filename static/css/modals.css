@@ -1,0 +1,363 @@
+/* ==================== NETWORK CONCEPTS ==================== */
+.concepts-hero { background: radial-gradient(ellipse at top, rgba(52, 152, 219, 0.15), transparent 60%); }
+
+.concepts-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.concepts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.concept-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.8rem 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--concept-color);
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.concept-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--concept-color), transparent);
+    opacity: 0.05;
+    transition: opacity 0.3s;
+}
+
+.concept-card:hover {
+    transform: translateX(10px);
+    border-color: var(--concept-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.concept-card:hover::before { opacity: 0.12; }
+
+.concept-icon {
+    font-size: 2.5rem;
+    min-width: 60px;
+    text-align: center;
+}
+
+.concept-body { flex: 1; position: relative; z-index: 1; }
+.concept-body h3 { font-size: 1.15rem; margin-bottom: 0.3rem; }
+
+.concept-layer {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--concept-color);
+    background: color-mix(in srgb, var(--concept-color) 15%, transparent);
+    padding: 0.15rem 0.6rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.concept-body p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.6rem; }
+
+.concept-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.concept-tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    padding: 0.15rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.concept-arrow {
+    font-size: 1.5rem;
+    color: var(--concept-color);
+    transition: transform 0.3s;
+}
+
+.concept-card:hover .concept-arrow { transform: translateX(8px); }
+
+/* Concept Detail Page */
+.concept-hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--concept-color) 15%, transparent), transparent);
+    border-bottom: 1px solid var(--border);
+}
+
+.concept-hero-icon { font-size: 4rem; margin-bottom: 1rem; }
+
+.concept-hero h1 {
+    font-size: 2.2rem;
+    color: var(--concept-color);
+    margin-bottom: 0.5rem;
+}
+
+.concept-layer-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--concept-color);
+    background: color-mix(in srgb, var(--concept-color) 15%, transparent);
+    padding: 0.3rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.concept-hero-desc {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.concept-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.concept-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.concept-card-full {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.8rem 2rem;
+}
+
+.concept-card-full h2 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.concept-steps {
+    list-style: none;
+    counter-reset: step-counter;
+    padding: 0;
+}
+
+.concept-steps li {
+    counter-increment: step-counter;
+    padding: 0.6rem 0 0.6rem 2.5rem;
+    position: relative;
+    color: var(--text-dim);
+    font-size: 0.92rem;
+}
+
+.concept-steps li::before {
+    content: counter(step-counter);
+    position: absolute;
+    left: 0;
+    top: 0.6rem;
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+.types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.type-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+}
+
+.type-card h4 { font-size: 0.95rem; margin-bottom: 0.5rem; color: var(--accent); }
+.type-card p { color: var(--text-dim); font-size: 0.85rem; }
+
+.pros-cons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.pros-card, .cons-card {
+    border-radius: 14px;
+    padding: 1.8rem;
+    border: 1px solid var(--border);
+}
+
+.pros-card { background: rgba(39, 174, 96, 0.08); border-left: 4px solid #27ae60; }
+.cons-card { background: rgba(231, 76, 60, 0.08); border-left: 4px solid #e74c3c; }
+
+.pros-card h3, .cons-card h3 { font-size: 1rem; margin-bottom: 1rem; }
+
+.pros-card ul, .cons-card ul { list-style: none; padding: 0; }
+.pros-card li, .cons-card li {
+    padding: 0.4rem 0;
+    color: var(--text-dim);
+    font-size: 0.88rem;
+}
+
+.pros-card li::before { content: '✓ '; color: #27ae60; font-weight: bold; }
+.cons-card li::before { content: '✗ '; color: #e74c3c; font-weight: bold; }
+
+.key-concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.key-concept {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+}
+
+.key-concept h4 {
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.key-concept p { color: var(--text-dim); font-size: 0.85rem; }
+
+.highlight-card {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(124, 58, 237, 0.06));
+    border-color: var(--accent);
+}
+
+.example-table { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.example-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0.8rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    font-size: 0.88rem;
+}
+
+.example-key {
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+}
+
+.example-value {
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+}
+
+.benefits-list {
+    list-style: none;
+    padding: 0;
+}
+
+.benefits-list li {
+    padding: 0.5rem 0 0.5rem 1.8rem;
+    position: relative;
+    color: var(--text-dim);
+    font-size: 0.92rem;
+}
+
+.benefits-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+.sim-steps-container { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.sim-step-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+}
+
+.sim-step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.sim-step-content { flex: 1; }
+
+.sim-route {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 0.4rem;
+}
+
+.sim-from { color: #3498db; }
+.sim-to { color: #e74c3c; }
+.sim-arrow { color: var(--accent); }
+
+.sim-data {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+}
+
+.sim-action { color: var(--text-dim); font-size: 0.82rem; }
+
+.real-example {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.7;
+    padding: 1rem;
+    background: rgba(0, 212, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent);
+}
+
+@media (max-width: 768px) {
+    .concept-grid-2, .pros-cons-grid { grid-template-columns: 1fr; }
+    .concept-card { flex-direction: column; text-align: center; }
+    .concept-arrow { display: none; }
+}

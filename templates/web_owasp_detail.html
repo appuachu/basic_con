@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}{{ vuln.title }} — OWASP {{ vuln.rank }}{% endblock %}
+
+{% block content %}
+<section class="layer-hero" style="--layer-color: {{ vuln.color }}">
+    <div class="layer-hero-content">
+        <div class="breadcrumb">
+            <a href="/web/owasp">OWASP Top 10</a> <span>/</span> <span>{{ vuln.rank }}</span>
+        </div>
+        <div class="hero-icon-big">{{ vuln.icon }}</div>
+        <h1>{{ vuln.title }}</h1>
+        <div class="layer-meta">
+            <div class="meta-item"><strong>Rank:</strong> {{ vuln.rank }}</div>
+            <div class="meta-item"><strong>Severity:</strong> {{ vuln.severity }}</div>
+        </div>
+        <p class="layer-hero-desc">{{ vuln.description }}</p>
+    </div>
+</section>
+
+<section class="layer-content">
+    <div class="content-grid">
+        <div class="content-card highlight">
+            <h2>📌 Summary</h2>
+            <p class="real-world-text">{{ vuln.summary }}</p>
+        </div>
+
+        <div class="content-card">
+            <h2>🎯 Attack Examples</h2>
+            <ul class="function-list">
+                {% for ex in vuln.examples %}
+                <li>{{ ex }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="content-card highlight">
+            <h2>🌍 Real-World Breach</h2>
+            <p class="real-world-text">{{ vuln.real_world }}</p>
+        </div>
+
+        <div class="content-card">
+            <h2>🛡️ Defenses</h2>
+            <ul class="function-list">
+                {% for d in vuln.defense %}
+                <li>{{ d }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- PAYLOADS -->
+<section class="tcp-section dark">
+    <h2 class="section-title">💉 Common Payloads</h2>
+    <p class="section-desc">Educational examples — only use on authorized targets</p>
+
+    <div class="cmds-grid">
+        {% for p in vuln.payloads %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ p.payload }}</code>
+            <p class="cmd-desc">{{ p.note }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- SIMULATION -->
+<section class="tcp-section">
+    <h2 class="section-title">🎬 Attack Simulation</h2>
+    <div class="arp-steps" id="owaspSteps">
+        {% for s in vuln.simulation %}
+        <div class="arp-step" data-step="{{ s.step }}">
+            <div class="arp-step-num" style="background: {{ s.color }}; color: #000;">{{ s.step }}</div>
+            <div class="arp-step-content">
+                <h4>{{ s.title }}</h4>
+                <p>{{ s.desc }}</p>
+                <div class="arp-step-flow">
+                    <span class="arp-from">{{ s.from }}</span>
+                    <span class="arp-arrow">→</span>
+                    <span class="arp-to">{{ s.to }}</span>
+                </div>
+                <div class="arp-step-data" style="border-color: {{ s.color }}">{{ s.data }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="sim-controls" style="justify-content:center;margin-top:2rem;">
+        <button class="sim-btn" id="owaspPlayBtn" onclick="toggleOwasp()">▶ Play</button>
+        <button class="sim-btn sim-reset" onclick="resetOwasp()">↺ Reset</button>
+    </div>
+</section>
+
+<section class="all-layers-nav">
+    <h2 class="section-title">🗂️ Other OWASP Top 10</h2>
+    <div class="concepts-mini-grid">
+        {% for v in all_vulns %}
+        {% if v.id != vuln.id %}
+        <a href="/web/owasp/{{ v.id }}" class="concept-mini-card" style="--c: {{ v.color }}">
+            <span class="cmc-icon">{{ v.icon }}</span>
+            <div>
+                <h4>{{ v.rank }} — {{ v.title }}</h4>
+                <p>{{ v.severity }}</p>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let owaspIndex = -1;
+let owaspTimer = null;
+
+function toggleOwasp() {
+    const steps = document.querySelectorAll('#owaspSteps .arp-step');
+    if (!steps.length) return;
+
+    if (owaspTimer) {
+        clearInterval(owaspTimer);
+        owaspTimer = null;
+        document.getElementById('owaspPlayBtn').textContent = '▶ Resume';
+        return;
+    }
+
+    if (owaspIndex >= 0 && owaspIndex < steps.length - 1) {
+        document.getElementById('owaspPlayBtn').textContent = '⏸ Pause';
+    } else {
+        owaspIndex = -1;
+        steps.forEach(s => s.classList.remove('active'));
+        document.getElementById('owaspPlayBtn').textContent = '⏸ Pause';
+    }
+
+    owaspTimer = setInterval(() => {
+        owaspIndex++;
+        if (owaspIndex >= steps.length) {
+            clearInterval(owaspTimer);
+            owaspTimer = null;
+            document.getElementById('owaspPlayBtn').textContent = '▶ Replay';
+            return;
+        }
+        steps[owaspIndex].classList.add('active');
+        steps[owaspIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 1800);
+}
+
+function resetOwasp() {
+    if (owaspTimer) clearInterval(owaspTimer);
+    owaspTimer = null;
+    owaspIndex = -1;
+    document.querySelectorAll('#owaspSteps .arp-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('owaspPlayBtn').textContent = '▶ Play';
+}
+</script>
+{% endblock %}

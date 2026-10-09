@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}TCP Protocol — Deep Dive{% endblock %}
+
+{% block content %}
+<section class="tcp-hero">
+    <h1>🤝 <span class="gradient-text">TCP Protocol</span> Deep Dive</h1>
+    <p>Transmission Control Protocol — Reliable, ordered, connection-oriented communication</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🔑 TCP Key Features</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="fc-icon">🔗</div>
+            <h3>Connection-Oriented</h3>
+            <p>Establishes a connection before data transfer using 3-way handshake</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">✅</div>
+            <h3>Reliable</h3>
+            <p>Guarantees delivery with acknowledgments and retransmissions</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">📊</div>
+            <h3>Ordered</h3>
+            <p>Sequence numbers ensure data arrives in correct order</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">🌊</div>
+            <h3>Flow Control</h3>
+            <p>Sliding window prevents overwhelming the receiver</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">🚦</div>
+            <h3>Congestion Control</h3>
+            <p>Prevents network congestion with algorithms like Slow Start</p>
+        </div>
+        <div class="feature-card">
+            <div class="fc-icon">🔁</div>
+            <h3>Full Duplex</h3>
+            <p>Bidirectional communication simultaneously</p>
+        </div>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🤝 TCP 3-Way Handshake</h2>
+    <p class="section-desc">The connection establishment process — click through each step</p>
+
+    <div class="handshake-diagram">
+        <div class="hs-side">
+            <div class="hs-node client">
+                <div class="hs-node-icon">💻</div>
+                <h4>Client</h4>
+            </div>
+        </div>
+
+        <div class="hs-center">
+            {% for step in handshake %}
+            <div class="hs-step" data-step="{{ step.step }}">
+                <div class="hs-arrow {% if step.from == 'Client' %}right{% else %}left{% endif %}">
+                    <span class="hs-arrow-line"></span>
+                    <span class="hs-label">{{ step.title }}</span>
+                </div>
+                <div class="hs-tooltip">
+                    <strong>Step {{ step.step }}: {{ step.title }}</strong>
+                    <p>{{ step.description }}</p>
+                    <div class="hs-fields">
+                        <span>Flags: {{ step.flags }}</span>
+                        <span>Seq: {{ step.seq }}</span>
+                        <span>Ack: {{ step.ack }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="hs-side">
+            <div class="hs-node server">
+                <div class="hs-node-icon">🖥️</div>
+                <h4>Server</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="hs-steps-detail">
+        {% for step in handshake %}
+        <div class="hs-detail-card">
+            <div class="hdc-num">{{ step.step }}</div>
+            <h4>{{ step.title }}</h4>
+            <p class="hdc-route">{{ step.from }} → {{ step.to }}</p>
+            <p>{{ step.description }}</p>
+            <div class="hdc-flags">{{ step.flags }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🚩 TCP Flags Explained</h2>
+    <div class="flags-grid">
+        {% for flag in flags %}
+        <div class="flag-card" style="--flag-color: {{ flag.color }}">
+            <div class="flag-name">{{ flag.flag }}</div>
+            <h4>{{ flag.name }}</h4>
+            <p>{{ flag.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🔚 TCP 4-Way Termination</h2>
+    <div class="term-flow">
+        {% for step in termination %}
+        <div class="term-step">
+            <div class="term-num">{{ step.step }}</div>
+            <div class="term-content">
+                <h4>{{ step.title }}</h4>
+                <span class="term-route">{{ step.from }} → {{ step.to }}</span>
+                <p>{{ step.description }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📦 TCP Segment Structure</h2>
+    <div class="segment-visual">
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:2">Source Port (16)</div>
+            <div class="seg-cell" style="flex:2">Destination Port (16)</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:4">Sequence Number (32)</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:4">Acknowledgment Number (32)</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:1">Data Offset</div>
+            <div class="seg-cell" style="flex:1">Reserved</div>
+            <div class="seg-cell flags-cell" style="flex:4">Flags (URG|ACK|PSH|RST|SYN|FIN)</div>
+            <div class="seg-cell" style="flex:2">Window Size</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:2">Checksum</div>
+            <div class="seg-cell" style="flex:2">Urgent Pointer</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell" style="flex:4">Options (variable)</div>
+        </div>
+        <div class="seg-row">
+            <div class="seg-cell data-cell" style="flex:4">DATA PAYLOAD</div>
+        </div>
+    </div>
+</section>
+{% endblock %}

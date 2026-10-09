@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% block title %}{{ layer.name }} — Layer {{ layer.number }}{% endblock %}
+
+{% block content %}
+
+<!-- ============ DEVICE POPUP MODAL ============ -->
+<div class="modal-overlay" id="deviceModal" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal()">×</button>
+
+        <div class="modal-header" id="modalHeader">
+            <div class="modal-icon" id="modalIcon">📦</div>
+            <div>
+                <h2 id="modalTitle">Device Name</h2>
+                <p class="modal-subtitle" id="modalSubtitle">Short description</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-image-wrapper">
+                <img id="modalImage" src="" alt="" class="modal-real-image">
+                <span class="image-credit" id="modalImageCredit"></span>
+            </div>
+
+            <div class="modal-section">
+                <h3>💡 Use Case</h3>
+                <p id="modalUseCase"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>⚙️ How It Works</h3>
+                <ul class="modal-list" id="modalHow"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>🌍 Real-World Example</h3>
+                <p class="modal-example" id="modalExample"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="modalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="simPlayBtn" onclick="toggleSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetSim()">↺ Reset</button>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📍 Operates at OSI Layers</h3>
+                <div class="modal-layers" id="modalLayers"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ LAYER HERO ============ -->
+<section class="layer-hero" style="--layer-color: {{ layer.color }}">
+    <div class="layer-hero-content">
+        <div class="breadcrumb">
+            <a href="/">OSI Model</a> <span>/</span> <span>Layer {{ layer.number }}</span>
+        </div>
+        <div class="hero-icon-big">{{ layer.icon }}</div>
+        <h1>{{ layer.name }}</h1>
+        <p class="layer-hero-desc">{{ layer.description }}</p>
+        <div class="layer-meta">
+            <div class="meta-item"><strong>Layer:</strong> {{ layer.number }} of 7</div>
+            <div class="meta-item"><strong>PDU:</strong> {{ layer.pdu }}</div>
+            <div class="meta-item"><strong>Protocols:</strong> {{ layer.protocols|length }}</div>
+            <div class="meta-item"><strong>Devices:</strong> {{ devices|length }}</div>
+        </div>
+    </div>
+    <div class="layer-nav">
+        {% if layer.number > 1 %}
+        <a href="/layer/{{ layer.number - 1 }}" class="nav-btn prev">← Layer {{ layer.number - 1 }}</a>
+        {% endif %}
+        {% if layer.number < 7 %}
+        <a href="/layer/{{ layer.number + 1 }}" class="nav-btn next">Layer {{ layer.number + 1 }} →</a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ============ KEY FUNCTIONS + PROTOCOLS ============ -->
+<section class="layer-content">
+    <div class="content-grid">
+        <div class="content-card">
+            <h2>⚙️ Key Functions</h2>
+            <ul class="function-list">
+                {% for func in layer.functions %}
+                <li>{{ func }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="content-card">
+            <h2>🔌 Protocols at this Layer</h2>
+            <div class="protocol-grid">
+                {% for proto in layer.protocols %}
+                <span class="protocol-badge" style="--layer-color: {{ layer.color }}">{{ proto }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CLICKABLE DEVICE CARDS WITH REAL IMAGES ============ -->
+<section class="devices-section">
+    <h2 class="section-title">🖥️ Devices at this Layer</h2>
+    <p class="section-desc">Click any device to see its real photo, use case, and live simulation</p>
+
+    <div class="device-cards-grid">
+        {% for device in devices %}
+        <div class="device-card"
+             style="--device-color: {{ device.color }}"
+             data-device='{{ device|tojson }}'
+             onclick="openDeviceModal(this)"
+             tabindex="0"
+             role="button"
+             aria-label="Open details for {{ device.name }}">
+            <div class="device-img-wrapper">
+                <img src="{{ device.image }}"
+                     alt="{{ device.name }}"
+                     class="device-real-img"
+                     loading="lazy"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="device-emoji-fallback" style="display:none;background: linear-gradient(135deg, {{ device.color }}, {{ device.color }}88);">
+                    <span>{{ device.icon }}</span>
+                </div>
+                <div class="device-click-hint">👆 Click to explore</div>
+            </div>
+            <div class="device-card-body">
+                <h3>{{ device.name }}</h3>
+                <p>{{ device.short }}</p>
+                <div class="device-layers-badges">
+                    {% for l in device.layers %}
+                    <span class="mini-layer-badge" style="--c: {{ all_layers[l].color }}">L{{ l }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ DATA FLOW VISUALIZATION ============ -->
+<section class="visualization-section">
+    <h2 class="section-title">🎬 Data Flow Visualization</h2>
+    <div class="simulation-box">
+        <div class="sim-diagram">
+            <div class="sim-node sim-sender">
+                <div class="node-icon">💻</div>
+                <p>Sender</p>
+            </div>
+            <div class="sim-connection">
+                <div class="data-packet" style="--layer-color: {{ layer.color }}">{{ layer.pdu }}</div>
+                <div class="sim-arrow">→→→</div>
+            </div>
+            <div class="sim-node sim-receiver">
+                <div class="node-icon">🖥️</div>
+                <p>Receiver</p>
+            </div>
+        </div>
+        <p class="sim-caption">Data in the form of <strong>{{ layer.pdu }}</strong> travels through the {{ layer.name }}</p>
+    </div>
+</section>
+
+<!-- ============ ALL LAYERS NAV ============ -->
+<section class="all-layers-nav">
+    <h2 class="section-title">🗂️ All OSI Layers</h2>
+    <div class="mini-stack">
+        {% for num in [7,6,5,4,3,2,1] %}
+        {% set l = all_layers[num] %}
+        <a href="/layer/{{ num }}" class="mini-layer {% if num == layer.number %}active{% endif %}" style="--c: {{ l.color }}">
+            <span class="mini-num">{{ l.number }}</span>
+            <span class="mini-name">{{ l.name }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/modals.js') }}"></script>
+<script src="{{ url_for('static', filename='js/simulations.js') }}"></script>
+{% endblock %}

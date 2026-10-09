@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Offline Brute Force — John, Hashcat, Crunch{% endblock %}
+
+{% block content %}
+
+<!-- ============ TOOL DETAIL MODAL ============ -->
+<div class="modal-overlay" id="toolModal" onclick="closeToolModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeToolModal()">×</button>
+
+        <div class="modal-header" id="toolModalHeader">
+            <div class="modal-icon" id="toolModalIcon">🔓</div>
+            <div>
+                <h2 id="toolModalTitle">Tool Name</h2>
+                <p class="modal-subtitle" id="toolModalSubtitle">Tagline</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>📖 About</h3>
+                <p id="toolModalDesc"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📦 Install</h3>
+                <div class="modal-command-display" id="toolModalInstall"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🚩 Common Flags</h3>
+                <div class="flags-mini-grid" id="toolModalFlags"></div>
+            </div>
+
+            <!-- Success / Failure Tabs -->
+            <div class="modal-tabs">
+                <button class="modal-tab active" id="tabSuccessBtn" onclick="switchOutputTab('success', event)">
+                    ✅ Success Examples
+                </button>
+                <button class="modal-tab tab-failure" id="tabFailureBtn" onclick="switchOutputTab('failure', event)">
+                    ❌ Failure Examples
+                </button>
+            </div>
+
+            <div class="modal-section tab-content active" id="tab-content-success">
+                <h3>💡 Working Examples</h3>
+                <div id="toolModalExamples"></div>
+            </div>
+
+            <div class="modal-section tab-content" id="tab-content-failure">
+                <h3>❌ What Happens When It Fails</h3>
+                <div id="toolModalFailures"></div>
+            </div>
+
+            <!-- Simulation -->
+            <div class="modal-section">
+                <h3>🎬 Live Simulation</h3>
+                <div class="sim-player" id="modalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="simPlayBtn" onclick="toggleSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="tcp-hero bf-hero-offline">
+    <h1>💾 <span class="gradient-text">Offline Brute Force</span></h1>
+    <p>Crack hashes, archives, PDFs, Wi-Fi handshakes — no network rate limits, full GPU speed</p>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is Offline Brute Force?</h2>
+    <div class="analogy-box">
+        <div class="analogy-grid">
+            <div class="analogy-item">
+                <div class="analogy-icon">💾</div>
+                <h3>Stolen Hash</h3>
+                <p>You have the <strong>hash or encrypted file</strong> but not the password.</p>
+            </div>
+            <div class="analogy-arrow">➡️</div>
+            <div class="analogy-item">
+                <div class="analogy-icon">🚀</div>
+                <h3>Unlimited Speed</h3>
+                <p>No lockouts. GPU tries <strong>billions per second</strong>.</p>
+            </div>
+            <div class="analogy-arrow">➡️</div>
+            <div class="analogy-item highlight">
+                <div class="analogy-icon">🔓</div>
+                <h3>Password Revealed</h3>
+                <p>Once cracked, use the password <strong>anywhere</strong> it's valid.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ TOOLS GRID ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🛠️ Offline Cracking Tools</h2>
+    <p class="section-desc">Click any tool for commands, flags, outputs, failure cases, and step-by-step simulations</p>
+
+    <div class="tools-grid">
+        {% for tool in tools %}
+        <div class="tool-card"
+             data-tool='{{ tool|tojson }}'
+             onclick="openToolModal(this)"
+             tabindex="0"
+             role="button"
+             aria-label="Open details for {{ tool.name }}"
+             style="--tool-color: {{ tool.color }}">
+            <div class="tool-card-header">
+                <div class="tool-icon">{{ tool.icon }}</div>
+                <div class="tool-badges">
+                    <span class="badge-difficulty diff-{{ tool.difficulty|lower }}">{{ tool.difficulty }}</span>
+                </div>
+            </div>
+            <h3>{{ tool.name }}</h3>
+            <p class="tool-tagline">{{ tool.tagline }}</p>
+            <p class="tool-desc">{{ tool.description[:130] }}...</p>
+            <div class="tool-meta">
+                <span>⚡ {{ tool.speed }}</span>
+                <span>📁 {{ tool.category }}</span>
+            </div>
+            <div class="tool-card-footer">
+                <span>View Details</span>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ COMMON WORDLIST PATHS ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">📂 Common Wordlist Paths in Linux</h2>
+    <p class="section-desc">Where to find wordlists on Kali / Parrot OS / Ubuntu</p>
+
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Path</th>
+                    <th>Size</th>
+                    <th>Passwords</th>
+                    <th>Best For</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wl in wordlists %}
+                <tr>
+                    <td><code>{{ wl.path }}</code></td>
+                    <td>{{ wl.size }}</td>
+                    <td>{{ wl.count }}</td>
+                    <td>{{ wl.best_for }}</td>
+                    <td>{{ wl.source }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="ip-note" style="margin-top: 1.5rem;">
+        💡 <strong>Tip:</strong> Use <code>locate wordlists</code> or <code>find / -name "*.txt" 2>/dev/null | grep -i wordlist</code> to find all wordlists on your system.
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/bruteforce.js') }}"></script>
+{% endblock %}
