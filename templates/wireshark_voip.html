@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Wireshark VoIP Analysis{% endblock %}
+
+{% block content %}
+<section class="tcp-hero wireshark-hero">
+    <h1>📞 <span class="gradient-text">VoIP Analysis</span></h1>
+    <p>Capture, decode, and play back VoIP calls with Wireshark</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is VoIP Analysis?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">{{ voip.intro }}</p>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">📊 SIP Call Flow</h2>
+    <div class="arp-steps">
+        {% for step in voip.sip_flow %}
+        <div class="arp-step active">
+            <div class="arp-step-num" style="background: {{ step.color }}; color: #000;">{{ step.step }}</div>
+            <div class="arp-step-content">
+                <h4>{{ step.method }}</h4>
+                <p>{{ step.desc }}</p>
+                <div class="arp-step-flow">
+                    <span class="arp-from">{{ step.from }}</span>
+                    <span class="arp-arrow">→</span>
+                    <span class="arp-to">{{ step.to }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎬 RTP Playback — Step by Step</h2>
+    <div class="cmds-grid">
+        {% for step in voip.rtp_playback_steps %}
+        <div class="cmd-card" style="border-left: 4px solid {{ step.color }};">
+            <div class="cmd-header">
+                <code class="cmd-code" style="color: {{ step.color }};">Step {{ step.step }}: {{ step.title }}</code>
+            </div>
+            <p class="cmd-desc">{{ step.desc }}</p>
+            <pre class="cmd-example">{{ step.command }}</pre>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🔍 VoIP Display Filters</h2>
+    <div class="cmds-grid">
+        {% for f in voip.voip_filters %}
+        <div class="cmd-card" style="border-left: 4px solid #16a085;">
+            <code class="cmd-code" style="color: #16a085; cursor: pointer;" onclick="navigator.clipboard.writeText('{{ f.filter }}'); this.textContent='✅ Copied!';">{{ f.filter }}</code>
+            <p class="cmd-desc">{{ f.desc }}</p>
+            <p style="font-size: 0.8rem; color: var(--text-dim);"><strong>Use case:</strong> {{ f.use_case }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎬 Real-World Scenario</h2>
+    <div class="warning-box">
+        <div class="warning-icon">📞</div>
+        <div>
+            <h3>{{ voip.scenario.title }}</h3>
+            <p>{{ voip.scenario.story }}</p>
+            <ul class="warning-list">
+                {% for step in voip.scenario.steps %}
+                <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

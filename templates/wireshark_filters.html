@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Wireshark Display Filters{% endblock %}
+
+{% block content %}
+<section class="tcp-hero wireshark-hero">
+    <h1>🔍 <span class="gradient-text">Display Filters</span></h1>
+    <p>Every filter you'll ever need — click any filter to copy it</p>
+</section>
+
+<!-- Filter Category Nav -->
+<section class="tcp-section">
+    <div class="concept-filters">
+        <button class="concept-filter active" onclick="filterCat('all', event)">All Categories</button>
+        {% for category in filters %}
+        <button class="concept-filter" onclick="filterCat('{{ category.category }}', event)" style="border-color: {{ category.color }};">
+            {{ category.category }}
+        </button>
+        {% endfor %}
+    </div>
+</section>
+
+{% for category in filters %}
+<section class="tcp-section {% if loop.index is even %}dark{% endif %} filter-category-block" data-category="{{ category.category }}">
+    <h2 class="section-title" style="color: {{ category.color }};">{{ category.category }} Filters</h2>
+    <p class="section-desc">{{ category.filters|length }} filters — click any to copy</p>
+
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Display Filter</th>
+                    <th style="width: 25%;">Description</th>
+                    <th style="width: 30%;">What It Shows</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in category.filters %}
+                <tr>
+                    <td>
+                        <code class="filter-code"
+                              style="color: {{ category.color }}; cursor: pointer; padding: 0.3rem 0.6rem; display: inline-block; background: rgba(0,0,0,0.3); border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;"
+                              onclick="copyFilter(this, '{{ f.filter }}')">
+                            {{ f.filter }}
+                        </code>
+                    </td>
+                    <td style="color: var(--text); font-size: 0.88rem;">{{ f.desc }}</td>
+                    <td style="color: var(--text-dim); font-size: 0.85rem;">{{ f.output }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endfor %}
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function filterCat(cat, event) {
+    document.querySelectorAll('.concept-filter').forEach(b => b.classList.remove('active'));
+    if (event) event.currentTarget.classList.add('active');
+
+    document.querySelectorAll('.filter-category-block').forEach(block => {
+        const blockCat = block.getAttribute('data-category');
+        block.style.display = (cat === 'all' || blockCat === cat) ? '' : 'none';
+    });
+}
+
+function copyFilter(el, text) {
+    navigator.clipboard.writeText(text).then(() => {
+        const original = el.textContent;
+        el.textContent = '✅ Copied!';
+        setTimeout(() => { el.textContent = original; }, 1200);
+    });
+}
+</script>
+{% endblock %}

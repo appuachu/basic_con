@@ -1,0 +1,486 @@
+{% extends "base.html" %}
+{% block title %}Linux Firewall — UFW & iptables Complete Guide{% endblock %}
+
+{% block content %}
+
+<!-- ============ FIREWALL MODAL ============ -->
+<div class="modal-overlay" id="fwModal" onclick="closeFwModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeFwModal()">×</button>
+
+        <div class="modal-header" id="fwModalHeader">
+            <div class="modal-icon" id="fwModalIcon">🛡️</div>
+            <div>
+                <h2 id="fwModalTitle">Command</h2>
+                <p class="modal-subtitle" id="fwModalSubtitle">Description</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>💻 Full Command</h3>
+                <div class="modal-command-display" id="fwModalCmd"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎯 What It Does</h3>
+                <p id="fwModalDesc"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🌍 Real-World Scenario</h3>
+                <p class="modal-example" id="fwModalScenario"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Sample Output</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">terminal</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="fwModalOutput"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section" id="fwSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="fwModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="fwSimPlayBtn" onclick="toggleFwSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetFwSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="tcp-hero linux-hero">
+    <h1>🛡️ <span class="gradient-text">Linux Firewall</span></h1>
+    <p>Master UFW & iptables — click any command to see live output and simulation</p>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is a Linux Firewall?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">{{ firewall.intro }}</p>
+    </div>
+
+    <h3 class="subsection-title">💡 Why You Need One</h3>
+    <div class="feature-grid">
+        {% for w in firewall.why %}
+        <div class="feature-card"><div class="fc-icon">✅</div><p>{{ w }}</p></div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ UFW SECTION ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🟢 UFW (Uncomplicated Firewall)</h2>
+    <p class="section-desc">Ubuntu's default firewall — click any command to see output and what happens behind the scenes</p>
+
+    <h3 class="subsection-title">📦 Install</h3>
+    <div class="cmds-grid">
+        {% for item in firewall.ufw_basics.install %}
+        <div class="cmd-card cmd-clickable"
+             data-fw='{{ item|tojson }}'
+             onclick="openFwModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ item.cmd }}</code>
+                <span class="cmd-cat">Install</span>
+            </div>
+            <p class="cmd-desc">{{ item.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for output + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">🚀 Enable (Correct Order!)</h3>
+    <div class="cmds-grid">
+        {% for item in firewall.ufw_basics.enable %}
+        <div class="cmd-card cmd-clickable"
+             data-fw='{{ item|tojson }}'
+             onclick="openFwModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ item.cmd }}</code>
+                <span class="cmd-cat" style="background: rgba(243,156,18,0.15); color: #f39c12; border-color: #f39c12;">Setup</span>
+            </div>
+            <p class="cmd-desc">{{ item.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for output + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="warning-box" style="margin-top: 1.5rem;">
+        <div class="warning-icon">⚠️</div>
+        <div>
+            <h3>Critical: Allow SSH BEFORE enabling!</h3>
+            <p>If you enable UFW without allowing SSH first, you'll be locked out of your remote server. Always run <code>sudo ufw allow ssh</code> first.</p>
+        </div>
+    </div>
+
+    <h3 class="subsection-title">🔧 Common Rules</h3>
+    <div class="cmds-grid">
+        {% for item in firewall.ufw_basics.common_rules %}
+        <div class="cmd-card cmd-clickable"
+             data-fw='{{ item|tojson }}'
+             onclick="openFwModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ item.cmd }}</code>
+                <span class="cmd-cat" style="background: rgba(39,174,96,0.15); color: #27ae60; border-color: #27ae60;">Rule</span>
+            </div>
+            <p class="cmd-desc">{{ item.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for output + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">🚀 Advanced</h3>
+    <div class="cmds-grid">
+        {% for item in firewall.ufw_basics.advanced %}
+        <div class="cmd-card cmd-clickable"
+             data-fw='{{ item|tojson }}'
+             onclick="openFwModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ item.cmd }}</code>
+                <span class="cmd-cat" style="background: rgba(155,89,182,0.15); color: #9b59b6; border-color: #9b59b6;">Advanced</span>
+            </div>
+            <p class="cmd-desc">{{ item.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for output + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">🚨 Emergency (If Locked Out)</h3>
+    <div class="cmds-grid">
+        {% for item in firewall.ufw_basics.emergency %}
+        <div class="cmd-card cmd-clickable"
+             data-fw='{{ item|tojson }}'
+             onclick="openFwModal(this)"
+             tabindex="0"
+             role="button"
+             style="border-left-color: #e74c3c;">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ item.cmd }}</code>
+                <span class="cmd-cat" style="background: rgba(231,76,60,0.15); color: #e74c3c; border-color: #e74c3c;">⚠️ Emergency</span>
+            </div>
+            <p class="cmd-desc">{{ item.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for output + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ IPTABLES SECTION ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🔴 iptables (Low-Level)</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">{{ firewall.iptables_basics.intro }}</p>
+    </div>
+
+    <h3 class="subsection-title">⛓️ Chains</h3>
+    <div class="cmds-grid">
+        {% for c in firewall.iptables_basics.chains %}
+        <div class="cmd-card" style="border-left: 4px solid {{ c.color }};">
+            <code class="cmd-code" style="color: {{ c.color }};">{{ c.name }}</code>
+            <p class="cmd-desc">{{ c.desc }}</p>
+            <p style="font-size: 0.78rem; color: var(--text-dim); font-style: italic;">Example: {{ c.example }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">🎯 Targets</h3>
+    <div class="cmds-grid">
+        {% for t in firewall.iptables_basics.targets %}
+        <div class="cmd-card" style="border-left: 4px solid {{ t.color }};">
+            <code class="cmd-code" style="color: {{ t.color }};">{{ t.icon }} {{ t.name }}</code>
+            <p class="cmd-desc">{{ t.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">💻 Essential Commands</h3>
+    <p class="section-desc">Click any command to see full output and simulation</p>
+    <div class="cmds-grid">
+        {% for item in firewall.iptables_basics.common_rules %}
+        <div class="cmd-card cmd-clickable"
+             data-fw='{{ item|tojson }}'
+             onclick="openFwModal(this)"
+             tabindex="0"
+             role="button">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ item.cmd }}</code>
+            </div>
+            <p class="cmd-desc">{{ item.desc }}</p>
+            <span class="cmd-click-hint">👆 Click for output + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ FIREWALL LOGS ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">📜 Firewall Logs — See Who's Being Blocked</h2>
+    <p class="section-desc">Firewalls log every blocked packet — this is how you spot attacks live</p>
+
+    <div class="content-card highlight">
+        <p><strong>Location:</strong> <code>{{ firewall.firewall_logs.location }}</code></p>
+        <p><strong>Read live:</strong> <code>{{ firewall.firewall_logs.read }}</code></p>
+    </div>
+
+    <h3 class="subsection-title">📄 Sample Blocked Packet</h3>
+    <div class="scan-terminal-mini">
+        <div class="terminal-bar-mini">
+            <span class="term-dot red"></span>
+            <span class="term-dot yellow"></span>
+            <span class="term-dot green"></span>
+            <span class="term-title-mini">/var/log/ufw.log</span>
+        </div>
+        <pre class="terminal-output-mini">{{ firewall.firewall_logs.sample }}</pre>
+    </div>
+
+    <h3 class="subsection-title">🔍 How to Read It</h3>
+    <ul class="function-list">
+        {% for a in firewall.firewall_logs.analysis %}
+        <li>{{ a }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3 class="subsection-title">🎯 Detection Commands</h3>
+    <div class="cmds-grid">
+        {% for cmd in firewall.firewall_logs.detection_commands %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ cmd.cmd }}</code>
+            <p class="cmd-desc">{{ cmd.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ SCENARIO ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎬 Real-World Scenario: Block an Attacker</h2>
+    <p class="section-desc">An SSH brute force attack is hitting your server right now — here's what to do</p>
+
+    <div class="workflow-box">
+        <div class="workflow-step">
+            <div class="wf-num">1</div>
+            <div class="wf-content">
+                <h4>You notice attack in auth.log</h4>
+                <code>sudo grep 'Failed password' /var/log/auth.log | tail -20</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">2</div>
+            <div class="wf-content">
+                <h4>Find the attacker IP</h4>
+                <code>sudo grep 'Failed password' /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn | head -5</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">3</div>
+            <div class="wf-content">
+                <h4>Block with UFW</h4>
+                <code>sudo ufw deny from 203.0.113.5</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">4</div>
+            <div class="wf-content">
+                <h4>Verify the block</h4>
+                <code>sudo ufw status | grep 203.0.113.5</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">5</div>
+            <div class="wf-content">
+                <h4>Watch next attempt get blocked (live)</h4>
+                <code>sudo tail -f /var/log/ufw.log | grep '203.0.113.5'</code>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// ==================== FIREWALL COMMAND MODAL ====================
+let currentFwSimSteps = [];
+let currentFwSimIndex = 0;
+let fwSimTimer = null;
+let isFwPaused = false;
+
+function openFwModal(card) {
+    const data = JSON.parse(card.getAttribute('data-fw'));
+
+    const modal = document.getElementById('fwModal');
+    if (!modal) return;
+
+    document.getElementById('fwModalHeader').style.setProperty('--modal-color', '#3498db');
+    document.getElementById('fwModalIcon').textContent = '🛡️';
+    document.getElementById('fwModalIcon').style.background = '#3498db';
+    document.getElementById('fwModalTitle').textContent = data.cmd;
+    document.getElementById('fwModalSubtitle').textContent = data.desc;
+    document.getElementById('fwModalCmd').textContent = '$ ' + data.cmd;
+    document.getElementById('fwModalDesc').textContent = data.desc;
+    document.getElementById('fwModalScenario').textContent = data.scenario || 'No scenario available.';
+    document.getElementById('fwModalOutput').textContent = data.output || '(no output — success is silent)';
+
+    // Simulation
+    currentFwSimSteps = data.simulation || [];
+    currentFwSimIndex = 0;
+    isFwPaused = false;
+    if (fwSimTimer) { clearInterval(fwSimTimer); fwSimTimer = null; }
+
+    const simSection = document.getElementById('fwSimSection');
+    if (currentFwSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateFwPlayBtn('▶ Play');
+        renderFwSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function renderFwSim() {
+    const player = document.getElementById('fwModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+
+    if (currentFwSimSteps.length === 0) {
+        player.innerHTML = '<p style="color: var(--text-dim); text-align:center;">No simulation available</p>';
+        return;
+    }
+
+    const step = currentFwSimSteps[currentFwSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from || 'Start')}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#3498db'}">${escapeHtml(step.data || '')}</div>
+            <div class="sim-action-label">${escapeHtml(step.title || '')} — ${escapeHtml(step.desc || '')}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${currentFwSimIndex + 1} / ${currentFwSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to || 'End')}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    currentFwSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= currentFwSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleFwSim() {
+    if (currentFwSimSteps.length === 0) return;
+    if (fwSimTimer && !isFwPaused) { pauseFwSim(); return; }
+    if (isFwPaused) { resumeFwSim(); return; }
+    startFwSim();
+}
+
+function startFwSim() {
+    if (fwSimTimer) clearInterval(fwSimTimer);
+    currentFwSimIndex = 0;
+    isFwPaused = false;
+    renderFwSim();
+    updateFwPlayBtn('⏸ Pause');
+    fwSimTimer = setInterval(() => {
+        currentFwSimIndex++;
+        if (currentFwSimIndex >= currentFwSimSteps.length) {
+            clearInterval(fwSimTimer);
+            fwSimTimer = null;
+            currentFwSimIndex = currentFwSimSteps.length - 1;
+            renderFwSim();
+            updateFwPlayBtn('▶ Replay');
+            return;
+        }
+        renderFwSim();
+    }, 1800);
+}
+
+function pauseFwSim() {
+    if (!fwSimTimer) return;
+    clearInterval(fwSimTimer);
+    fwSimTimer = null;
+    isFwPaused = true;
+    updateFwPlayBtn('▶ Resume');
+}
+
+function resumeFwSim() {
+    if (!isFwPaused) return;
+    isFwPaused = false;
+    updateFwPlayBtn('⏸ Pause');
+    fwSimTimer = setInterval(() => {
+        currentFwSimIndex++;
+        if (currentFwSimIndex >= currentFwSimSteps.length) {
+            clearInterval(fwSimTimer);
+            fwSimTimer = null;
+            currentFwSimIndex = currentFwSimSteps.length - 1;
+            renderFwSim();
+            updateFwPlayBtn('▶ Replay');
+            return;
+        }
+        renderFwSim();
+    }, 1800);
+}
+
+function updateFwPlayBtn(label) {
+    const btn = document.getElementById('fwSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetFwSim() {
+    if (fwSimTimer) clearInterval(fwSimTimer);
+    fwSimTimer = null;
+    isFwPaused = false;
+    currentFwSimIndex = 0;
+    updateFwPlayBtn('▶ Play');
+    renderFwSim();
+}
+
+function closeFwModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('fwModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (fwSimTimer) clearInterval(fwSimTimer);
+    fwSimTimer = null;
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFwModal(); });
+</script>
+{% endblock %}

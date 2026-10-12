@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}OSI Model — Interactive Learning{% endblock %}
+{% block title %}OSI Model — Interactive Learning Platform{% endblock %}
 
 {% block content %}
 
-<!-- ============ DEVICE POPUP MODAL (needed on homepage too) ============ -->
+<!-- ============ DEVICE MODAL ============ -->
 <div class="modal-overlay" id="deviceModal" onclick="closeModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeModal()">×</button>
@@ -55,121 +55,354 @@
 </div>
 
 <!-- ============ HERO ============ -->
-<section class="hero">
-    <div class="hero-content">
-        <h1 class="hero-title">The <span class="gradient-text">OSI Model</span> Explained Visually</h1>
-        <p class="hero-subtitle">Click any layer to explore its functions, protocols, devices, and real-world examples with interactive simulations.</p>
-        <div class="hero-stats">
-            <div class="stat"><span class="stat-num">7</span><span class="stat-label">Layers</span></div>
-            <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Protocols</span></div>
-            <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Devices</span></div>
-            <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Interactive</span></div>
+<!-- ============ HERO ============ -->
+<section class="hero-v2">
+    <div class="hero-v2-bg"></div>
+    <div class="hero-v2-content">
+        <div class="hero-v2-badge">🎓 Interactive Learning Platform</div>
+        <h1 class="hero-v2-title">
+            What is the <span class="gradient-text">OSI Model</span>?
+        </h1>
+        <p class="hero-v2-subtitle">
+            The <strong>Open Systems Interconnection (OSI) Model</strong> is a conceptual framework
+            that describes <strong>how data travels across a network</strong> — from one application
+            on your computer to another application on a remote server.
+        </p>
+        <p class="hero-v2-subtitle" style="margin-top: -1rem;">
+            It divides this complex journey into <strong>7 distinct layers</strong>. Each layer has a
+            specific job — and each layer only talks to the layer directly above and below it. This
+            layered approach is why two completely different systems (a Mac talking to a Windows server,
+            an Android phone talking to a Linux web server) can communicate seamlessly.
+        </p>
+        <div class="hero-v2-actions">
+            <a href="#why-osi" class="btn-primary-v2">🚀 Why It Matters</a>
+            <a href="#osi-stack" class="btn-secondary-v2">📚 Explore the 7 Layers</a>
+        </div>
+    </div>
+
+    <div class="hero-v2-stats">
+        <div class="stat-v2">
+            <span class="stat-v2-num">7</span>
+            <span class="stat-v2-label">Layers</span>
+        </div>
+        <div class="stat-v2-divider"></div>
+        <div class="stat-v2">
+            <span class="stat-v2-num">50+</span>
+            <span class="stat-v2-label">Protocols</span>
+        </div>
+        <div class="stat-v2-divider"></div>
+        <div class="stat-v2">
+            <span class="stat-v2-num">30+</span>
+            <span class="stat-v2-label">Devices</span>
+        </div>
+        <div class="stat-v2-divider"></div>
+        <div class="stat-v2">
+            <span class="stat-v2-num">100%</span>
+            <span class="stat-v2-label">Interactive</span>
         </div>
     </div>
 </section>
 
-<!-- ============ OSI STACK ============ -->
-<section class="osi-container">
-    <h2 class="section-title">📚 Interactive OSI Model</h2>
-    <p class="section-desc">Click any layer below to dive deep into its functionality with visual simulations</p>
+<!-- ============ WHY OSI MATTERS ============ -->
+<section class="why-osi-section" id="why-osi">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">Why It Exists</div>
+        <h2 class="section-title-v2">Why Do We Need the OSI Model?</h2>
+        <p class="section-desc-v2">Before OSI, every vendor made their own networking rules — nothing worked together</p>
+    </div>
 
-    <div class="osi-stack">
-        {% for num in [7,6,5,4,3,2,1] %}
-        {% set layer = layers[num] %}
-        <a href="/layer/{{ num }}" class="osi-layer" style="--layer-color: {{ layer.color }}">
-            <div class="layer-number">{{ layer.number }}</div>
-            <div class="layer-icon">{{ layer.icon }}</div>
-            <div class="layer-info">
-                <h3 class="layer-name">{{ layer.name }}</h3>
-                <p class="layer-summary">{{ layer.summary }}</p>
-                <div class="layer-tags">
-                    <span class="tag">PDU: {{ layer.pdu }}</span>
-                    <span class="tag">{{ layer.protocols|length }} Protocols</span>
-                    <span class="tag">{{ layer.device_keys|length }} Devices</span>
+    <div class="why-osi-grid">
+        <div class="why-osi-card" style="--card-color: #e74c3c">
+            <div class="wo-icon">🌍</div>
+            <h3>Universal Standard</h3>
+            <p>Before OSI (1984), IBM, Apple, and DEC each had proprietary networking. A Mac couldn't talk to an IBM mainframe. OSI gave everyone the same rules so <strong>any system can talk to any other system</strong>.</p>
+        </div>
+
+        <div class="why-osi-card" style="--card-color: #f39c12">
+            <div class="wo-icon">🧩</div>
+            <h3>Troubleshooting</h3>
+            <p>When a website won't load, the problem could be <em>anywhere</em>. OSI lets you isolate it: <strong>Is it the cable (L1)? The IP (L3)? The server (L7)?</strong> Check layer by layer — bottom-up.</p>
+        </div>
+
+        <div class="why-osi-card" style="--card-color: #27ae60">
+            <div class="wo-icon">🔧</div>
+            <h3>Modular Design</h3>
+            <p>Want to switch from Wi-Fi to Ethernet? Only the <strong>Physical layer</strong> changes. New HTTP version? Only the <strong>Application layer</strong> changes. Other layers stay untouched.</p>
+        </div>
+
+        <div class="why-osi-card" style="--card-color: #3498db">
+            <div class="wo-icon">📚</div>
+            <h3>Easy Learning</h3>
+            <p>Networking is huge — thousands of protocols and devices. OSI <strong>organizes</strong> everything into 7 logical groups, making it possible to study one piece at a time.</p>
+        </div>
+
+        <div class="why-osi-card" style="--card-color: #9b59b6">
+            <div class="wo-icon">🔐</div>
+            <h3>Security Layering</h3>
+            <p>Attacks happen at specific layers — phishing (L7), ARP spoofing (L2), IP spoofing (L3). Understanding OSI tells you <strong>where to place defenses</strong> (firewalls, TLS, encryption).</p>
+        </div>
+
+        <div class="why-osi-card" style="--card-color: #16a085">
+            <div class="wo-icon">💼</div>
+            <h3>Vendor Independence</h3>
+            <p>Cisco, Juniper, Huawei, Aruba — all follow OSI. So a Cisco router can route traffic for a Linux server on an Aruba Wi-Fi network. The <strong>standards win</strong>, not the vendor.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ANALOGY: OSI AS A POSTAL SYSTEM ============ -->
+<section class="analogy-section-v2">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">Real-World Analogy</div>
+        <h2 class="section-title-v2">Think of OSI Like Sending a Letter</h2>
+        <p class="section-desc-v2">The easiest way to understand OSI is to compare it to the postal system</p>
+    </div>
+
+    <div class="analogy-flow">
+        <div class="analogy-row">
+            <div class="analogy-layer" style="--a-color: #e74c3c">
+                <span class="al-badge">L7</span>
+                <div class="al-body">
+                    <div class="al-icon">✍️</div>
+                    <h4>Application</h4>
+                    <p>You <strong>write the letter</strong> — the actual content you want to send</p>
                 </div>
             </div>
-            <div class="layer-arrow">→</div>
+            <div class="analogy-arrow">→</div>
+            <div class="analogy-layer" style="--a-color: #e67e22">
+                <span class="al-badge">L6</span>
+                <div class="al-body">
+                    <div class="al-icon">🔤</div>
+                    <h4>Presentation</h4>
+                    <p>You <strong>translate to a language</strong> the receiver understands (encrypt/compress)</p>
+                </div>
+            </div>
+            <div class="analogy-arrow">→</div>
+            <div class="analogy-layer" style="--a-color: #f39c12">
+                <span class="al-badge">L5</span>
+                <div class="al-body">
+                    <div class="al-icon">📞</div>
+                    <h4>Session</h4>
+                    <p>You <strong>start a conversation</strong> with the recipient — "Hi, it's me"</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="analogy-row">
+            <div class="analogy-layer" style="--a-color: #27ae60">
+                <span class="al-badge">L4</span>
+                <div class="al-body">
+                    <div class="al-icon">📦</div>
+                    <h4>Transport</h4>
+                    <p>You <strong>number the pages</strong> so nothing gets lost or out of order</p>
+                </div>
+            </div>
+            <div class="analogy-arrow">→</div>
+            <div class="analogy-layer" style="--a-color: #3498db">
+                <span class="al-badge">L3</span>
+                <div class="al-body">
+                    <div class="al-icon">🏠</div>
+                    <h4>Network</h4>
+                    <p>You <strong>write the address</strong> so postal workers know where it goes</p>
+                </div>
+            </div>
+            <div class="analogy-arrow">→</div>
+            <div class="analogy-layer" style="--a-color: #9b59b6">
+                <span class="al-badge">L2</span>
+                <div class="al-body">
+                    <div class="al-icon">🚚</div>
+                    <h4>Data Link</h4>
+                    <p>Postman <strong>moves it between stops</strong> — from post office to truck to local branch</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="analogy-row single">
+            <div class="analogy-layer" style="--a-color: #1abc9c">
+                <span class="al-badge">L1</span>
+                <div class="al-body">
+                    <div class="al-icon">🛣️</div>
+                    <h4>Physical</h4>
+                    <p>The <strong>physical roads, trucks, planes</strong> that carry the letter</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="analogy-note">
+        💡 <strong>Key insight:</strong> Each layer only knows about its own job. The Application layer doesn't care if it's using Wi-Fi or fiber optic — it just writes the message. That's the power of layering.
+    </div>
+</section>
+
+<!-- ============ OSI STACK ============ -->
+<section class="osi-section-v2" id="osi-stack">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">The 7 Layers</div>
+        <h2 class="section-title-v2">Interactive OSI Model</h2>
+        <p class="section-desc-v2">Click any layer to dive deep with visual simulations</p>
+    </div>
+
+    <div class="osi-stack-v2">
+        {% for num in [7,6,5,4,3,2,1] %}
+        {% set layer = layers[num] %}
+        <a href="/layer/{{ num }}" class="osi-layer-v2" style="--layer-color: {{ layer.color }}">
+            <div class="layer-glow"></div>
+
+            <div class="layer-number-v2">
+                <span class="lnum">{{ layer.number }}</span>
+                <span class="ltext">Layer</span>
+            </div>
+
+            <div class="layer-icon-v2">{{ layer.icon }}</div>
+
+            <div class="layer-content-v2">
+                <div class="layer-title-row">
+                    <h3 class="layer-name-v2">{{ layer.name }}</h3>
+                    <span class="layer-pdu">{{ layer.pdu }}</span>
+                </div>
+                <p class="layer-summary-v2">{{ layer.summary }}</p>
+                <div class="layer-meta-v2">
+                    <span class="meta-chip">
+                        <span class="chip-dot" style="background: {{ layer.color }}"></span>
+                        {{ layer.protocols|length }} protocols
+                    </span>
+                    <span class="meta-chip">
+                        <span class="chip-dot" style="background: {{ layer.color }}"></span>
+                        {{ layer.device_keys|length }} devices
+                    </span>
+                </div>
+            </div>
+
+            <div class="layer-cta-v2">
+                <span>Explore</span>
+                <span class="cta-arrow">→</span>
+            </div>
         </a>
         {% endfor %}
     </div>
 </section>
 
-<!-- ============ FEATURED DEVICE SIMULATION PREVIEW ============ -->
-<section class="devices-section">
-    <h2 class="section-title">🖥️ Try a Device Simulation</h2>
-    <p class="section-desc">Click any device to see how it works — full simulations available on each layer page</p>
+<!-- ============ FEATURED DEVICES ============ -->
+<section class="devices-section-v2">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">Try It Out</div>
+        <h2 class="section-title-v2">Featured Device Simulations</h2>
+        <p class="section-desc-v2">Click any device to see how it works with live animation</p>
+    </div>
 
-    <div class="device-cards-grid" id="homeDeviceGrid">
-        <!-- Populated by JS to avoid needing data from app.py -->
+    <div class="device-cards-grid-v2" id="homeDeviceGrid">
+        <!-- Populated by JS -->
     </div>
 </section>
 
-<!-- ============ FLOW DIAGRAM ============ -->
-<section class="flow-section">
-    <h2 class="section-title">🔄 How Data Flows Through the OSI Model</h2>
-    <p class="section-desc">Watch how data transforms as it travels from sender to receiver</p>
+<!-- ============ DATA FLOW ============ -->
+<section class="flow-section-v2">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">Encapsulation</div>
+        <h2 class="section-title-v2">How Data Flows Through OSI</h2>
+        <p class="section-desc-v2">Watch data transform as it travels from sender to receiver</p>
+    </div>
 
-    <div class="flow-diagram">
-        <div class="flow-side">
-            <h3>📤 Sender (Encapsulation)</h3>
-            <div class="flow-steps">
-                <div class="flow-step" style="--c:#e74c3c"><span>7. Application</span><code>DATA</code></div>
-                <div class="flow-step" style="--c:#e67e22"><span>6. Presentation</span><code>DATA</code></div>
-                <div class="flow-step" style="--c:#f39c12"><span>5. Session</span><code>DATA</code></div>
-                <div class="flow-step" style="--c:#27ae60"><span>4. Transport</span><code>TCP | DATA</code></div>
-                <div class="flow-step" style="--c:#3498db"><span>3. Network</span><code>IP | TCP | DATA</code></div>
-                <div class="flow-step" style="--c:#9b59b6"><span>2. Data Link</span><code>MAC | IP | TCP | DATA</code></div>
-                <div class="flow-step" style="--c:#1abc9c"><span>1. Physical</span><code>1010101010...</code></div>
+    <div class="flow-diagram-v2">
+        <div class="flow-column">
+            <div class="flow-header" style="--flow-color: #27ae60">
+                <div class="flow-header-icon">📤</div>
+                <div>
+                    <div class="flow-header-title">Sender</div>
+                    <div class="flow-header-sub">Encapsulation</div>
+                </div>
+            </div>
+            <div class="flow-steps-v2">
+                {% set sender = [
+                    (7, 'Application', 'DATA', '#e74c3c'),
+                    (6, 'Presentation', 'DATA', '#e67e22'),
+                    (5, 'Session', 'DATA', '#f39c12'),
+                    (4, 'Transport', 'TCP | DATA', '#27ae60'),
+                    (3, 'Network', 'IP | TCP | DATA', '#3498db'),
+                    (2, 'Data Link', 'MAC | IP | TCP | DATA', '#9b59b6'),
+                    (1, 'Physical', '1010101...', '#1abc9c')
+                ] %}
+                {% for num, name, pdu, color in sender %}
+                <div class="flow-step-v2" style="--c: {{ color }}">
+                    <span class="fs-num">{{ num }}</span>
+                    <span class="fs-name">{{ name }}</span>
+                    <code class="fs-pdu">{{ pdu }}</code>
+                </div>
+                {% endfor %}
             </div>
         </div>
 
-        <div class="flow-middle">
-            <div class="transmission-line">
-                <div class="pulse"></div>
-                <div class="pulse delay1"></div>
-                <div class="pulse delay2"></div>
+        <div class="flow-middle-v2">
+            <div class="transmission-v2">
+                <div class="tp-line"></div>
+                <div class="tp-packet p1"></div>
+                <div class="tp-packet p2"></div>
+                <div class="tp-packet p3"></div>
             </div>
-            <p class="transmission-label">Transmission Medium</p>
+            <div class="transmission-label-v2">Transmission Medium</div>
         </div>
 
-        <div class="flow-side">
-            <h3>📥 Receiver (Decapsulation)</h3>
-            <div class="flow-steps reverse">
-                <div class="flow-step" style="--c:#1abc9c"><span>1. Physical</span><code>1010101010...</code></div>
-                <div class="flow-step" style="--c:#9b59b6"><span>2. Data Link</span><code>MAC | IP | TCP | DATA</code></div>
-                <div class="flow-step" style="--c:#3498db"><span>3. Network</span><code>IP | TCP | DATA</code></div>
-                <div class="flow-step" style="--c:#27ae60"><span>4. Transport</span><code>TCP | DATA</code></div>
-                <div class="flow-step" style="--c:#f39c12"><span>5. Session</span><code>DATA</code></div>
-                <div class="flow-step" style="--c:#e67e22"><span>6. Presentation</span><code>DATA</code></div>
-                <div class="flow-step" style="--c:#e74c3c"><span>7. Application</span><code>DATA</code></div>
+        <div class="flow-column">
+            <div class="flow-header" style="--flow-color: #3498db">
+                <div class="flow-header-icon">📥</div>
+                <div>
+                    <div class="flow-header-title">Receiver</div>
+                    <div class="flow-header-sub">Decapsulation</div>
+                </div>
+            </div>
+            <div class="flow-steps-v2">
+                {% set receiver = [
+                    (1, 'Physical', '1010101...', '#1abc9c'),
+                    (2, 'Data Link', 'MAC | IP | TCP | DATA', '#9b59b6'),
+                    (3, 'Network', 'IP | TCP | DATA', '#3498db'),
+                    (4, 'Transport', 'TCP | DATA', '#27ae60'),
+                    (5, 'Session', 'DATA', '#f39c12'),
+                    (6, 'Presentation', 'DATA', '#e67e22'),
+                    (7, 'Application', 'DATA', '#e74c3c')
+                ] %}
+                {% for num, name, pdu, color in receiver %}
+                <div class="flow-step-v2" style="--c: {{ color }}">
+                    <span class="fs-num">{{ num }}</span>
+                    <span class="fs-name">{{ name }}</span>
+                    <code class="fs-pdu">{{ pdu }}</code>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
 
 <!-- ============ QUICK LINKS ============ -->
-<section class="quick-links">
-    <h2 class="section-title">🚀 Quick Learning Modules</h2>
-    <div class="cards-grid">
-        <a href="/tcp" class="quick-card">
-            <div class="qc-icon">🤝</div>
+<section class="quick-links-v2">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">Continue Learning</div>
+        <h2 class="section-title-v2">Explore More Modules</h2>
+    </div>
+
+    <div class="cards-grid-v2">
+        <a href="/tcp" class="quick-card-v2" style="--card-color: #27ae60">
+            <div class="qc-icon-v2">🤝</div>
             <h3>TCP Protocol</h3>
             <p>3-way handshake, flags, flow control, and connection lifecycle visualized</p>
+            <span class="qc-arrow">→</span>
         </a>
-        <a href="/udp" class="quick-card">
-            <div class="qc-icon">⚡</div>
+        <a href="/udp" class="quick-card-v2" style="--card-color: #3498db">
+            <div class="qc-icon-v2">⚡</div>
             <h3>UDP Protocol</h3>
             <p>Connectionless communication, speed vs reliability trade-offs</p>
+            <span class="qc-arrow">→</span>
         </a>
-        <a href="/ports" class="quick-card">
-            <div class="qc-icon">🚪</div>
+        <a href="/ports" class="quick-card-v2" style="--card-color: #f39c12">
+            <div class="qc-icon-v2">🚪</div>
             <h3>Common Ports</h3>
             <p>Complete reference of well-known ports and their services</p>
+            <span class="qc-arrow">→</span>
         </a>
-        <a href="/iot" class="quick-card">
-            <div class="qc-icon">📡</div>
+        <a href="/iot" class="quick-card-v2" style="--card-color: #9b59b6">
+            <div class="qc-icon-v2">📡</div>
             <h3>IoT Protocols</h3>
             <p>MQTT, CoAP, Zigbee, LoRaWAN and more for IoT systems</p>
+            <span class="qc-arrow">→</span>
         </a>
     </div>
 </section>
@@ -179,22 +412,16 @@
 {% block extra_scripts %}
 <script>
 // ==================== FEATURED DEVICES ON HOMEPAGE ====================
-// These are shown as previews. Full device data lives on /layer/N pages.
 const HOMEPAGE_DEVICES = [
     {
         name: "Router",
         icon: "🌐",
         color: "#3498db",
-        short: "Routes packets between different networks using IP addresses.",
+        short: "Routes packets between networks using IP addresses.",
         layers: [3],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Cisco_1841_Router.jpg/640px-Cisco_1841_Router.jpg",
-        use_case: "Your home router connects your local network to the internet. It decides where each packet should go based on its IP address.",
-        how_it_works: [
-            "Receives packet with destination IP",
-            "Looks up routing table",
-            "Finds best next-hop",
-            "Forwards packet out correct interface"
-        ],
+        use_case: "Your home router connects your local network to the internet. It decides where each packet goes based on IP.",
+        how_it_works: ["Receives packet with destination IP", "Looks up routing table", "Finds best next-hop", "Forwards out correct interface"],
         real_example: "Cisco ISR, home Wi-Fi router",
         simulation_steps: [
             {"from": "PC", "to": "Router", "data": "Packet → 8.8.8.8", "action": "Packet arrives"},
@@ -203,20 +430,15 @@ const HOMEPAGE_DEVICES = [
         ]
     },
     {
-        name: "Network Switch",
+        name: "Switch",
         icon: "🔗",
         color: "#9b59b6",
         short: "Forwards frames to specific devices using MAC addresses.",
         layers: [2],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/24-port_switch.jpg/640px-24-port_switch.jpg",
-        use_case: "Office switches connect 24-48 computers and forward data only to the intended device, not broadcasting to all like a hub.",
-        how_it_works: [
-            "Learns MAC addresses from incoming frames",
-            "Builds MAC address table",
-            "Looks up destination MAC",
-            "Forwards frame only to that port"
-        ],
-        real_example: "Cisco Catalyst, Netgear business switch",
+        use_case: "Office switches connect dozens of computers and forward data only to the intended device.",
+        how_it_works: ["Learns MAC addresses", "Builds MAC table", "Looks up destination MAC", "Forwards to correct port"],
+        real_example: "Cisco Catalyst, Netgear switch",
         simulation_steps: [
             {"from": "PC-A", "to": "Switch", "data": "Frame → MAC-BB", "action": "Frame arrives"},
             {"from": "Switch", "to": "CAM Table", "data": "Lookup MAC BB", "action": "Found on port 3"},
@@ -227,82 +449,72 @@ const HOMEPAGE_DEVICES = [
         name: "Hub",
         icon: "🔌",
         color: "#1abc9c",
-        short: "Broadcasts data to all connected devices (legacy).",
+        short: "Broadcasts data to all devices (legacy).",
         layers: [1],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/4_port_netgear_ethernet_hub.jpg/640px-4_port_netgear_ethernet_hub.jpg",
-        use_case: "Old hubs are rarely used now — they broadcast every packet to every device, causing collisions and wasted bandwidth.",
-        how_it_works: [
-            "Receives signal on one port",
-            "Amplifies signal",
-            "Repeats to ALL other ports",
-            "No intelligence or filtering"
-        ],
+        use_case: "Old hubs broadcast every packet to every device, causing collisions — rarely used today.",
+        how_it_works: ["Receives signal", "Amplifies", "Repeats to ALL ports", "No intelligence"],
         real_example: "Legacy Ethernet hub (obsolete)",
         simulation_steps: [
             {"from": "PC-A", "to": "Hub", "data": "Frame → PC-B", "action": "Frame received"},
-            {"from": "Hub", "to": "All Ports", "data": "Broadcast", "action": "Sent everywhere!"},
-            {"from": "Hub", "to": "PC-C, D, E", "data": "Wasted bandwidth", "action": "Collisions possible"}
+            {"from": "Hub", "to": "All Ports", "data": "Broadcast", "action": "Sent everywhere"},
+            {"from": "Hub", "to": "PC-C,D,E", "data": "Wasted BW", "action": "Collisions possible"}
         ]
     },
     {
-        name: "Access Point (AP)",
+        name: "Access Point",
         icon: "📡",
         color: "#9b59b6",
         short: "Provides wireless network access to devices.",
         layers: [2, 1],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Wireless_access_point.jpg/640px-Wireless_access_point.jpg",
         use_case: "Office APs let laptops and phones connect to the wired network over Wi-Fi.",
-        how_it_works: [
-            "Broadcasts SSID (Wi-Fi name)",
-            "Authenticates connecting devices",
-            "Bridges wireless traffic to wired LAN",
-            "Manages multiple clients"
-        ],
-        real_example: "Ubiquiti UniFi AP, Cisco Aironet",
+        how_it_works: ["Broadcasts SSID", "Authenticates devices", "Bridges wireless to wired", "Manages clients"],
+        real_example: "Ubiquiti UniFi AP",
         simulation_steps: [
             {"from": "Laptop", "to": "AP", "data": "Wi-Fi association", "action": "Client connects"},
             {"from": "AP", "to": "Auth", "data": "WPA2 handshake", "action": "Authenticated"},
-            {"from": "AP", "to": "Wired LAN", "data": "Bridged frames", "action": "Traffic to network"}
+            {"from": "AP", "to": "Wired LAN", "data": "Bridged frames", "action": "Traffic flows"}
         ]
     }
 ];
 
-// Render device cards on homepage
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('homeDeviceGrid');
     if (!grid) return;
 
+    const layerColors = {1:'#1abc9c',2:'#9b59b6',3:'#3498db',4:'#27ae60',5:'#f39c12',6:'#e67e22',7:'#e74c3c'};
+
     HOMEPAGE_DEVICES.forEach(device => {
         const card = document.createElement('div');
-        card.className = 'device-card';
+        card.className = 'device-card-v2';
         card.style.setProperty('--device-color', device.color);
         card.setAttribute('data-device', JSON.stringify(device));
         card.setAttribute('tabindex', '0');
         card.setAttribute('role', 'button');
         card.innerHTML = `
-            <div class="device-img-wrapper">
-                <img src="${device.image}" alt="${device.name}" class="device-real-img" loading="lazy"
+            <div class="device-img-v2">
+                <img src="${device.image}" alt="${device.name}" loading="lazy"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="device-emoji-fallback" style="display:none;background: linear-gradient(135deg, ${device.color}, ${device.color}88);">
+                <div class="device-fallback-v2" style="display:none;">
                     <span>${device.icon}</span>
                 </div>
-                <div class="device-click-hint">👆 Click to explore</div>
-            </div>
-            <div class="device-card-body">
-                <h3>${device.name}</h3>
-                <p>${device.short}</p>
-                <div class="device-layers-badges">
-                    ${device.layers.map(l => `<span class="mini-layer-badge" style="--c: ${
-                        {1:'#1abc9c',2:'#9b59b6',3:'#3498db',4:'#27ae60',5:'#f39c12',6:'#e67e22',7:'#e74c3c'}[l]
-                    }">L${l}</span>`).join('')}
+                <div class="device-overlay-v2">
+                    <span class="device-cta-v2">Click to explore</span>
                 </div>
+            </div>
+            <div class="device-body-v2">
+                <div class="device-title-row-v2">
+                    <h3>${device.name}</h3>
+                    <div class="device-layers-v2">
+                        ${device.layers.map(l => `<span class="layer-pill" style="--c: ${layerColors[l]}">L${l}</span>`).join('')}
+                    </div>
+                </div>
+                <p>${device.short}</p>
             </div>
         `;
 
-        // Click opens modal
         card.addEventListener('click', () => window.openDeviceModal(card));
-
-        // Keyboard access
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -312,8 +524,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         grid.appendChild(card);
     });
-
-    console.log('%c🏠 Homepage devices loaded:', 'color: #9b59b6;', grid.children.length);
 });
 </script>
 {% endblock %}

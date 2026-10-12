@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Wireshark Statistics & Analysis{% endblock %}
+
+{% block content %}
+<section class="tcp-hero wireshark-hero">
+    <h1>📊 <span class="gradient-text">Statistics & Analysis</span></h1>
+    <p>Every statistics tool in Wireshark — what it does and how to read the output</p>
+</section>
+
+<section class="tcp-section">
+    <div class="feature-grid">
+        {% for stat in stats %}
+        <div class="feature-card" style="border-top: 4px solid {{ stat.color }};">
+            <div class="fc-icon">{{ stat.icon }}</div>
+            <h3>{{ stat.name }}</h3>
+            <p>{{ stat.desc }}</p>
+            <p style="font-size: 0.8rem; color: var(--text-dim); margin-top: 0.5rem;"><strong>Use case:</strong> {{ stat.use_case }}</p>
+            <div class="scan-terminal-mini" style="margin-top: 1rem;">
+                <div class="terminal-bar-mini">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span class="term-title-mini">output</span>
+                </div>
+                <pre class="terminal-output-mini" style="font-size: 0.7rem;">{{ stat.output }}</pre>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

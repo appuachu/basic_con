@@ -125,35 +125,303 @@
     </div>
 </section>
 
+<!-- ============ INTERACTIVE TCP SEGMENT STRUCTURE ============ -->
 <section class="tcp-section">
     <h2 class="section-title">📦 TCP Segment Structure</h2>
-    <div class="segment-visual">
+    <p class="section-desc">Click any field to learn what it does with real examples and simulations</p>
+
+    <div class="segment-visual-interactive">
         <div class="seg-row">
-            <div class="seg-cell" style="flex:2">Source Port (16)</div>
-            <div class="seg-cell" style="flex:2">Destination Port (16)</div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[0].color }}" onclick="openTcpField(0)">
+                <div class="seg-cell-label">Source Port</div>
+                <div class="seg-cell-size">16 bits</div>
+            </div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[1].color }}" onclick="openTcpField(1)">
+                <div class="seg-cell-label">Destination Port</div>
+                <div class="seg-cell-size">16 bits</div>
+            </div>
         </div>
         <div class="seg-row">
-            <div class="seg-cell" style="flex:4">Sequence Number (32)</div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[2].color }}" onclick="openTcpField(2)">
+                <div class="seg-cell-label">Sequence Number</div>
+                <div class="seg-cell-size">32 bits</div>
+            </div>
         </div>
         <div class="seg-row">
-            <div class="seg-cell" style="flex:4">Acknowledgment Number (32)</div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[3].color }}" onclick="openTcpField(3)">
+                <div class="seg-cell-label">Acknowledgment Number</div>
+                <div class="seg-cell-size">32 bits</div>
+            </div>
         </div>
         <div class="seg-row">
-            <div class="seg-cell" style="flex:1">Data Offset</div>
-            <div class="seg-cell" style="flex:1">Reserved</div>
-            <div class="seg-cell flags-cell" style="flex:4">Flags (URG|ACK|PSH|RST|SYN|FIN)</div>
-            <div class="seg-cell" style="flex:2">Window Size</div>
+            <div class="seg-cell-clickable seg-cell-small" style="--field-color: {{ segment_fields[4].color }}" onclick="openTcpField(4)">
+                <div class="seg-cell-label">Data Offset</div>
+                <div class="seg-cell-size">4 bits</div>
+            </div>
+            <div class="seg-cell-clickable seg-cell-small" style="--field-color: #7f8c8d">
+                <div class="seg-cell-label">Reserved</div>
+                <div class="seg-cell-size">3 bits</div>
+            </div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[5].color }}" onclick="openTcpField(5)">
+                <div class="seg-cell-label">Flags</div>
+                <div class="seg-cell-size">9 bits</div>
+            </div>
+            <div class="seg-cell-clickable seg-cell-small" style="--field-color: {{ segment_fields[6].color }}" onclick="openTcpField(6)">
+                <div class="seg-cell-label">Window</div>
+                <div class="seg-cell-size">16 bits</div>
+            </div>
         </div>
         <div class="seg-row">
-            <div class="seg-cell" style="flex:2">Checksum</div>
-            <div class="seg-cell" style="flex:2">Urgent Pointer</div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[7].color }}" onclick="openTcpField(7)">
+                <div class="seg-cell-label">Checksum</div>
+                <div class="seg-cell-size">16 bits</div>
+            </div>
+            <div class="seg-cell-clickable" style="--field-color: {{ segment_fields[8].color }}" onclick="openTcpField(8)">
+                <div class="seg-cell-label">Urgent Pointer</div>
+                <div class="seg-cell-size">16 bits</div>
+            </div>
         </div>
         <div class="seg-row">
-            <div class="seg-cell" style="flex:4">Options (variable)</div>
+            <div class="seg-cell-clickable seg-cell-wide" style="--field-color: {{ segment_fields[9].color }}" onclick="openTcpField(9)">
+                <div class="seg-cell-label">Options (variable)</div>
+                <div class="seg-cell-size">0–40 bytes</div>
+            </div>
         </div>
         <div class="seg-row">
-            <div class="seg-cell data-cell" style="flex:4">DATA PAYLOAD</div>
+            <div class="seg-cell-clickable data-cell" style="--field-color: #27ae60">
+                <div class="seg-cell-label">DATA PAYLOAD</div>
+                <div class="seg-cell-size">Variable length</div>
+            </div>
         </div>
     </div>
 </section>
+
+<!-- ============ TCP FIELD MODAL ============ -->
+<div class="modal-overlay" id="tcpFieldModal" onclick="closeTcpModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeTcpModal()">×</button>
+
+        <div class="modal-header" id="tcpModalHeader">
+            <div class="modal-icon" id="tcpModalIcon">📦</div>
+            <div>
+                <h2 id="tcpModalTitle">Field Name</h2>
+                <p class="modal-subtitle" id="tcpModalSize">Size</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>🎯 Purpose</h3>
+                <p id="tcpModalPurpose"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📋 Key Details</h3>
+                <ul class="modal-list" id="tcpModalDetails"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>💡 Example</h3>
+                <p class="modal-example" id="tcpModalExample"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🌍 Real-World Scenario</h3>
+                <p id="tcpModalScenario"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Real Terminal Output</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">terminal</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="tcpModalOutput"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section" id="tcpSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="tcpModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="tcpSimPlayBtn" onclick="toggleTcpSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetTcpSim()">↺ Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+const TCP_FIELDS = {{ segment_fields|tojson }};
+let currentTcpSimSteps = [];
+let currentTcpSimIndex = 0;
+let tcpSimTimer = null;
+let isTcpPaused = false;
+
+function openTcpField(idx) {
+    const field = TCP_FIELDS[idx];
+    if (!field) return;
+
+    const modal = document.getElementById('tcpFieldModal');
+
+    document.getElementById('tcpModalHeader').style.setProperty('--modal-color', field.color);
+    document.getElementById('tcpModalIcon').textContent = '📦';
+    document.getElementById('tcpModalIcon').style.background = field.color;
+    document.getElementById('tcpModalTitle').textContent = field.name;
+    document.getElementById('tcpModalSize').textContent = field.size;
+    document.getElementById('tcpModalPurpose').textContent = field.purpose;
+    document.getElementById('tcpModalExample').textContent = field.example;
+    document.getElementById('tcpModalScenario').textContent = field.scenario;
+    document.getElementById('tcpModalOutput').textContent = field.real_output;
+
+    const detailsList = document.getElementById('tcpModalDetails');
+    detailsList.innerHTML = '';
+    field.details.forEach(d => {
+        const li = document.createElement('li');
+        li.textContent = d;
+        detailsList.appendChild(li);
+    });
+
+    currentTcpSimSteps = field.simulation || [];
+    currentTcpSimIndex = 0;
+    isTcpPaused = false;
+    if (tcpSimTimer) { clearInterval(tcpSimTimer); tcpSimTimer = null; }
+
+    const simSection = document.getElementById('tcpSimSection');
+    if (currentTcpSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateTcpPlayBtn('▶ Play');
+        renderTcpSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function renderTcpSim() {
+    const player = document.getElementById('tcpModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+    if (currentTcpSimSteps.length === 0) return;
+
+    const step = currentTcpSimSteps[currentTcpSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${step.from}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color}">${step.data}</div>
+            <div class="sim-action-label">${step.title} — ${step.desc}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${currentTcpSimIndex + 1} / ${currentTcpSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${step.to}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    currentTcpSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= currentTcpSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleTcpSim() {
+    if (currentTcpSimSteps.length === 0) return;
+    if (tcpSimTimer && !isTcpPaused) { pauseTcpSim(); return; }
+    if (isTcpPaused) { resumeTcpSim(); return; }
+    startTcpSim();
+}
+
+function startTcpSim() {
+    if (tcpSimTimer) clearInterval(tcpSimTimer);
+    currentTcpSimIndex = 0;
+    isTcpPaused = false;
+    renderTcpSim();
+    updateTcpPlayBtn('⏸ Pause');
+    tcpSimTimer = setInterval(() => {
+        currentTcpSimIndex++;
+        if (currentTcpSimIndex >= currentTcpSimSteps.length) {
+            clearInterval(tcpSimTimer);
+            tcpSimTimer = null;
+            currentTcpSimIndex = currentTcpSimSteps.length - 1;
+            renderTcpSim();
+            updateTcpPlayBtn('▶ Replay');
+            return;
+        }
+        renderTcpSim();
+    }, 1800);
+}
+
+function pauseTcpSim() {
+    if (!tcpSimTimer) return;
+    clearInterval(tcpSimTimer);
+    tcpSimTimer = null;
+    isTcpPaused = true;
+    updateTcpPlayBtn('▶ Resume');
+}
+
+function resumeTcpSim() {
+    if (!isTcpPaused) return;
+    isTcpPaused = false;
+    updateTcpPlayBtn('⏸ Pause');
+    tcpSimTimer = setInterval(() => {
+        currentTcpSimIndex++;
+        if (currentTcpSimIndex >= currentTcpSimSteps.length) {
+            clearInterval(tcpSimTimer);
+            tcpSimTimer = null;
+            currentTcpSimIndex = currentTcpSimSteps.length - 1;
+            renderTcpSim();
+            updateTcpPlayBtn('▶ Replay');
+            return;
+        }
+        renderTcpSim();
+    }, 1800);
+}
+
+function updateTcpPlayBtn(label) {
+    const btn = document.getElementById('tcpSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetTcpSim() {
+    if (tcpSimTimer) clearInterval(tcpSimTimer);
+    tcpSimTimer = null;
+    isTcpPaused = false;
+    currentTcpSimIndex = 0;
+    updateTcpPlayBtn('▶ Play');
+    renderTcpSim();
+}
+
+function closeTcpModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('tcpFieldModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (tcpSimTimer) clearInterval(tcpSimTimer);
+    tcpSimTimer = null;
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeTcpModal(); });
+</script>
 {% endblock %}

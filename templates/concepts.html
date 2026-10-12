@@ -2,89 +2,281 @@
 {% block title %}Network Concepts — Learn NAT, Routing & More{% endblock %}
 
 {% block content %}
-<section class="tcp-hero concepts-hero">
-    <h1>🧠 <span class="gradient-text">Network Concepts</span></h1>
-    <p>Master the fundamental ideas behind modern networks — NAT, Bridging, Routing, Subnetting & more</p>
-</section>
 
-<!-- Filter Bar -->
-<section class="concepts-section">
-    <div class="concept-filters">
-        <button class="concept-filter active" onclick="filterConcepts('all', event)">All Concepts</button>
-        <button class="concept-filter" onclick="filterConcepts('Addressing', event)">📍 Addressing</button>
-        <button class="concept-filter" onclick="filterConcepts('Layer 2', event)">🔗 Layer 2</button>
-        <button class="concept-filter" onclick="filterConcepts('Layer 3', event)">🗺️ Layer 3</button>
-        <button class="concept-filter" onclick="filterConcepts('Services', event)">⚙️ Services</button>
-        <button class="concept-filter" onclick="filterConcepts('Security', event)">🛡️ Security</button>
+<!-- ============ HERO ============ -->
+<section class="concepts-hero-v2">
+    <div class="hero-v2-bg"></div>
+    <div class="hero-v2-content">
+        <div class="hero-v2-badge">🧠 Networking Fundamentals</div>
+        <h1 class="hero-v2-title">
+            Master <span class="gradient-text">Network Concepts</span>
+        </h1>
+        <p class="hero-v2-subtitle">
+            From NAT to VLANs, from Subnetting to Load Balancing —
+            every fundamental concept explained with real-world examples,
+            visual diagrams, and interactive simulations.
+        </p>
     </div>
 
-    <div class="concepts-grid" id="conceptsGrid">
+    <div class="hero-v2-stats">
+        <div class="stat-v2">
+            <span class="stat-v2-num">{{ concepts|length }}</span>
+            <span class="stat-v2-label">Concepts</span>
+        </div>
+        <div class="stat-v2-divider"></div>
+        <div class="stat-v2">
+            <span class="stat-v2-num">6</span>
+            <span class="stat-v2-label">Categories</span>
+        </div>
+        <div class="stat-v2-divider"></div>
+        <div class="stat-v2">
+            <span class="stat-v2-num">100%</span>
+            <span class="stat-v2-label">Interactive</span>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FEATURED CONCEPT ============ -->
+<section class="featured-concept-section">
+    <div class="featured-concept-card" style="--feat-color: #3498db">
+        <div class="fc-left">
+            <div class="fc-icon-big">🔄</div>
+            <div class="fc-label">⭐ Most Important</div>
+        </div>
+        <div class="fc-right">
+            <h2>NAT (Network Address Translation)</h2>
+            <p>Without NAT, the internet would have run out of IPv4 addresses in the 1990s.
+               It's the reason your home has 20+ devices online — all sharing <strong>one public IP</strong> from your ISP.</p>
+            <div class="fc-stats">
+                <span class="fc-stat">📍 <strong>Layer 3/4</strong></span>
+                <span class="fc-stat">🎯 <strong>Public IP Sharing</strong></span>
+                <span class="fc-stat">🏠 <strong>Every home network</strong></span>
+            </div>
+            <a href="/concept/nat" class="fc-btn">Learn NAT →</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FILTERS + SEARCH ============ -->
+<section class="concepts-section-v2">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">All Concepts</div>
+        <h2 class="section-title-v2">Explore by Category</h2>
+        <p class="section-desc-v2">Filter, search, and click any card to dive deep</p>
+    </div>
+
+    <div class="concept-controls">
+        <div class="search-bar-concepts">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="conceptSearch" placeholder="Search concepts..." onkeyup="searchConcepts()">
+        </div>
+
+        <div class="concept-filters-v2">
+            <button class="filter-pill active" onclick="filterConcepts('all', event)">
+                <span class="pill-icon">🎯</span>
+                All
+                <span class="pill-count">{{ concepts|length }}</span>
+            </button>
+            <button class="filter-pill" onclick="filterConcepts('Addressing', event)">
+                <span class="pill-icon">📍</span>
+                Addressing
+                <span class="pill-count">{{ concepts.values()|selectattr('category', 'equalto', 'Addressing')|list|length }}</span>
+            </button>
+            <button class="filter-pill" onclick="filterConcepts('Layer 2', event)">
+                <span class="pill-icon">🔗</span>
+                Layer 2
+                <span class="pill-count">{{ concepts.values()|selectattr('category', 'equalto', 'Layer 2')|list|length }}</span>
+            </button>
+            <button class="filter-pill" onclick="filterConcepts('Layer 3', event)">
+                <span class="pill-icon">🗺️</span>
+                Layer 3
+                <span class="pill-count">{{ concepts.values()|selectattr('category', 'equalto', 'Layer 3')|list|length }}</span>
+            </button>
+            <button class="filter-pill" onclick="filterConcepts('Services', event)">
+                <span class="pill-icon">⚙️</span>
+                Services
+                <span class="pill-count">{{ concepts.values()|selectattr('category', 'equalto', 'Services')|list|length }}</span>
+            </button>
+            <button class="filter-pill" onclick="filterConcepts('Security', event)">
+                <span class="pill-icon">🛡️</span>
+                Security
+                <span class="pill-count">{{ concepts.values()|selectattr('category', 'equalto', 'Security')|list|length }}</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="concepts-grid-v2" id="conceptsGrid">
         {% for key, concept in concepts.items() %}
         <a href="/concept/{{ concept.id }}"
-           class="concept-card"
+           class="concept-card-v2"
            style="--concept-color: {{ concept.color }}"
-           data-category="{{ concept.category }}">
-            <div class="concept-card-header">
-                <div class="concept-icon">{{ concept.icon }}</div>
-                <div class="concept-badges">
-                    <span class="badge-category">{{ concept.category }}</span>
-                    <span class="badge-difficulty diff-{{ concept.difficulty|lower }}">{{ concept.difficulty }}</span>
+           data-category="{{ concept.category }}"
+           data-title="{{ concept.title|lower }}"
+           data-summary="{{ concept.summary|lower }}">
+            <div class="cc-v2-glow"></div>
+
+            <div class="cc-v2-header">
+                <div class="cc-v2-icon">{{ concept.icon }}</div>
+                <div class="cc-v2-badges">
+                    <span class="cc-v2-cat">{{ concept.category }}</span>
+                    <span class="cc-v2-diff diff-{{ concept.difficulty|lower }}">{{ concept.difficulty }}</span>
                 </div>
             </div>
-            <h3>{{ concept.title }}</h3>
-            <p>{{ concept.summary }}</p>
-            <div class="concept-card-footer">
-                <span>Learn More</span>
-                <span class="arrow">→</span>
+
+            <h3 class="cc-v2-title">{{ concept.title }}</h3>
+            <p class="cc-v2-summary">{{ concept.summary }}</p>
+
+            <div class="cc-v2-meta">
+                <div class="cc-v2-bar">
+                    <div class="cc-v2-bar-fill" style="width: {{ {'Beginner': '33%', 'Intermediate': '66%', 'Advanced': '100%'}[concept.difficulty] }}"></div>
+                </div>
+                <span class="cc-v2-bar-label">{{ concept.difficulty }}</span>
+            </div>
+
+            <div class="cc-v2-footer">
+                <span>Explore</span>
+                <span class="cc-v2-arrow">→</span>
             </div>
         </a>
         {% endfor %}
     </div>
+
+    <div class="no-results-v2" id="noResults" style="display:none;">
+        <div class="nr-icon">🔍</div>
+        <h3>No concepts found</h3>
+        <p>Try a different search term or category</p>
+    </div>
 </section>
 
-<!-- Quick Reference Table -->
-<section class="tcp-section dark">
-    <h2 class="section-title">⚡ Quick Comparison</h2>
-    <p class="section-desc">At-a-glance comparison of key concepts</p>
+<!-- ============ COMPARISON TABLE ============ -->
+<section class="comparison-section-v2">
+    <div class="section-header-v2">
+        <div class="section-eyebrow">Quick Reference</div>
+        <h2 class="section-title-v2">Comparison Table</h2>
+        <p class="section-desc-v2">At-a-glance view of how all concepts relate</p>
+    </div>
 
-    <div class="comparison-table">
+    <div class="comparison-table-v2">
         <table>
             <thead>
                 <tr>
                     <th>Concept</th>
-                    <th>Layer</th>
+                    <th>OSI Layer</th>
                     <th>Purpose</th>
                     <th>Key Identifier</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Bridge</td><td>L2</td><td>Connect segments</td><td>MAC address</td></tr>
-                <tr><td>Switch</td><td>L2</td><td>Forward frames</td><td>MAC address</td></tr>
-                <tr><td>VLAN</td><td>L2</td><td>Isolate segments</td><td>VLAN ID (802.1Q)</td></tr>
-                <tr><td>Router</td><td>L3</td><td>Connect networks</td><td>IP address</td></tr>
-                <tr><td>NAT</td><td>L3/L4</td><td>Share public IP</td><td>Public IP + Port</td></tr>
-                <tr><td>Subnetting</td><td>L3</td><td>Divide networks</td><td>Subnet mask</td></tr>
-                <tr><td>DHCP</td><td>L7</td><td>Auto-config IPs</td><td>MAC address</td></tr>
-                <tr><td>DNS</td><td>L7</td><td>Name → IP</td><td>Domain name</td></tr>
-                <tr><td>Proxy</td><td>L7</td><td>Intermediary</td><td>Proxy IP + Port</td></tr>
-                <tr><td>Firewall</td><td>L3-L7</td><td>Filter traffic</td><td>Rules & state</td></tr>
-                <tr><td>Load Balancer</td><td>L4/L7</td><td>Distribute traffic</td><td>VIP address</td></tr>
+                <tr>
+                    <td><strong>Bridge</strong></td>
+                    <td><span class="layer-tag" style="--l: #9b59b6">L2</span></td>
+                    <td>Connect segments</td>
+                    <td><code>MAC address</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Switch</strong></td>
+                    <td><span class="layer-tag" style="--l: #9b59b6">L2</span></td>
+                    <td>Forward frames</td>
+                    <td><code>MAC address</code></td>
+                </tr>
+                <tr>
+                    <td><strong>VLAN</strong></td>
+                    <td><span class="layer-tag" style="--l: #9b59b6">L2</span></td>
+                    <td>Isolate segments</td>
+                    <td><code>VLAN ID (802.1Q)</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Router</strong></td>
+                    <td><span class="layer-tag" style="--l: #3498db">L3</span></td>
+                    <td>Connect networks</td>
+                    <td><code>IP address</code></td>
+                </tr>
+                <tr>
+                    <td><strong>NAT</strong></td>
+                    <td><span class="layer-tag" style="--l: #3498db">L3</span><span class="layer-tag" style="--l: #27ae60">L4</span></td>
+                    <td>Share public IP</td>
+                    <td><code>Public IP + Port</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Subnetting</strong></td>
+                    <td><span class="layer-tag" style="--l: #3498db">L3</span></td>
+                    <td>Divide networks</td>
+                    <td><code>Subnet mask</code></td>
+                </tr>
+                <tr>
+                    <td><strong>DHCP</strong></td>
+                    <td><span class="layer-tag" style="--l: #e74c3c">L7</span></td>
+                    <td>Auto-config IPs</td>
+                    <td><code>MAC address</code></td>
+                </tr>
+                <tr>
+                    <td><strong>DNS</strong></td>
+                    <td><span class="layer-tag" style="--l: #e74c3c">L7</span></td>
+                    <td>Name → IP</td>
+                    <td><code>Domain name</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Proxy</strong></td>
+                    <td><span class="layer-tag" style="--l: #e74c3c">L7</span></td>
+                    <td>Intermediary</td>
+                    <td><code>Proxy IP + Port</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Firewall</strong></td>
+                    <td><span class="layer-tag" style="--l: #3498db">L3</span>–<span class="layer-tag" style="--l: #e74c3c">L7</span></td>
+                    <td>Filter traffic</td>
+                    <td><code>Rules & state</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Load Balancer</strong></td>
+                    <td><span class="layer-tag" style="--l: #27ae60">L4</span><span class="layer-tag" style="--l: #e74c3c">L7</span></td>
+                    <td>Distribute traffic</td>
+                    <td><code>VIP address</code></td>
+                </tr>
             </tbody>
         </table>
     </div>
 </section>
+
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
 function filterConcepts(cat, event) {
-    document.querySelectorAll('.concept-filter').forEach(b => b.classList.remove('active'));
-    if (event) event.target.classList.add('active');
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    if (event) event.currentTarget.classList.add('active');
 
-    document.querySelectorAll('.concept-card').forEach(card => {
+    let visible = 0;
+    document.querySelectorAll('.concept-card-v2').forEach(card => {
         const cardCat = card.getAttribute('data-category');
-        card.style.display = (cat === 'all' || cardCat === cat) ? '' : 'none';
+        const show = (cat === 'all' || cardCat === cat);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
     });
+
+    document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+
+function searchConcepts() {
+    const query = document.getElementById('conceptSearch').value.toLowerCase();
+    const activeFilter = document.querySelector('.filter-pill.active');
+    const activeCat = activeFilter ? activeFilter.textContent.trim().split(/\s+/)[1] || 'all' : 'all';
+
+    let visible = 0;
+    document.querySelectorAll('.concept-card-v2').forEach(card => {
+        const title = card.getAttribute('data-title') || '';
+        const summary = card.getAttribute('data-summary') || '';
+        const cat = card.getAttribute('data-category');
+
+        const matchesSearch = title.includes(query) || summary.includes(query);
+        const matchesFilter = activeCat === 'all' || cat === activeCat;
+
+        const show = matchesSearch && matchesFilter;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
 }
 </script>
 {% endblock %}

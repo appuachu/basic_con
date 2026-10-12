@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Wireshark Export & Files{% endblock %}
+
+{% block content %}
+<section class="tcp-hero wireshark-hero">
+    <h1>💾 <span class="gradient-text">Export & File Management</span></h1>
+    <p>Extract files, save captures, and document evidence</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📦 Export Objects</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">{{ export.export_objects.intro }}</p>
+    </div>
+
+    <h3 class="subsection-title">Supported Protocols</h3>
+    <div class="cmds-grid">
+        {% for p in export.export_objects.protocols %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ p.protocol }}</code>
+            <p class="cmd-desc">{{ p.desc }}</p>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">{{ p.example }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">GUI Steps</h3>
+    <div class="workflow-box">
+        {% for step in export.export_objects.gui_steps %}
+        <div class="workflow-step">
+            <div class="wf-num">{{ step.step }}</div>
+            <div class="wf-content">
+                <h4>{{ step.title }}</h4>
+                <p>{{ step.desc }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="subsection-title">tshark Commands</h3>
+    <div class="cmds-grid">
+        {% for cmd in export.export_objects.tshark_commands %}
+        <div class="cmd-card">
+            <code class="cmd-code" style="cursor: pointer;" onclick="navigator.clipboard.writeText('{{ cmd.cmd }}'); this.textContent='✅ Copied!';">{{ cmd.cmd }}</code>
+            <p class="cmd-desc">{{ cmd.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🎬 Scenario: {{ export.export_objects.scenario.title }}</h2>
+    <div class="warning-box">
+        <div class="warning-icon">🦠</div>
+        <div>
+            <p>{{ export.export_objects.scenario.story }}</p>
+            <ul class="warning-list">
+                {% for step in export.export_objects.scenario.steps %}
+                <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+            <div class="scan-terminal-mini" style="margin-top: 1rem;">
+                <div class="terminal-bar-mini">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span class="term-title-mini">Export Objects</span>
+                </div>
+                <pre class="terminal-output-mini">{{ export.export_objects.scenario.output }}</pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📁 Save Formats</h2>
+    <div class="cmds-grid">
+        {% for fmt in export.save_formats.formats %}
+        <div class="cmd-card" style="border-left: 4px solid {% if fmt.recommended %}#27ae60{% else %}#95a5a6{% endif %};">
+            <code class="cmd-code">.{{ fmt.ext }}</code>
+            <p class="cmd-desc">{{ fmt.name }}</p>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">{{ fmt.desc }}</p>
+            {% if fmt.recommended %}<span style="color: #27ae60; font-size: 0.75rem;">✅ Recommended</span>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">📄 Capture File Properties</h2>
+    <div class="cmds-grid">
+        {% for field in export.capture_properties.fields %}
+        <div class="cmd-card">
+            <code class="cmd-code">{{ field.name }}</code>
+            <p class="cmd-desc">{{ field.desc }}</p>
+            <p style="font-size: 0.8rem; color: var(--text-dim);">Example: {{ field.example }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

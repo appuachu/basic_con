@@ -2,106 +2,212 @@
 {% block title %}{{ concept.title }} — Network Concepts{% endblock %}
 
 {% block content %}
-<section class="concept-hero" style="--concept-color: {{ concept.color }}">
-    <div class="breadcrumb">
-        <a href="/concepts">Concepts</a> <span>/</span> <span>{{ concept.title }}</span>
+
+<!-- ============ HERO ============ -->
+<section class="concept-detail-hero" style="--concept-color: {{ concept.color }}">
+    <div class="cdh-bg"></div>
+
+    <div class="cdh-content">
+        <div class="breadcrumb-cdh">
+            <a href="/concepts">🧠 Concepts</a>
+            <span class="bc-sep">/</span>
+            <span class="bc-current">{{ concept.title }}</span>
+        </div>
+
+        <div class="cdh-icon-wrap">
+            <div class="cdh-icon">{{ concept.icon }}</div>
+            <div class="cdh-icon-glow"></div>
+        </div>
+
+        <h1 class="cdh-title">{{ concept.title }}</h1>
+
+        <div class="cdh-meta">
+            <span class="cdh-chip chip-cat">
+                <span class="chip-icon">📂</span> {{ concept.category }}
+            </span>
+            <span class="cdh-chip diff-{{ concept.difficulty|lower }}">
+                <span class="chip-icon">📊</span> {{ concept.difficulty }}
+            </span>
+        </div>
+
+        <p class="cdh-summary">{{ concept.summary }}</p>
+
+        <div class="cdh-nav">
+            {% set ids = all_concepts.keys()|list %}
+            {% set current_idx = ids.index(concept.id) %}
+            {% if current_idx > 0 %}
+            {% set prev_c = all_concepts[ids[current_idx - 1]] %}
+            <a href="/concept/{{ prev_c.id }}" class="cdh-nav-btn prev">
+                <span class="nav-arrow">←</span>
+                <div>
+                    <div class="nav-label">Previous</div>
+                    <div class="nav-title">{{ prev_c.title }}</div>
+                </div>
+            </a>
+            {% else %}<div></div>{% endif %}
+
+            <a href="/concepts" class="cdh-nav-btn all">
+                <span class="nav-arrow">≡</span>
+                <div>
+                    <div class="nav-label">All</div>
+                    <div class="nav-title">Concepts</div>
+                </div>
+            </a>
+
+            {% if current_idx < ids|length - 1 %}
+            {% set next_c = all_concepts[ids[current_idx + 1]] %}
+            <a href="/concept/{{ next_c.id }}" class="cdh-nav-btn next">
+                <div>
+                    <div class="nav-label">Next</div>
+                    <div class="nav-title">{{ next_c.title }}</div>
+                </div>
+                <span class="nav-arrow">→</span>
+            </a>
+            {% else %}<div></div>{% endif %}
+        </div>
     </div>
-    <div class="concept-hero-icon">{{ concept.icon }}</div>
-    <h1>{{ concept.title }}</h1>
-    <div class="concept-meta">
-        <span class="badge-category">{{ concept.category }}</span>
-        <span class="badge-difficulty diff-{{ concept.difficulty|lower }}">{{ concept.difficulty }}</span>
-    </div>
-    <p class="concept-hero-summary">{{ concept.summary }}</p>
 </section>
 
-<section class="layer-content">
-    <div class="content-grid">
-
-        <div class="content-card highlight">
-            <h2>💡 Why Is It Needed?</h2>
-            <p class="real-world-text">{{ concept.why_needed }}</p>
+<!-- ============ WHY IT MATTERS ============ -->
+<section class="cd-block">
+    <div class="cd-why-card" style="--concept-color: {{ concept.color }}">
+        <div class="cd-why-icon">💡</div>
+        <div class="cd-why-content">
+            <div class="cd-eyebrow">Why It Matters</div>
+            <h2>Why Is It Needed?</h2>
+            <p>{{ concept.why_needed }}</p>
         </div>
+    </div>
+</section>
 
-        <div class="content-card">
-            <h2>⚙️ How It Works</h2>
-            <ol class="step-list">
-                {% for step in concept.how_it_works %}
-                <li>
-                    <span class="step-num">{{ loop.index }}</span>
-                    <span>{{ step }}</span>
-                </li>
-                {% endfor %}
-            </ol>
-        </div>
+<!-- ============ HOW IT WORKS ============ -->
+<section class="cd-block">
+    <div class="cd-section-header">
+        <div class="cd-eyebrow">Step by Step</div>
+        <h2 class="cd-section-title">⚙️ How It Works</h2>
+        <p class="cd-section-desc">Click any step to expand the details</p>
+    </div>
 
-        <div class="content-card">
-            <h2>🎯 Types / Variants</h2>
-            <div class="types-list">
-                {% for t in concept.types %}
-                <div class="type-item">
-                    <h4>{{ t.name }}</h4>
-                    <p>{{ t.desc }}</p>
-                </div>
-                {% endfor %}
+    <div class="cd-steps">
+        {% for step in concept.how_it_works %}
+        <div class="cd-step" onclick="this.classList.toggle('open')">
+            <div class="cd-step-num" style="background: {{ concept.color }}">{{ loop.index }}</div>
+            <div class="cd-step-body">
+                <p>{{ step }}</p>
             </div>
+            <div class="cd-step-toggle">▼</div>
         </div>
+        {% endfor %}
+    </div>
+</section>
 
-        <div class="content-card highlight">
-            <h2>🌍 Real-World Example</h2>
-            <p class="real-world-text">{{ concept.real_example }}</p>
+<!-- ============ TYPES / VARIANTS ============ -->
+<section class="cd-block">
+    <div class="cd-section-header">
+        <div class="cd-eyebrow">Variants</div>
+        <h2 class="cd-section-title">🎯 Types & Variants</h2>
+        <p class="cd-section-desc">Different flavors and when to use each</p>
+    </div>
+
+    <div class="cd-types-grid">
+        {% for t in concept.types %}
+        <div class="cd-type-card" style="--concept-color: {{ concept.color }}">
+            <div class="cd-type-icon">{{ loop.index }}</div>
+            <h3>{{ t.name }}</h3>
+            <p>{{ t.desc }}</p>
         </div>
+        {% endfor %}
+    </div>
+</section>
 
+<!-- ============ REAL-WORLD EXAMPLE ============ -->
+<section class="cd-block">
+    <div class="cd-example-card" style="--concept-color: {{ concept.color }}">
+        <div class="cd-example-icon">🌍</div>
+        <div class="cd-example-content">
+            <div class="cd-eyebrow">In The Wild</div>
+            <h2>Real-World Example</h2>
+            <p>{{ concept.real_example }}</p>
+        </div>
     </div>
 </section>
 
 <!-- ============ VISUAL SIMULATION ============ -->
-<section class="tcp-section dark">
-    <h2 class="section-title">🎬 Visual Walkthrough</h2>
-    <p class="section-desc">Watch how {{ concept.title }} processes data step by step</p>
+<section class="cd-sim-section" style="--concept-color: {{ concept.color }}">
+    <div class="cd-section-header">
+        <div class="cd-eyebrow">Interactive</div>
+        <h2 class="cd-section-title">🎬 Visual Walkthrough</h2>
+        <p class="cd-section-desc">Watch how {{ concept.title }} processes data step by step</p>
+    </div>
 
-    <div class="concept-sim-container">
-        <div class="concept-sim-diagram">
+    <div class="cd-sim-container">
+        <div class="cd-sim-progress">
+            <div class="cd-sim-progress-bar" id="simProgressBar"></div>
+        </div>
+
+        <div class="cd-sim-timeline" id="cdSimTimeline">
             {% for step in concept.diagram_steps %}
-            <div class="concept-sim-node" data-step="{{ loop.index }}" style="--step-color: {{ step.color }}">
-                <div class="cnode-step">{{ loop.index }}</div>
-                <div class="cnode-label">{{ step.label }}</div>
-                <code class="cnode-data">{{ step.data }}</code>
-                {% if not loop.last %}
-                <div class="cnode-arrow">↓</div>
-                {% endif %}
+            <div class="cd-sim-step" data-step="{{ loop.index0 }}" style="--step-color: {{ step.color }}">
+                <div class="cd-sim-node-wrapper">
+                    <div class="cd-sim-marker" style="background: {{ step.color }}">
+                        <span>{{ loop.index }}</span>
+                    </div>
+                    {% if not loop.last %}
+                    <div class="cd-sim-connector"></div>
+                    {% endif %}
+                </div>
+
+                <div class="cd-sim-content">
+                    <div class="cd-sim-label" style="color: {{ step.color }}">{{ step.label }}</div>
+                    <code class="cd-sim-data" style="border-color: {{ step.color }}">{{ step.data }}</code>
+                </div>
             </div>
             {% endfor %}
         </div>
 
         <div class="sim-controls" style="justify-content:center;margin-top:2rem;">
-            <button class="sim-btn" onclick="playConceptSim()">▶ Play Simulation</button>
+            <button class="sim-btn" id="cdSimPlayBtn" onclick="playConceptSim()">▶ Play Simulation</button>
             <button class="sim-btn sim-reset" onclick="resetConceptSim()">↺ Reset</button>
+        </div>
+
+        <div class="cd-sim-status" id="cdSimStatus">
+            Click play to watch the flow
         </div>
     </div>
 </section>
 
 <!-- ============ PROS / CONS ============ -->
-<section class="layer-content">
-    <div class="pros-cons-grid">
-        <div class="pros-card">
-            <div class="pc-header">
-                <span class="pc-icon">✅</span>
-                <h3>Key Benefits</h3>
+<section class="cd-block">
+    <div class="cd-section-header">
+        <div class="cd-eyebrow">Trade-offs</div>
+        <h2 class="cd-section-title">⚖️ Benefits & Drawbacks</h2>
+    </div>
+
+    <div class="cd-pros-cons-grid">
+        <div class="cd-pc-card cd-pros-card">
+            <div class="cd-pc-header">
+                <div class="cd-pc-icon">✅</div>
+                <div>
+                    <div class="cd-eyebrow">Upside</div>
+                    <h3>Key Benefits</h3>
+                </div>
             </div>
-            <ul class="pc-list">
+            <ul class="cd-pc-list">
                 {% for b in concept.key_benefits %}
                 <li>{{ b }}</li>
                 {% endfor %}
             </ul>
         </div>
 
-        <div class="cons-card">
-            <div class="pc-header">
-                <span class="pc-icon">⚠️</span>
-                <h3>Drawbacks / Limitations</h3>
+        <div class="cd-pc-card cd-cons-card">
+            <div class="cd-pc-header">
+                <div class="cd-pc-icon">⚠️</div>
+                <div>
+                    <div class="cd-eyebrow">Downside</div>
+                    <h3>Drawbacks & Limitations</h3>
+                </div>
             </div>
-            <ul class="pc-list">
+            <ul class="cd-pc-list">
                 {% for d in concept.key_drawbacks %}
                 <li>{{ d }}</li>
                 {% endfor %}
@@ -110,23 +216,32 @@
     </div>
 </section>
 
-<!-- ============ NAVIGATE TO OTHER CONCEPTS ============ -->
-<section class="all-layers-nav">
-    <h2 class="section-title">🧠 Explore Other Concepts</h2>
-    <div class="concepts-mini-grid">
+<!-- ============ EXPLORE OTHER CONCEPTS ============ -->
+<section class="cd-explore">
+    <div class="cd-section-header">
+        <div class="cd-eyebrow">Keep Learning</div>
+        <h2 class="cd-section-title">🧠 Explore Other Concepts</h2>
+    </div>
+
+    <div class="cd-explore-grid">
         {% for key, c in all_concepts.items() %}
         {% if c.id != concept.id %}
-        <a href="/concept/{{ c.id }}" class="concept-mini-card" style="--c: {{ c.color }}">
-            <span class="cmc-icon">{{ c.icon }}</span>
-            <div>
+        <a href="/concept/{{ c.id }}" class="cd-explore-card" style="--c: {{ c.color }}">
+            <div class="cd-explore-icon">{{ c.icon }}</div>
+            <div class="cd-explore-body">
                 <h4>{{ c.title }}</h4>
-                <p>{{ c.category }} • {{ c.difficulty }}</p>
+                <div class="cd-explore-meta">
+                    <span class="cd-explore-cat">{{ c.category }}</span>
+                    <span class="cd-explore-diff diff-{{ c.difficulty|lower }}">{{ c.difficulty }}</span>
+                </div>
             </div>
+            <span class="cd-explore-arrow">→</span>
         </a>
         {% endif %}
         {% endfor %}
     </div>
 </section>
+
 {% endblock %}
 
 {% block extra_scripts %}
@@ -135,30 +250,66 @@ let conceptStep = -1;
 let conceptTimer = null;
 
 function playConceptSim() {
-    const nodes = document.querySelectorAll('.concept-sim-node');
-    if (!nodes.length) return;
+    const steps = document.querySelectorAll('.cd-sim-step');
+    if (!steps.length) return;
 
-    if (conceptTimer) clearInterval(conceptTimer);
+    if (conceptTimer) {
+        clearInterval(conceptTimer);
+        conceptTimer = null;
+    }
+
+    // If already running, pause
+    if (conceptStep >= 0 && conceptStep < steps.length - 1) {
+        document.getElementById('cdSimPlayBtn').textContent = '▶ Resume';
+        return;
+    }
+
     conceptStep = -1;
-    nodes.forEach(n => n.classList.remove('active'));
+    steps.forEach(s => s.classList.remove('active', 'done'));
+    document.getElementById('cdSimPlayBtn').textContent = '⏸ Pause';
+    document.getElementById('cdSimStatus').textContent = 'Running...';
+    updateProgress(0, steps.length);
 
     conceptTimer = setInterval(() => {
+        // Mark previous as done
+        if (conceptStep >= 0 && conceptStep < steps.length) {
+            steps[conceptStep].classList.remove('active');
+            steps[conceptStep].classList.add('done');
+        }
+
         conceptStep++;
-        if (conceptStep >= nodes.length) {
+        if (conceptStep >= steps.length) {
             clearInterval(conceptTimer);
             conceptTimer = null;
+            document.getElementById('cdSimPlayBtn').textContent = '▶ Replay';
+            document.getElementById('cdSimStatus').textContent = '✅ Simulation complete';
+            updateProgress(steps.length, steps.length);
             return;
         }
-        nodes[conceptStep].classList.add('active');
-        nodes[conceptStep].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 1500);
+
+        steps[conceptStep].classList.add('active');
+        steps[conceptStep].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        updateProgress(conceptStep + 1, steps.length);
+        document.getElementById('cdSimStatus').textContent =
+            `Step ${conceptStep + 1} of ${steps.length}`;
+    }, 1600);
 }
 
 function resetConceptSim() {
     if (conceptTimer) clearInterval(conceptTimer);
     conceptTimer = null;
     conceptStep = -1;
-    document.querySelectorAll('.concept-sim-node').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.cd-sim-step').forEach(n => n.classList.remove('active', 'done'));
+    document.getElementById('cdSimPlayBtn').textContent = '▶ Play Simulation';
+    document.getElementById('cdSimStatus').textContent = 'Click play to watch the flow';
+    updateProgress(0, document.querySelectorAll('.cd-sim-step').length);
+}
+
+function updateProgress(current, total) {
+    const bar = document.getElementById('simProgressBar');
+    if (!bar) return;
+    const pct = total > 0 ? (current / total) * 100 : 0;
+    bar.style.width = pct + '%';
 }
 </script>
 {% endblock %}

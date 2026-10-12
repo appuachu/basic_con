@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Wireshark Hub — Complete Learning Platform{% endblock %}
+
+{% block content %}
+<section class="tcp-hero wireshark-hero">
+    <h1>🦈 <span class="gradient-text">Wireshark Learning Hub</span></h1>
+    <p>Master packet analysis — from basic captures to VoIP forensics and malware extraction</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">🎯 What Is Wireshark?</h2>
+    <div class="content-card highlight">
+        <p class="real-world-text">
+            Wireshark is the world's foremost network protocol analyzer. It captures packets traveling across your network
+            in real-time, decodes them layer by layer, and lets you filter, analyze, and extract everything from
+            HTTP requests to VoIP audio. It's used by network engineers, security analysts, and forensic investigators worldwide.
+        </p>
+    </div>
+</section>
+
+<section class="tcp-section dark">
+    <h2 class="section-title">🚀 Explore Wireshark Modules</h2>
+    <div class="feature-grid-landing">
+        <a href="/wireshark/interface" class="feature-tile" style="--tile-color: #3498db">
+            <div class="tile-icon">🖥️</div>
+            <h3>Interface & Menus</h3>
+            <p>All menu options — File, Edit, Capture, Analyze, Statistics, Telephony, Tools</p>
+        </a>
+        <a href="/wireshark/filters" class="feature-tile" style="--tile-color: #27ae60">
+            <div class="tile-icon">🔍</div>
+            <h3>Display Filters</h3>
+            <p>HTTP, TCP, DNS, TLS, VoIP, WiFi filters and advanced operators</p>
+        </a>
+        <a href="/wireshark/voip" class="feature-tile" style="--tile-color: #16a085">
+            <div class="tile-icon">📞</div>
+            <h3>VoIP Analysis</h3>
+            <p>SIP signaling, RTP streams, call flows, and audio playback</p>
+        </a>
+        <a href="/wireshark/export" class="feature-tile" style="--tile-color: #e67e22">
+            <div class="tile-icon">💾</div>
+            <h3>Export & Files</h3>
+            <p>Export Objects, save formats, capture properties, evidence documentation</p>
+        </a>
+        <a href="/wireshark/statistics" class="feature-tile" style="--tile-color: #9b59b6">
+            <div class="tile-icon">📊</div>
+            <h3>Statistics & Analysis</h3>
+            <p>Conversations, endpoints, I/O graphs, expert information, flow graphs</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

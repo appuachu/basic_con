@@ -24,11 +24,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="/osi" class="dropdown-link">
-                                <span class="dd-icon">📚</span>
+                            <a href="/concepts" class="dropdown-link">
+                                <span class="dd-icon">🧠</span>
                                 <span>
-                                    <strong>OSI Model</strong>
-                                    <small>7 layers explained</small>
+                                    <strong>Concepts</strong>
+                                    <small>Basic Network Concepts</small>
                                 </span>
                             </a>
                         </li>
@@ -51,11 +51,11 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/concepts" class="dropdown-link">
-                                <span class="dd-icon">🧠</span>
+                            <a href="/osi" class="dropdown-link">
+                                <span class="dd-icon">📚</span>
                                 <span>
-                                    <strong>Concepts</strong>
-                                    <small>Basic Network Concepts</small>
+                                    <strong>OSI Model</strong>
+                                    <small>7 layers explained</small>
                                 </span>
                             </a>
                         </li>
@@ -112,7 +112,7 @@
                     <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
                         🐧 Linux <span class="dropdown-arrow">▼</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-wide">
+                    <ul class="dropdown-menu dropdown-wide dropdown-scroll">
                         <li>
                             <a href="/linux" class="dropdown-link">
                                 <span class="dd-icon">🏠</span>
@@ -126,8 +126,8 @@
                             <a href="/linux/filesystem" class="dropdown-link">
                                 <span class="dd-icon">📁</span>
                                 <span>
-                                    <strong>Filesystem (/ to /)</strong>
-                                    <small>Every directory explained</small>
+                                    <strong>Filesystem</strong>
+                                    <small>/ to /var explained</small>
                                 </span>
                             </a>
                         </li>
@@ -136,7 +136,7 @@
                                 <span class="dd-icon">⌨️</span>
                                 <span>
                                     <strong>Basic Commands</strong>
-                                    <small>ls, cd, cp, mv, grep...</small>
+                                    <small>ls, cd, cp, grep...</small>
                                 </span>
                             </a>
                         </li>
@@ -144,8 +144,8 @@
                             <a href="/linux/permissions" class="dropdown-link">
                                 <span class="dd-icon">🔐</span>
                                 <span>
-                                    <strong>Permissions & chmod</strong>
-                                    <small>rwx, chmod, chown, umask</small>
+                                    <strong>Permissions</strong>
+                                    <small>rwx, chmod, chown</small>
                                 </span>
                             </a>
                         </li>
@@ -154,7 +154,7 @@
                                 <span class="dd-icon">👥</span>
                                 <span>
                                     <strong>Users & Groups</strong>
-                                    <small>/etc/passwd, shadow, group</small>
+                                    <small>passwd, shadow, group</small>
                                 </span>
                             </a>
                         </li>
@@ -163,7 +163,7 @@
                                 <span class="dd-icon">⚡</span>
                                 <span>
                                     <strong>sudo & SUID</strong>
-                                    <small>Privilege escalation, sudoers</small>
+                                    <small>Privilege escalation</small>
                                 </span>
                             </a>
                         </li>
@@ -171,8 +171,8 @@
                             <a href="/linux/shells" class="dropdown-link">
                                 <span class="dd-icon">🐚</span>
                                 <span>
-                                    <strong>Shells (bash/zsh/sh)</strong>
-                                    <small>Differences & scripts</small>
+                                    <strong>Shells</strong>
+                                    <small>bash/zsh/sh/fish</small>
                                 </span>
                             </a>
                         </li>
@@ -180,13 +180,93 @@
                             <a href="/linux/processes" class="dropdown-link">
                                 <span class="dd-icon">📊</span>
                                 <span>
-                                    <strong>Processes & Services</strong>
+                                    <strong>Processes</strong>
                                     <small>ps, top, systemctl</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/logs" class="dropdown-link">
+                                <span class="dd-icon">📜</span>
+                                <span>
+                                    <strong>Log Analysis</strong>
+                                    <small>auth.log, attacks</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/linux/firewall" class="dropdown-link">
+                                <span class="dd-icon">🛡️</span>
+                                <span>
+                                    <strong>Firewall</strong>
+                                    <small>UFW & iptables</small>
                                 </span>
                             </a>
                         </li>
                     </ul>
                 </li>
+                <!-- ============ WIRESHARK DROPDOWN ============ -->
+<li class="nav-dropdown">
+    <a href="#" class="nav-link dropdown-toggle" onclick="toggleDropdown(event)">
+        🦈 Wireshark <span class="dropdown-arrow">▼</span>
+    </a>
+    <ul class="dropdown-menu dropdown-wide dropdown-scroll">
+        <li>
+            <a href="/wireshark" class="dropdown-link">
+                <span class="dd-icon">🏠</span>
+                <span>
+                    <strong>Wireshark Hub</strong>
+                    <small>Everything in one place</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/wireshark/interface" class="dropdown-link">
+                <span class="dd-icon">🖥️</span>
+                <span>
+                    <strong>Interface & Menus</strong>
+                    <small>GUI, menus, capture options</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/wireshark/filters" class="dropdown-link">
+                <span class="dd-icon">🔍</span>
+                <span>
+                    <strong>Display Filters</strong>
+                    <small>BPF, operators, common filters</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/wireshark/voip" class="dropdown-link">
+                <span class="dd-icon">📞</span>
+                <span>
+                    <strong>VoIP Analysis</strong>
+                    <small>SIP, RTP, playback</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/wireshark/export" class="dropdown-link">
+                <span class="dd-icon">💾</span>
+                <span>
+                    <strong>Export & Files</strong>
+                    <small>Export Objects, formats</small>
+                </span>
+            </a>
+        </li>
+        <li>
+            <a href="/wireshark/statistics" class="dropdown-link">
+                <span class="dd-icon">📊</span>
+                <span>
+                    <strong>Statistics & Analysis</strong>
+                    <small>Conversations, graphs, expert</small>
+                </span>
+            </a>
+        </li>
+    </ul>
+</li>
 
                 <!-- ============ WEB HACKING DROPDOWN ============ -->
                 <li class="nav-dropdown">

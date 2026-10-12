@@ -1,0 +1,462 @@
+{% extends "base.html" %}
+{% block title %}Linux Log Analysis — Detect Attacks in Real Time{% endblock %}
+
+{% block content %}
+
+<!-- ============ LOG MODAL ============ -->
+<div class="modal-overlay" id="logModal" onclick="closeLogModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeLogModal()">×</button>
+
+        <div class="modal-header" id="logModalHeader">
+            <div class="modal-icon" id="logModalIcon">📜</div>
+            <div>
+                <h2 id="logModalTitle">Log File</h2>
+                <p class="modal-subtitle" id="logModalSubtitle">Purpose</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>📂 Path</h3>
+                <div class="modal-command-display" id="logModalPath"></div>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-dim);" id="logModalAlt"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>🎯 Purpose</h3>
+                <p id="logModalPurpose"></p>
+            </div>
+
+            <div class="modal-section">
+                <h3>📌 What Gets Logged</h3>
+                <ul class="modal-list" id="logModalWhat"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>💻 How to Read It Live</h3>
+                <div class="modal-command-display" id="logModalRead"></div>
+            </div>
+
+            <!-- REAL WORLD SCENARIO -->
+            <div class="modal-section" id="logScenarioSection">
+                <h3>🎬 Real-World Scenario</h3>
+                <div class="scenario-card" id="logScenarioCard">
+                    <div class="scenario-title" id="logScenarioTitle"></div>
+                    <p class="scenario-story" id="logScenarioStory"></p>
+                    <div class="scenario-trigger">
+                        <strong>🚨 Trigger:</strong> <span id="logScenarioTrigger"></span>
+                    </div>
+                    <div class="scenario-steps" id="logScenarioSteps"></div>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>📄 Sample Output</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini" id="logModalFileTitle">log</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="logModalSample"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section" id="logSimSection">
+                <h3>🎬 Attack Simulation</h3>
+                <div class="sim-player" id="logModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="logSimPlayBtn" onclick="toggleLogSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetLogSim()">↺ Reset</button>
+                </div>
+            </div>
+
+            <div class="modal-section">
+                <h3>🔍 Detection Commands</h3>
+                <div id="logModalCommands"></div>
+            </div>
+
+            <div class="modal-section">
+                <h3>✅ Response Actions</h3>
+                <ul class="modal-list" id="logModalResponse"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="tcp-hero linux-hero">
+    <h1>📜 <span class="gradient-text">Linux Log Analysis</span></h1>
+    <p>Find attackers in real time — click any log file for real-world scenarios and attack simulations</p>
+</section>
+
+<!-- ============ WHY LOGS MATTER ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎯 Why Logs Are Critical</h2>
+    <div class="feature-grid">
+        <div class="feature-card"><div class="fc-icon">🔍</div><h3>Detect Attacks</h3><p>Every attack leaves traces. Logs are the evidence.</p></div>
+        <div class="feature-card"><div class="fc-icon">⏱️</div><h3>Real-Time Alerts</h3><p>Watch logs live with <code>tail -f</code> to catch attacks as they happen</p></div>
+        <div class="feature-card"><div class="fc-icon">📊</div><h3>Forensics</h3><p>After a breach — logs tell you what happened, when, and how</p></div>
+        <div class="feature-card"><div class="fc-icon">🛡️</div><h3>Compliance</h3><p>PCI-DSS, HIPAA, SOC2 require log retention & monitoring</p></div>
+    </div>
+</section>
+
+<!-- ============ LOG FILES GRID ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">📁 Every Critical Log File</h2>
+    <p class="section-desc">Click any log file to see real-world attack scenarios, sample output, and detection commands</p>
+
+    <div class="cmds-grid">
+        {% for log in log_files %}
+        <div class="cmd-card cmd-clickable"
+             data-log='{{ log|tojson }}'
+             onclick="openLogModal(this)"
+             tabindex="0"
+             role="button"
+             style="border-left: 4px solid {{ log.color }};">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ log.name }}</code>
+                <span class="cmd-cat" style="background: {{ log.color }}22; color: {{ log.color }}; border-color: {{ log.color }}">{{ log.icon }}</span>
+            </div>
+            <p class="cmd-desc">{{ log.purpose[:110] }}...</p>
+            <span class="cmd-click-hint">👆 Click for scenario + simulation</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ LIVE MONITORING WORKFLOW ============ -->
+<section class="tcp-section">
+    <h2 class="section-title">🎥 Live Monitoring Workflow</h2>
+    <p class="section-desc">What a sysadmin actually does to watch for attacks in real time</p>
+
+    <div class="workflow-box">
+        <div class="workflow-step">
+            <div class="wf-num">1</div>
+            <div class="wf-content">
+                <h4>Open terminal & tail a log</h4>
+                <p>Watch auth.log in real time — every login attempt shows up as it happens</p>
+                <code>sudo tail -f /var/log/auth.log</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">2</div>
+            <div class="wf-content">
+                <h4>Filter out noise with grep</h4>
+                <p>Only see what matters — filter for failures, errors, or a specific IP</p>
+                <code>sudo tail -f /var/log/auth.log | grep --line-buffered 'Failed\|Invalid'</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">3</div>
+            <div class="wf-content">
+                <h4>Watch for bursts</h4>
+                <p>Many failures in a short window = attack in progress</p>
+                <code>sudo journalctl -u ssh -f | grep --line-buffered 'Failed'</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">4</div>
+            <div class="wf-content">
+                <h4>Identify the source</h4>
+                <p>Grab the attacking IP and rank by attempt count</p>
+                <code>sudo grep 'Failed password' /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -rn | head</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">5</div>
+            <div class="wf-content">
+                <h4>Block the attacker</h4>
+                <p>Use UFW to instantly drop traffic from the attacker</p>
+                <code>sudo ufw deny from 203.0.113.5</code>
+            </div>
+        </div>
+        <div class="workflow-step">
+            <div class="wf-num">6</div>
+            <div class="wf-content">
+                <h4>Document & escalate</h4>
+                <p>Save log excerpts for the incident report</p>
+                <code>sudo grep '203.0.113.5' /var/log/auth.log > /tmp/incident-$(date +%F).log</code>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ MUST-INSTALL TOOLS ============ -->
+<section class="tcp-section dark">
+    <h2 class="section-title">🛠️ Must-Install Log Analysis Tools</h2>
+    <p class="section-desc">These tools amplify your logging — from centralizing to alerting</p>
+
+    <div class="cmds-grid">
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install fail2ban</code>
+            <p class="cmd-desc"><strong>Fail2ban</strong> — Watches logs and auto-bans IPs that fail too many times. Essential for SSH.</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install rsyslog</code>
+            <p class="cmd-desc"><strong>rsyslog</strong> — Central syslog daemon. Forward logs to a remote server.</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install logwatch</code>
+            <p class="cmd-desc"><strong>logwatch</strong> — Daily email summary of important log events.</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install auditd</code>
+            <p class="cmd-desc"><strong>auditd</strong> — Kernel-level auditing — tracks every syscall, file access.</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install lnav</code>
+            <p class="cmd-desc"><strong>lnav</strong> — Terminal log viewer with filtering, syntax highlighting, SQL queries.</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install goaccess</code>
+            <p class="cmd-desc"><strong>goaccess</strong> — Real-time web log analyzer (HTML dashboard).</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install multitail</code>
+            <p class="cmd-desc"><strong>multitail</strong> — Watch multiple logs in a single terminal.</p>
+        </div>
+        <div class="cmd-card">
+            <code class="cmd-code">sudo apt install tripwire</code>
+            <p class="cmd-desc"><strong>tripwire</strong> — File integrity monitoring — detects changes to critical files.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// ==================== LOG MODAL + SCENARIO + SIMULATION ====================
+let currentLogSimSteps = [];
+let currentLogSimIndex = 0;
+let logSimTimer = null;
+let isLogPaused = false;
+
+function openLogModal(card) {
+    const log = JSON.parse(card.getAttribute('data-log'));
+
+    const modal = document.getElementById('logModal');
+    if (!modal) return;
+
+    // Header
+    document.getElementById('logModalHeader').style.setProperty('--modal-color', log.color);
+    document.getElementById('logModalIcon').textContent = log.icon;
+    document.getElementById('logModalIcon').style.background = log.color;
+    document.getElementById('logModalTitle').textContent = log.name;
+    document.getElementById('logModalSubtitle').textContent = log.purpose.slice(0, 80) + '...';
+    document.getElementById('logModalPath').textContent = '$ ' + log.path;
+    document.getElementById('logModalAlt').textContent = 'Alternative: ' + log.alt_path;
+    document.getElementById('logModalPurpose').textContent = log.purpose;
+    document.getElementById('logModalRead').textContent = '$ ' + log.read_command;
+    document.getElementById('logModalSample').textContent = log.sample_output;
+    document.getElementById('logModalFileTitle').textContent = log.name;
+
+    // What's logged
+    const whatList = document.getElementById('logModalWhat');
+    whatList.innerHTML = '';
+    log.what_logged.forEach(w => {
+        const li = document.createElement('li');
+        li.textContent = w;
+        whatList.appendChild(li);
+    });
+
+    // Real-World Scenario
+    const scenarioSection = document.getElementById('logScenarioSection');
+    if (log.real_world_scenario) {
+        scenarioSection.style.display = '';
+        document.getElementById('logScenarioTitle').textContent = '🎬 ' + log.real_world_scenario.title;
+        document.getElementById('logScenarioStory').textContent = log.real_world_scenario.story;
+        document.getElementById('logScenarioTrigger').textContent = log.real_world_scenario.trigger;
+
+        const stepsContainer = document.getElementById('logScenarioSteps');
+        stepsContainer.innerHTML = '';
+        log.real_world_scenario.steps.forEach(s => {
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'scenario-step';
+            stepDiv.style.setProperty('--step-color', s.color);
+            stepDiv.innerHTML = `
+                <div class="scenario-step-num">${s.step}</div>
+                <div class="scenario-step-body">
+                    <h4>${escapeHtml(s.title)}</h4>
+                    <code>${escapeHtml(s.cmd)}</code>
+                    <p>${escapeHtml(s.explain)}</p>
+                </div>
+            `;
+            stepsContainer.appendChild(stepDiv);
+        });
+    } else {
+        scenarioSection.style.display = 'none';
+    }
+
+    // Simulation
+    currentLogSimSteps = log.simulation || [];
+    currentLogSimIndex = 0;
+    isLogPaused = false;
+    if (logSimTimer) { clearInterval(logSimTimer); logSimTimer = null; }
+
+    const simSection = document.getElementById('logSimSection');
+    if (currentLogSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateLogPlayBtn('▶ Play');
+        renderLogSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    // Detection Commands (with output)
+    const cmdsContainer = document.getElementById('logModalCommands');
+    cmdsContainer.innerHTML = '';
+    log.detection_commands.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'detection-cmd';
+        div.innerHTML = `
+            <code class="detection-cmd-text">$ ${escapeHtml(c.cmd)}</code>
+            <p class="detection-cmd-desc">${escapeHtml(c.desc)}</p>
+            ${c.output ? `<pre class="detection-cmd-output">${escapeHtml(c.output)}</pre>` : ''}
+        `;
+        cmdsContainer.appendChild(div);
+    });
+
+    // Response Actions
+    const responseList = document.getElementById('logModalResponse');
+    responseList.innerHTML = '';
+    (log.response_actions || []).forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = r;
+        responseList.appendChild(li);
+    });
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function renderLogSim() {
+    const player = document.getElementById('logModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+
+    if (currentLogSimSteps.length === 0) {
+        player.innerHTML = '<p style="color: var(--text-dim); text-align:center;">No simulation available</p>';
+        return;
+    }
+
+    const step = currentLogSimSteps[currentLogSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from || 'Start')}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#3498db'}">${escapeHtml(step.data || '')}</div>
+            <div class="sim-action-label">${escapeHtml(step.title || '')} — ${escapeHtml(step.desc || '')}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${currentLogSimIndex + 1} / ${currentLogSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to || 'End')}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    currentLogSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= currentLogSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleLogSim() {
+    if (currentLogSimSteps.length === 0) return;
+    if (logSimTimer && !isLogPaused) { pauseLogSim(); return; }
+    if (isLogPaused) { resumeLogSim(); return; }
+    startLogSim();
+}
+
+function startLogSim() {
+    if (logSimTimer) clearInterval(logSimTimer);
+    currentLogSimIndex = 0;
+    isLogPaused = false;
+    renderLogSim();
+    updateLogPlayBtn('⏸ Pause');
+    logSimTimer = setInterval(() => {
+        currentLogSimIndex++;
+        if (currentLogSimIndex >= currentLogSimSteps.length) {
+            clearInterval(logSimTimer);
+            logSimTimer = null;
+            currentLogSimIndex = currentLogSimSteps.length - 1;
+            renderLogSim();
+            updateLogPlayBtn('▶ Replay');
+            return;
+        }
+        renderLogSim();
+    }, 1800);
+}
+
+function pauseLogSim() {
+    if (!logSimTimer) return;
+    clearInterval(logSimTimer);
+    logSimTimer = null;
+    isLogPaused = true;
+    updateLogPlayBtn('▶ Resume');
+}
+
+function resumeLogSim() {
+    if (!isLogPaused) return;
+    isLogPaused = false;
+    updateLogPlayBtn('⏸ Pause');
+    logSimTimer = setInterval(() => {
+        currentLogSimIndex++;
+        if (currentLogSimIndex >= currentLogSimSteps.length) {
+            clearInterval(logSimTimer);
+            logSimTimer = null;
+            currentLogSimIndex = currentLogSimSteps.length - 1;
+            renderLogSim();
+            updateLogPlayBtn('▶ Replay');
+            return;
+        }
+        renderLogSim();
+    }, 1800);
+}
+
+function updateLogPlayBtn(label) {
+    const btn = document.getElementById('logSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetLogSim() {
+    if (logSimTimer) clearInterval(logSimTimer);
+    logSimTimer = null;
+    isLogPaused = false;
+    currentLogSimIndex = 0;
+    updateLogPlayBtn('▶ Play');
+    renderLogSim();
+}
+
+function closeLogModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('logModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (logSimTimer) clearInterval(logSimTimer);
+    logSimTimer = null;
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLogModal(); });
+</script>
+{% endblock %}

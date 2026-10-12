@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Wireshark Menus — Complete Guide{% endblock %}
+
+{% block content %}
+<section class="tcp-hero wireshark-hero">
+    <h1>🖥️ <span class="gradient-text">Wireshark Menus</span></h1>
+    <p>Every menu, every option, and what it does — click any menu to explore</p>
+</section>
+
+<section class="tcp-section">
+    <h2 class="section-title">📋 Main Menu Bar</h2>
+    <p class="section-desc">Click any menu below to see all items, shortcuts, and sample outputs</p>
+
+    <div class="cmds-grid">
+        {% for menu in menus %}
+        <div class="cmd-card cmd-clickable"
+             data-menu='{{ menu|tojson }}'
+             onclick="openMenuModal(this)"
+             tabindex="0"
+             role="button"
+             style="--menu-color: {{ menu.color }}; border-left: 4px solid {{ menu.color }};">
+            <div class="cmd-header">
+                <code class="cmd-code" style="color: {{ menu.color }};">{{ menu.icon }} {{ menu.name }}</code>
+                <span class="cmd-cat" style="background: {{ menu.color }}22; color: {{ menu.color }}; border-color: {{ menu.color }}">{{ menu['items']|length }} items</span>
+            </div>
+            <p class="cmd-desc">{{ menu.purpose }}</p>
+            <span class="cmd-click-hint">👆 Click to see all options</span>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ============ MENU MODAL ============ -->
+<div class="modal-overlay" id="menuModal" onclick="closeMenuModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeMenuModal()">×</button>
+
+        <div class="modal-header" id="menuModalHeader">
+            <div class="modal-icon" id="menuModalIcon">📁</div>
+            <div>
+                <h2 id="menuModalTitle">Menu Name</h2>
+                <p class="modal-subtitle" id="menuModalSubtitle">Purpose</p>
+            </div>
+        </div>
+
+        <div class="modal-body" id="menuModalBody">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function openMenuModal(card) {
+    const menu = JSON.parse(card.getAttribute('data-menu'));
+    const modal = document.getElementById('menuModal');
+    if (!modal) return;
+
+    document.getElementById('menuModalHeader').style.setProperty('--modal-color', menu.color);
+    document.getElementById('menuModalIcon').textContent = menu.icon;
+    document.getElementById('menuModalIcon').style.background = menu.color;
+    document.getElementById('menuModalTitle').textContent = menu.name;
+    document.getElementById('menuModalSubtitle').textContent = menu.purpose;
+
+    const body = document.getElementById('menuModalBody');
+    body.innerHTML = '';
+
+    menu.items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'menu-item-block';
+        div.innerHTML = `
+            <div class="menu-item-header">
+                <h4>${escapeHtml(item.item)}</h4>
+                <span class="shortcut-badge">${escapeHtml(item.shortcut)}</span>
+            </div>
+            <p class="menu-item-desc">${escapeHtml(item.desc)}</p>
+            <div class="scan-terminal-mini">
+                <div class="terminal-bar-mini">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span class="term-title-mini">output</span>
+                </div>
+                <pre class="terminal-output-mini">${escapeHtml(item.output)}</pre>
+            </div>
+        `;
+        body.appendChild(div);
+    });
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function closeMenuModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('menuModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenuModal(); });
+</script>
+{% endblock %}
