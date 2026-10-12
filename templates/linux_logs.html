@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<!-- ============ LOG MODAL ============ -->
+<!-- ============ LOG FILE MODAL ============ -->
 <div class="modal-overlay" id="logModal" onclick="closeLogModal(event)">
     <div class="modal-content" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeLogModal()">×</button>
@@ -41,7 +41,7 @@
             <!-- REAL WORLD SCENARIO -->
             <div class="modal-section" id="logScenarioSection">
                 <h3>🎬 Real-World Scenario</h3>
-                <div class="scenario-card" id="logScenarioCard">
+                <div class="scenario-card">
                     <div class="scenario-title" id="logScenarioTitle"></div>
                     <p class="scenario-story" id="logScenarioStory"></p>
                     <div class="scenario-trigger">
@@ -78,9 +78,96 @@
                 <div id="logModalCommands"></div>
             </div>
 
-            <div class="modal-section">
+            <div class="modal-section" id="logResponseSection">
                 <h3>✅ Response Actions</h3>
                 <ul class="modal-list" id="logModalResponse"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ TOOL MODAL (rsyslog, fail2ban, etc.) ============ -->
+<div class="modal-overlay" id="toolModal" onclick="closeToolModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeToolModal()">×</button>
+
+        <div class="modal-header" id="toolModalHeader">
+            <div class="modal-icon" id="toolModalIcon">📡</div>
+            <div>
+                <h2 id="toolModalTitle">Tool Name</h2>
+                <p class="modal-subtitle" id="toolModalSubtitle">Tagline</p>
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-section">
+                <h3>📖 What Is It?</h3>
+                <p id="toolModalWhat"></p>
+            </div>
+
+            <div class="modal-section" id="toolWhySection">
+                <h3>🎯 Why It's Used</h3>
+                <ul class="modal-list" id="toolModalWhy"></ul>
+            </div>
+
+            <div class="modal-section">
+                <h3>📦 Install</h3>
+                <div class="modal-command-display" id="toolModalInstall"></div>
+            </div>
+
+            <div class="modal-section" id="toolConceptsSection">
+                <h3>🔑 Key Concepts</h3>
+                <div class="flags-mini-grid" id="toolModalConcepts"></div>
+            </div>
+
+            <div class="modal-section" id="toolConfigSection">
+                <h3>⚙️ Config Location</h3>
+                <div class="modal-command-display" id="toolModalConfigPath"></div>
+            </div>
+
+            <div class="modal-section" id="toolSampleConfigSection">
+                <h3>📄 Sample Configuration</h3>
+                <div class="scan-terminal-mini">
+                    <div class="terminal-bar-mini">
+                        <span class="term-dot red"></span>
+                        <span class="term-dot yellow"></span>
+                        <span class="term-dot green"></span>
+                        <span class="term-title-mini">config file</span>
+                    </div>
+                    <pre class="terminal-output-mini" id="toolModalSampleConfig"></pre>
+                </div>
+            </div>
+
+            <div class="modal-section" id="toolHowSection">
+                <h3>⚙️ How It Works</h3>
+                <ul class="modal-list" id="toolModalHow"></ul>
+            </div>
+
+            <!-- Real World Scenario -->
+            <div class="modal-section" id="toolScenarioSection">
+                <h3>🎬 Real-World Scenario</h3>
+                <div class="scenario-card">
+                    <div class="scenario-title" id="toolScenarioTitle"></div>
+                    <p class="scenario-story" id="toolScenarioStory"></p>
+                    <div class="scenario-trigger">
+                        <strong>🚨 Trigger:</strong> <span id="toolScenarioTrigger"></span>
+                    </div>
+                    <div class="scenario-steps" id="toolScenarioSteps"></div>
+                </div>
+            </div>
+
+            <div class="modal-section" id="toolCommandsSection">
+                <h3>💻 Common Commands</h3>
+                <div id="toolModalCommands"></div>
+            </div>
+
+            <div class="modal-section" id="toolSimSection">
+                <h3>🎬 Simulation</h3>
+                <div class="sim-player" id="toolModalSim"></div>
+                <div class="sim-controls">
+                    <button class="sim-btn" id="toolSimPlayBtn" onclick="toggleToolSim()">▶ Play</button>
+                    <button class="sim-btn sim-reset" onclick="resetToolSim()">↺ Reset</button>
+                </div>
             </div>
         </div>
     </div>
@@ -89,7 +176,7 @@
 <!-- ============ HERO ============ -->
 <section class="tcp-hero linux-hero">
     <h1>📜 <span class="gradient-text">Linux Log Analysis</span></h1>
-    <p>Find attackers in real time — click any log file for real-world scenarios and attack simulations</p>
+    <p>Find attackers in real time — click any log file or tool for real-world scenarios and attack simulations</p>
 </section>
 
 <!-- ============ WHY LOGS MATTER ============ -->
@@ -187,55 +274,51 @@
 <!-- ============ MUST-INSTALL TOOLS ============ -->
 <section class="tcp-section dark">
     <h2 class="section-title">🛠️ Must-Install Log Analysis Tools</h2>
-    <p class="section-desc">These tools amplify your logging — from centralizing to alerting</p>
+    <p class="section-desc">Click any tool to learn what it does, how to use it, and see a real-world attack scenario</p>
 
     <div class="cmds-grid">
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install fail2ban</code>
-            <p class="cmd-desc"><strong>Fail2ban</strong> — Watches logs and auto-bans IPs that fail too many times. Essential for SSH.</p>
+        {% for tool in log_tools %}
+        <div class="cmd-card cmd-clickable"
+             data-tool='{{ tool|tojson }}'
+             onclick="openToolModal(this)"
+             tabindex="0"
+             role="button"
+             style="border-left: 4px solid {{ tool.color }};">
+            <div class="cmd-header">
+                <code class="cmd-code">{{ tool.name }}</code>
+                <span class="cmd-cat" style="background: {{ tool.color }}22; color: {{ tool.color }}; border-color: {{ tool.color }}">{{ tool.icon }}</span>
+            </div>
+            <p class="cmd-desc">{{ tool.tagline }}</p>
+            <span class="cmd-click-hint">👆 Click for use case + simulation</span>
         </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install rsyslog</code>
-            <p class="cmd-desc"><strong>rsyslog</strong> — Central syslog daemon. Forward logs to a remote server.</p>
-        </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install logwatch</code>
-            <p class="cmd-desc"><strong>logwatch</strong> — Daily email summary of important log events.</p>
-        </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install auditd</code>
-            <p class="cmd-desc"><strong>auditd</strong> — Kernel-level auditing — tracks every syscall, file access.</p>
-        </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install lnav</code>
-            <p class="cmd-desc"><strong>lnav</strong> — Terminal log viewer with filtering, syntax highlighting, SQL queries.</p>
-        </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install goaccess</code>
-            <p class="cmd-desc"><strong>goaccess</strong> — Real-time web log analyzer (HTML dashboard).</p>
-        </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install multitail</code>
-            <p class="cmd-desc"><strong>multitail</strong> — Watch multiple logs in a single terminal.</p>
-        </div>
-        <div class="cmd-card">
-            <code class="cmd-code">sudo apt install tripwire</code>
-            <p class="cmd-desc"><strong>tripwire</strong> — File integrity monitoring — detects changes to critical files.</p>
-        </div>
+        {% endfor %}
     </div>
 </section>
+
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
-// ==================== LOG MODAL + SCENARIO + SIMULATION ====================
+// ==================== HELPERS ====================
+function escapeHtml(str) {
+    if (str === undefined || str === null) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ==================== LOG FILE MODAL ====================
 let currentLogSimSteps = [];
 let currentLogSimIndex = 0;
 let logSimTimer = null;
 let isLogPaused = false;
 
 function openLogModal(card) {
-    const log = JSON.parse(card.getAttribute('data-log'));
+    let log;
+    try {
+        log = JSON.parse(card.getAttribute('data-log'));
+    } catch (e) {
+        console.error('Failed to parse log JSON:', e);
+        return;
+    }
 
     const modal = document.getElementById('logModal');
     if (!modal) return;
@@ -256,7 +339,7 @@ function openLogModal(card) {
     // What's logged
     const whatList = document.getElementById('logModalWhat');
     whatList.innerHTML = '';
-    log.what_logged.forEach(w => {
+    (log.what_logged || []).forEach(w => {
         const li = document.createElement('li');
         li.textContent = w;
         whatList.appendChild(li);
@@ -305,10 +388,10 @@ function openLogModal(card) {
         simSection.style.display = 'none';
     }
 
-    // Detection Commands (with output)
+    // Detection Commands
     const cmdsContainer = document.getElementById('logModalCommands');
     cmdsContainer.innerHTML = '';
-    log.detection_commands.forEach(c => {
+    (log.detection_commands || []).forEach(c => {
         const div = document.createElement('div');
         div.className = 'detection-cmd';
         div.innerHTML = `
@@ -320,21 +403,22 @@ function openLogModal(card) {
     });
 
     // Response Actions
+    const responseSection = document.getElementById('logResponseSection');
     const responseList = document.getElementById('logModalResponse');
     responseList.innerHTML = '';
-    (log.response_actions || []).forEach(r => {
-        const li = document.createElement('li');
-        li.textContent = r;
-        responseList.appendChild(li);
-    });
+    if (log.response_actions && log.response_actions.length) {
+        responseSection.style.display = '';
+        log.response_actions.forEach(r => {
+            const li = document.createElement('li');
+            li.textContent = r;
+            responseList.appendChild(li);
+        });
+    } else {
+        responseSection.style.display = 'none';
+    }
 
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-}
-
-function escapeHtml(str) {
-    if (str === undefined || str === null) return '';
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function renderLogSim() {
@@ -457,6 +541,298 @@ function closeLogModal(event) {
     logSimTimer = null;
 }
 
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLogModal(); });
+// ==================== TOOL MODAL ====================
+let currentToolSimSteps = [];
+let currentToolSimIndex = 0;
+let toolSimTimer = null;
+let isToolPaused = false;
+
+function openToolModal(card) {
+    let tool;
+    try {
+        tool = JSON.parse(card.getAttribute('data-tool'));
+    } catch (e) {
+        console.error('Failed to parse tool JSON:', e);
+        return;
+    }
+
+    const modal = document.getElementById('toolModal');
+    if (!modal) return;
+
+    // Header
+    document.getElementById('toolModalHeader').style.setProperty('--modal-color', tool.color);
+    document.getElementById('toolModalIcon').textContent = tool.icon;
+    document.getElementById('toolModalIcon').style.background = tool.color;
+    document.getElementById('toolModalTitle').textContent = tool.name;
+    document.getElementById('toolModalSubtitle').textContent = tool.tagline;
+
+    // What is it
+    document.getElementById('toolModalWhat').textContent = tool.what_is_it;
+
+    // Why it's used
+    const whySection = document.getElementById('toolWhySection');
+    const whyList = document.getElementById('toolModalWhy');
+    whyList.innerHTML = '';
+    if (tool.why_used && tool.why_used.length) {
+        whySection.style.display = '';
+        tool.why_used.forEach(w => {
+            const li = document.createElement('li');
+            li.textContent = w;
+            whyList.appendChild(li);
+        });
+    } else {
+        whySection.style.display = 'none';
+    }
+
+    // Install
+    document.getElementById('toolModalInstall').textContent = '$ ' + tool.install;
+
+    // Key Concepts
+    const conceptsSection = document.getElementById('toolConceptsSection');
+    const conceptsContainer = document.getElementById('toolModalConcepts');
+    if (tool.key_concepts && tool.key_concepts.length) {
+        conceptsSection.style.display = '';
+        conceptsContainer.innerHTML = '';
+        tool.key_concepts.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'flag-mini';
+            div.style.flexDirection = 'column';
+            div.style.alignItems = 'flex-start';
+            div.innerHTML = `
+                <code style="white-space: normal;">${escapeHtml(c.concept)}</code>
+                <span style="margin-top: 0.3rem;">${escapeHtml(c.desc)}</span>
+            `;
+            conceptsContainer.appendChild(div);
+        });
+    } else {
+        conceptsSection.style.display = 'none';
+    }
+
+    // Config Location
+    const configSection = document.getElementById('toolConfigSection');
+    if (tool.config_path) {
+        configSection.style.display = '';
+        document.getElementById('toolModalConfigPath').textContent = tool.config_path;
+    } else {
+        configSection.style.display = 'none';
+    }
+
+    // Sample Config
+    const sampleSection = document.getElementById('toolSampleConfigSection');
+    if (tool.sample_config) {
+        sampleSection.style.display = '';
+        document.getElementById('toolModalSampleConfig').textContent = tool.sample_config;
+    } else {
+        sampleSection.style.display = 'none';
+    }
+
+    // How It Works
+    const howSection = document.getElementById('toolHowSection');
+    const howList = document.getElementById('toolModalHow');
+    howList.innerHTML = '';
+    if (tool.how_it_works && tool.how_it_works.length) {
+        howSection.style.display = '';
+        tool.how_it_works.forEach(h => {
+            const li = document.createElement('li');
+            li.textContent = h;
+            howList.appendChild(li);
+        });
+    } else {
+        howSection.style.display = 'none';
+    }
+
+    // Real-World Scenario
+    const scenarioSection = document.getElementById('toolScenarioSection');
+    if (tool.real_world_scenario) {
+        scenarioSection.style.display = '';
+        document.getElementById('toolScenarioTitle').textContent = '🎬 ' + tool.real_world_scenario.title;
+        document.getElementById('toolScenarioStory').textContent = tool.real_world_scenario.story;
+        document.getElementById('toolScenarioTrigger').textContent = tool.real_world_scenario.trigger;
+
+        const stepsContainer = document.getElementById('toolScenarioSteps');
+        stepsContainer.innerHTML = '';
+        tool.real_world_scenario.steps.forEach(s => {
+            const stepDiv = document.createElement('div');
+            stepDiv.className = 'scenario-step';
+            stepDiv.style.setProperty('--step-color', s.color);
+            stepDiv.innerHTML = `
+                <div class="scenario-step-num">${s.step}</div>
+                <div class="scenario-step-body">
+                    <h4>${escapeHtml(s.title)}</h4>
+                    <code>${escapeHtml(s.cmd)}</code>
+                    <p>${escapeHtml(s.explain)}</p>
+                </div>
+            `;
+            stepsContainer.appendChild(stepDiv);
+        });
+    } else {
+        scenarioSection.style.display = 'none';
+    }
+
+    // Common Commands
+    const cmdsSection = document.getElementById('toolCommandsSection');
+    const cmdsContainer = document.getElementById('toolModalCommands');
+    cmdsContainer.innerHTML = '';
+    if (tool.common_commands && tool.common_commands.length) {
+        cmdsSection.style.display = '';
+        tool.common_commands.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'detection-cmd';
+            div.innerHTML = `
+                <code class="detection-cmd-text">$ ${escapeHtml(c.cmd)}</code>
+                <p class="detection-cmd-desc">${escapeHtml(c.desc)}</p>
+                ${c.output ? `<pre class="detection-cmd-output">${escapeHtml(c.output)}</pre>` : ''}
+            `;
+            cmdsContainer.appendChild(div);
+        });
+    } else {
+        cmdsSection.style.display = 'none';
+    }
+
+    // Simulation
+    currentToolSimSteps = tool.simulation || [];
+    currentToolSimIndex = 0;
+    isToolPaused = false;
+    if (toolSimTimer) { clearInterval(toolSimTimer); toolSimTimer = null; }
+
+    const simSection = document.getElementById('toolSimSection');
+    if (currentToolSimSteps.length > 0) {
+        simSection.style.display = '';
+        updateToolPlayBtn('▶ Play');
+        renderToolSim();
+    } else {
+        simSection.style.display = 'none';
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function renderToolSim() {
+    const player = document.getElementById('toolModalSim');
+    if (!player) return;
+    player.innerHTML = '';
+    if (currentToolSimSteps.length === 0) return;
+
+    const step = currentToolSimSteps[currentToolSimIndex];
+    const scene = document.createElement('div');
+    scene.className = 'sim-scene active';
+    scene.innerHTML = `
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📤</span>
+            <span>${escapeHtml(step.from || 'Start')}</span>
+        </div>
+        <div class="sim-arrow-middle">
+            <div class="sim-packet" style="background: ${step.color || '#3498db'}">${escapeHtml(step.data || '')}</div>
+            <div class="sim-action-label">${escapeHtml(step.title || '')} — ${escapeHtml(step.desc || '')}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Step ${currentToolSimIndex + 1} / ${currentToolSimSteps.length}</div>
+        </div>
+        <div class="sim-endpoint">
+            <span class="sim-endpoint-icon">📥</span>
+            <span>${escapeHtml(step.to || 'End')}</span>
+        </div>
+    `;
+    player.appendChild(scene);
+
+    const dots = document.createElement('div');
+    dots.style.cssText = 'display:flex;justify-content:center;gap:0.4rem;margin-top:0.5rem;';
+    currentToolSimSteps.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i <= currentToolSimIndex ? 'var(--accent)' : 'var(--border)'};transition:all 0.3s;`;
+        dots.appendChild(dot);
+    });
+    player.appendChild(dots);
+}
+
+function toggleToolSim() {
+    if (currentToolSimSteps.length === 0) return;
+    if (toolSimTimer && !isToolPaused) { pauseToolSim(); return; }
+    if (isToolPaused) { resumeToolSim(); return; }
+    startToolSim();
+}
+
+function startToolSim() {
+    if (toolSimTimer) clearInterval(toolSimTimer);
+    currentToolSimIndex = 0;
+    isToolPaused = false;
+    renderToolSim();
+    updateToolPlayBtn('⏸ Pause');
+    toolSimTimer = setInterval(() => {
+        currentToolSimIndex++;
+        if (currentToolSimIndex >= currentToolSimSteps.length) {
+            clearInterval(toolSimTimer);
+            toolSimTimer = null;
+            currentToolSimIndex = currentToolSimSteps.length - 1;
+            renderToolSim();
+            updateToolPlayBtn('▶ Replay');
+            return;
+        }
+        renderToolSim();
+    }, 1800);
+}
+
+function pauseToolSim() {
+    if (!toolSimTimer) return;
+    clearInterval(toolSimTimer);
+    toolSimTimer = null;
+    isToolPaused = true;
+    updateToolPlayBtn('▶ Resume');
+}
+
+function resumeToolSim() {
+    if (!isToolPaused) return;
+    isToolPaused = false;
+    updateToolPlayBtn('⏸ Pause');
+    toolSimTimer = setInterval(() => {
+        currentToolSimIndex++;
+        if (currentToolSimIndex >= currentToolSimSteps.length) {
+            clearInterval(toolSimTimer);
+            toolSimTimer = null;
+            currentToolSimIndex = currentToolSimSteps.length - 1;
+            renderToolSim();
+            updateToolPlayBtn('▶ Replay');
+            return;
+        }
+        renderToolSim();
+    }, 1800);
+}
+
+function updateToolPlayBtn(label) {
+    const btn = document.getElementById('toolSimPlayBtn');
+    if (!btn) return;
+    btn.textContent = label;
+    btn.classList.remove('is-paused', 'is-playing');
+    if (label.includes('Pause')) btn.classList.add('is-playing');
+    if (label.includes('Resume')) btn.classList.add('is-paused');
+}
+
+function resetToolSim() {
+    if (toolSimTimer) clearInterval(toolSimTimer);
+    toolSimTimer = null;
+    isToolPaused = false;
+    currentToolSimIndex = 0;
+    updateToolPlayBtn('▶ Play');
+    renderToolSim();
+}
+
+function closeToolModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    const modal = document.getElementById('toolModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    if (toolSimTimer) clearInterval(toolSimTimer);
+    toolSimTimer = null;
+}
+
+// ==================== GLOBAL KEYBOARD ====================
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        closeLogModal();
+        closeToolModal();
+    }
+});
+
+// Log success
+console.log('%c📜 Linux logs module loaded', 'color: #e74c3c; font-weight: bold;');
 </script>
 {% endblock %}

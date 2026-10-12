@@ -7658,6 +7658,587 @@ Jan 15 14:35:20 server www-data: PHP Warning: shell_exec(): Cannot execute a bla
     }
 ]
 
+# ==================== LINUX: LOG ANALYSIS TOOLS ====================
+LINUX_LOG_TOOLS = [
+    {
+        "id": "rsyslog",
+        "name": "rsyslog",
+        "icon": "📡",
+        "color": "#3498db",
+        "tagline": "The syslog daemon — the engine behind every Linux log",
+        "install": "sudo apt install rsyslog",
+        "difficulty": "Intermediate",
+        "category": "Log Collection",
+        "what_is_it": "rsyslog (Rocket-fast System for LOG processing) is the modern syslog daemon that runs on most Linux systems. It collects log messages from the kernel, services, and applications, then routes them to files, remote servers, databases, or message queues based on rules.",
+        "why_used": [
+            "Central collection — one service gathers logs from everywhere",
+            "Rule-based routing — send specific logs to specific places",
+            "Remote forwarding — send logs to a central logging server",
+            "Database output — write logs directly to MySQL/PostgreSQL",
+            "Reliable — can guarantee delivery with TCP + disk buffering",
+            "High performance — handles 100,000+ messages per second"
+        ],
+        "key_concepts": [
+            {"concept": "Facility", "desc": "Category of message: kern, auth, mail, cron, daemon, user..."},
+            {"concept": "Priority", "desc": "Severity: emerg(0), alert(1), crit(2), err(3), warning(4), notice(5), info(6), debug(7)"},
+            {"concept": "Selector", "desc": "facility.priority — e.g., 'auth.*' = all auth messages"},
+            {"concept": "Action", "desc": "Where to send it: file, remote host, database, pipe"},
+            {"concept": "Ruleset", "desc": "Group of rules for specific message types"},
+            {"concept": "Template", "desc": "Format log messages (JSON, custom layout, etc.)"}
+        ],
+        "config_path": "/etc/rsyslog.conf + /etc/rsyslog.d/*.conf",
+        "sample_config": """# /etc/rsyslog.d/50-default.conf
+
+# Kernel messages
+kern.*                          /var/log/kern.log
+
+# Auth messages (SSH, sudo, su)
+auth,authpriv.*                 /var/log/auth.log
+
+# Everything except auth, mail, cron
+*.*;auth,authpriv.none          -/var/log/syslog
+
+# Cron messages
+cron.*                          /var/log/cron.log
+
+# Mail logs
+mail.*                          -/var/log/mail.log
+
+# Emergency messages to all logged-in users
+*.emerg                         :omusrmsg:*
+
+# Forward ALL logs to central server via TCP
+*.*                             @@192.168.1.100:514
+
+# Forward auth logs only
+auth.*                          @192.168.1.100:514
+#                               ^ UDP  ^^ TCP""",
+        "how_it_works": [
+            "Applications/kernel write to /dev/log (Unix socket) or UDP 514",
+            "rsyslog receives message with facility + priority",
+            "Applies rules top-to-bottom from /etc/rsyslog.conf",
+            "First matching rule(s) determine output action",
+            "Action can be: file, remote server, DB, pipe, script",
+            "Multiple rules can match — messages can fan out"
+        ],
+        "common_commands": [
+            {"cmd": "sudo systemctl status rsyslog", "desc": "Check if rsyslog is running", "output": """● rsyslog.service - System Logging Service
+     Loaded: loaded (/lib/systemd/system/rsyslog.service; enabled)
+     Active: active (running) since Mon 2024-01-15 09:00:12 UTC; 5h ago
+   Main PID: 890 (rsyslogd)
+      Tasks: 4 (limit: 4647)
+     Memory: 4.6M
+     CGroup: /system.slice/rsyslog.service
+             └─890 /usr/sbin/rsyslogd -n -iNONE""" },
+            {"cmd": "sudo rsyslogd -N1", "desc": "Validate config (no syntax errors)", "output": """rsyslogd: version 8.2112.0, config validation run (level 1)
+rsyslogd: End of config validation run. Bye.""" },
+            {"cmd": "sudo systemctl restart rsyslog", "desc": "Reload config after editing", "output": """(no output on success)""" },
+            {"cmd": "logger 'test from admin'", "desc": "Send a test message to syslog", "output": """(writes to /var/log/syslog)"""},
+            {"cmd": "sudo tail -f /var/log/syslog", "desc": "Watch live messages arrive", "output": """Jan 15 14:35:12 host admin: test from admin""" }
+        ],
+        "real_world_scenario": {
+            "title": "Setting Up Central Logging Across 50 Servers",
+            "story": "You manage 50 Linux servers. When one gets breached, you need logs. But if the attacker runs 'rm -rf /var/log/*' before you notice, evidence is gone. Solution: rsyslog forwards logs to a central server in real time. Even if the victim server is wiped, the logs survive.",
+            "trigger": "Compliance audit — 'Prove you have centralized logging for all production servers.'",
+            "steps": [
+                {"step": 1, "title": "Prepare the log server", "cmd": "sudo apt install rsyslog on logserver", "explain": "One server acts as the log aggregator. This will be the 'single source of truth' for all logs.", "color": "#3498db"},
+                {"step": 2, "title": "Enable TCP reception on the log server", "cmd": "# Add to /etc/rsyslog.conf:\nmodule(load=\"imtcp\")\ninput(type=\"imtcp\" port=\"514\")\nsudo systemctl restart rsyslog", "explain": "Log server now listens on TCP 514 for incoming logs. TCP chosen over UDP for reliability.", "color": "#f39c12"},
+                {"step": 3, "title": "Configure each client to forward", "cmd": "# Add to each client /etc/rsyslog.d/90-forward.conf:\n*.* @@logserver.example.com:514\nsudo systemctl restart rsyslog", "explain": "Every client now sends a copy of every log message to the central server.", "color": "#27ae60"},
+                {"step": 4, "title": "Verify on the log server", "cmd": "sudo tail -f /var/log/remote/hostname/", "explain": "You see logs from all 50 servers streaming in live. Organized by hostname in separate files.", "color": "#9b59b6"},
+                {"step": 5, "title": "Add disk buffering for reliability", "cmd": "# In client config:\n$WorkDirectory /var/spool/rsyslog\n$ActionQueueType LinkedList\n$ActionQueueFileName fwdRule1\n$ActionResumeRetryCount -1\n$ActionQueueSaveOnShutdown on", "explain": "If the network drops or log server goes down, messages queue on disk and are sent when connection restores.", "color": "#e74c3c"},
+                {"step": 6, "title": "Simulate disaster recovery", "cmd": "On victim server: sudo rm -rf /var/log/*\nOn log server: ls /var/log/remote/", "explain": "Victim's local logs are gone, but central server still has everything. Attack evidence preserved!", "color": "#27ae60"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "App writes log", "desc": "sshd writes to /dev/log socket", "from": "sshd", "to": "/dev/log", "data": "Failed password...", "color": "#3498db"},
+            {"step": 2, "title": "rsyslog reads", "desc": "rsyslogd receives message + metadata", "from": "/dev/log", "to": "rsyslogd", "data": "auth.warning", "color": "#f39c12"},
+            {"step": 3, "title": "Rule matching", "desc": "Checks /etc/rsyslog.d/*.conf", "from": "rsyslogd", "to": "Rules", "data": "auth.* → file", "color": "#9b59b6"},
+            {"step": 4, "title": "Local write", "desc": "Writes to /var/log/auth.log", "from": "rsyslogd", "to": "auth.log", "data": "Saved locally", "color": "#27ae60"},
+            {"step": 5, "title": "Remote forward", "desc": "Also sends to central log server", "from": "rsyslogd", "to": "logserver:514", "data": "TCP forward", "color": "#e74c3c"},
+            {"step": 6, "title": "Compliance achieved", "desc": "Two copies of every log", "from": "logserver", "to": "Storage", "data": "Redundancy ✓", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "fail2ban",
+        "name": "Fail2ban",
+        "icon": "🚫",
+        "color": "#16a085",
+        "tagline": "Auto-ban IPs that fail too many times",
+        "install": "sudo apt install fail2ban",
+        "difficulty": "Beginner",
+        "category": "Intrusion Prevention",
+        "what_is_it": "Fail2ban scans log files for patterns (like failed passwords) and temporarily bans IPs that trigger too many matches. It's a log-driven intrusion-prevention system.",
+        "why_used": [
+            "Automatically blocks SSH brute force",
+            "Protects web login forms (Apache/Nginx)",
+            "Reduces log noise after initial bans",
+            "Zero-config protection on Ubuntu",
+            "Works with any service that logs to file"
+        ],
+        "key_concepts": [
+            {"concept": "Filter", "desc": "Regex that matches failure lines in a log file"},
+            {"concept": "Jail", "desc": "Combination of filter + action + log file (e.g., 'sshd')"},
+            {"concept": "Action", "desc": "What to do when a ban is triggered (ufw, iptables, etc.)"},
+            {"concept": "Bantime", "desc": "How long an IP stays banned (default 10 min)"},
+            {"concept": "Findtime", "desc": "Window to count failures (default 10 min)"},
+            {"concept": "Maxretry", "desc": "Number of failures before ban (default 5)"}
+        ],
+        "config_path": "/etc/fail2ban/jail.conf (don't edit) → /etc/fail2ban/jail.local (edit this)",
+        "sample_config": """# /etc/fail2ban/jail.local
+
+[DEFAULT]
+bantime  = 1h
+findtime = 10m
+maxretry = 5
+backend  = systemd
+
+[sshd]
+enabled = true
+port    = ssh
+logpath = %(sshd_log)s
+
+[apache-auth]
+enabled = true
+port    = http,https
+logpath = /var/log/apache2/error.log
+
+[nginx-http-auth]
+enabled = true
+port    = http,https
+logpath = /var/log/nginx/error.log""",
+        "how_it_works": [
+            "Fail2ban daemon starts and reads jail.local",
+            "Tails specified log files (auth.log, access.log, etc.)",
+            "For each new line, applies regex from filter",
+            "If line matches → increments counter for that IP",
+            "When counter ≥ maxretry within findtime → trigger ban",
+            "Ban action: add UFW/iptables rule to block IP"
+        ],
+        "common_commands": [
+            {"cmd": "sudo fail2ban-client status", "desc": "Show all jails", "output": """Status
+|- Number of jail:      2
+`- Jail list:   sshd, apache-auth""" },
+            {"cmd": "sudo fail2ban-client status sshd", "desc": "SSH jail details", "output": """Status for the jail: sshd
+|- Filter
+|  |- Currently failed: 2
+|  |  - Total failed:   847
+|  `- File list:        /var/log/auth.log
+`- Actions
+   |- Currently banned: 3
+   |- Total banned:     12
+   `- Banned IP list:   203.0.113.5 198.51.100.42""" },
+            {"cmd": "sudo fail2ban-client set sshd unbanip 203.0.113.5", "desc": "Manually unban an IP", "output": """203.0.113.5""" },
+            {"cmd": "sudo fail2ban-client set sshd banip 198.51.100.99", "desc": "Manually ban an IP", "output": """198.51.100.99""" },
+            {"cmd": "sudo tail -f /var/log/fail2ban.log", "desc": "Watch bans happen in real-time", "output": """2024-01-15 14:24:00 fail2ban.actions [1234]: NOTICE [sshd] Ban 203.0.113.5
+2024-01-15 14:34:00 fail2ban.actions [1234]: NOTICE [sshd] Unban 203.0.113.5""" }
+        ],
+        "real_world_scenario": {
+            "title": "Fail2ban Blocks 800 Brute-Force Attempts Automatically",
+            "story": "You set up a fresh VPS. Within 20 minutes of being online, attackers start hitting SSH. Without fail2ban, they'd try thousands of passwords. With fail2ban installed, they only get 5 attempts before being banned for an hour.",
+            "trigger": "You check fail2ban status out of curiosity after deploying.",
+            "steps": [
+                {"step": 1, "title": "Install fail2ban", "cmd": "sudo apt install fail2ban", "explain": "Installs with a default sshd jail enabled automatically.", "color": "#16a085"},
+                {"step": 2, "title": "Attacker starts brute force", "cmd": "(automatic)", "explain": "Within minutes, an automated bot starts trying passwords on port 22.", "color": "#f39c12"},
+                {"step": 3, "title": "First 5 failures logged", "cmd": "sudo tail -f /var/log/auth.log", "explain": "Fail2ban watches auth.log. Each failed attempt is logged.", "color": "#3498db"},
+                {"step": 4, "title": "Ban triggered", "cmd": "sudo tail -f /var/log/fail2ban.log", "explain": "After 5th failure, fail2ban adds an iptables/ufw rule to DROP the IP.", "color": "#e74c3c"},
+                {"step": 5, "title": "Attack stops", "cmd": "sudo fail2ban-client status sshd", "explain": "The IP is now in the banned list. All further traffic from it is dropped silently.", "color": "#27ae60"},
+                {"step": 6, "title": "Auto-unban after 1 hour", "cmd": "(automatic)", "explain": "Ban expires after bantime. Attacker can retry, but they've wasted an hour.", "color": "#9b59b6"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "Fail2ban tailing", "desc": "Watches auth.log via systemd-journal", "from": "fail2ban", "to": "auth.log", "data": "Tailing...", "color": "#16a085"},
+            {"step": 2, "title": "Failed login logged", "desc": "sshd writes failure", "from": "sshd", "to": "auth.log", "data": "Failed password", "color": "#f39c12"},
+            {"step": 3, "title": "Filter matches", "desc": "Regex hits, counter +1", "from": "fail2ban", "to": "Counter", "data": "IP: 4 failures", "color": "#3498db"},
+            {"step": 4, "title": "Threshold hit", "desc": "5th failure triggers ban", "from": "fail2ban", "to": "Rules", "data": "Ban 203.0.113.5", "color": "#e74c3c"},
+            {"step": 5, "title": "Firewall updated", "desc": "Adds DROP rule via UFW", "from": "fail2ban", "to": "ufw/iptables", "data": "sudo ufw deny", "color": "#9b59b6"},
+            {"step": 6, "title": "Attacker blocked", "desc": "Next connection times out", "from": "Attacker", "to": "Firewall", "data": "(no response)", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "logwatch",
+        "name": "Logwatch",
+        "icon": "📧",
+        "color": "#f39c12",
+        "tagline": "Daily email summary of important log events",
+        "install": "sudo apt install logwatch",
+        "difficulty": "Beginner",
+        "category": "Reporting",
+        "what_is_it": "Logwatch analyzes log files daily and emails you a summary of interesting events — failed logins, disk usage, service errors, etc. It's a 'morning briefing' for your server.",
+        "why_used": [
+            "No need to read every log manually",
+            "Daily digest catches patterns over time",
+            "Easy to spot anomalies (e.g., 400 failed logins)",
+            "Can be customized per service",
+            "Runs automatically via cron"
+        ],
+        "common_commands": [
+            {"cmd": "sudo logwatch --detail high", "desc": "Generate today's report to stdout", "output": """################### Logwatch 7.5.2 ####################
+        Processing Initiated: Mon Jan 15 14:35:00 2024
+        Date Range Processed: yesterday
+        Detail Level of Output: 10
+        Output Format: text
+
+--------------------- SSHD Begin ------------------------
+Failed logins from:
+   203.0.113.5 (attacker.example.com): 452 times
+   198.51.100.42: 89 times
+
+Users logging in through sshd:
+   alice:
+      192.168.1.50: 3 times
+   bob:
+      192.168.1.51: 1 time
+
+---------------------- SSHD End -------------------------
+
+--------------------- Disk Space Begin -------------------
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        50G   32G   15G  68% /
+/dev/sdb1       500G  245G  230G  52% /data
+
+---------------------- Disk Space End --------------------""" },
+            {"cmd": "sudo logwatch --service sshd --detail high", "desc": "Only SSHD report", "output": """SSHD report for yesterday:
+Failed logins: 452 (from 203.0.113.5)
+Successful logins: 4""" },
+            {"cmd": "sudo logwatch --range all", "desc": "Report for entire log history", "output": "(long report)" },
+            {"cmd": "sudo logwatch --mailto admin@example.com", "desc": "Email the report", "output": """(report mailed to admin@example.com)""" }
+        ],
+        "real_world_scenario": {
+            "title": "Weekly Logwatch Catches a Slow Attack",
+            "story": "A sophisticated attacker tries one password per hour to avoid detection. Per-day logs don't show anything unusual. But logwatch's weekly summary reveals 168 failed logins from one IP — impossible to miss.",
+            "trigger": "You get your Monday morning logwatch email as usual.",
+            "steps": [
+                {"step": 1, "title": "Normal weeks", "cmd": "sudo logwatch", "explain": "Reports look identical week-to-week. 0-2 failed logins.", "color": "#27ae60"},
+                {"step": 2, "title": "Slow attack starts", "cmd": "(automatic)", "explain": "Attacker tries 1 password per hour from one IP.", "color": "#f39c12"},
+                {"step": 3, "title": "Daily report miss", "cmd": "sudo logwatch --range today", "explain": "Only shows 24 failures — looks like normal noise.", "color": "#3498db"},
+                {"step": 4, "title": "Weekly report catches it", "cmd": "sudo logwatch --range 'since 7 days ago'", "explain": "168 failed logins from 1 IP. Volume is the pattern.", "color": "#e74c3c"},
+                {"step": 5, "title": "Block the IP", "cmd": "sudo ufw deny from 203.0.113.5", "explain": "Now you act with confidence — this is clearly malicious.", "color": "#9b59b6"},
+                {"step": 6, "title": "Automate alerting", "cmd": "sudo logwatch --mailto you@example.com --range 'since 7 days ago'", "explain": "Weekly email ensures you never miss the pattern again.", "color": "#27ae60"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "Cron fires daily", "desc": "logwatch runs at 6 AM via cron", "from": "cron", "to": "logwatch", "data": "Run report", "color": "#f39c12"},
+            {"step": 2, "title": "Parse logs", "desc": "Reads auth.log, syslog, kern.log", "from": "logwatch", "to": "Logs", "data": "Analyze...", "color": "#3498db"},
+            {"step": 3, "title": "Aggregate events", "desc": "Counts by type + source", "from": "logwatch", "to": "Analyzer", "data": "452 failures/IP", "color": "#9b59b6"},
+            {"step": 4, "title": "Format report", "desc": "Builds readable summary", "from": "Analyzer", "to": "Formatter", "data": "Report ready", "color": "#e74c3c"},
+            {"step": 5, "title": "Send email", "desc": "SMTP to admin@example.com", "from": "logwatch", "to": "Email", "data": "Delivered", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "auditd",
+        "name": "Auditd",
+        "icon": "🔎",
+        "color": "#c0392b",
+        "tagline": "Kernel-level auditing — tracks every syscall, file access",
+        "install": "sudo apt install auditd",
+        "difficulty": "Advanced",
+        "category": "Kernel Auditing",
+        "what_is_it": "auditd is the Linux Audit daemon. It hooks into the kernel and records every security-relevant event — file access, syscalls, user commands, permission denials, etc. Used for compliance (PCI-DSS, HIPAA) and deep forensics.",
+        "why_used": [
+            "Compliance — required by PCI-DSS, HIPAA, SOC2",
+            "Forensics — see exactly what a user/process did",
+            "File integrity — detect changes to sensitive files",
+            "Privilege tracking — log every sudo/exec call",
+            "Cannot be bypassed — kernel-level"
+        ],
+        "key_concepts": [
+            {"concept": "auditctl", "desc": "Command to add/remove/list audit rules"},
+            {"concept": "ausearch", "desc": "Search audit log for specific events"},
+            {"concept": "aureport", "desc": "Summarize audit log data"},
+            {"concept": "Rules", "desc": "What to audit: file paths, syscalls, users"},
+            {"concept": "Keys", "desc": "Named tags to identify rules later"}
+        ],
+        "config_path": "/etc/audit/auditd.conf + /etc/audit/rules.d/*.rules",
+        "sample_config": """# /etc/audit/rules.d/audit.rules
+
+# Delete all existing rules
+-D
+
+# Set buffer size
+-b 8192
+
+# Monitor changes to /etc/passwd
+-w /etc/passwd -p wa -k passwd_changes
+
+# Monitor /etc/shadow (write/attribute changes)
+-w /etc/shadow -p wa -k shadow_changes
+
+# Monitor sudoers file
+-w /etc/sudoers -p wa -k sudoers_changes
+
+# Monitor SSH config
+-w /etc/ssh/sshd_config -p wa -k sshd_config
+
+# Log every command execution
+-a always,exit -F arch=b64 -S execve -k exec_commands
+
+# Log all deletions/renames
+-a always,exit -F arch=b64 -S unlink,unlinkat,rename -k delete_ops
+
+# Log all permission changes
+-a always,exit -F arch=b64 -S chmod,fchmod,chown -k perm_changes""",
+        "how_it_works": [
+            "Kernel has an audit subsystem built-in",
+            "auditd reads rules from /etc/audit/rules.d/",
+            "Pushes rules to kernel via netlink socket",
+            "Kernel fires hooks when events match rules",
+            "Events logged to /var/log/audit/audit.log",
+            "admins query with ausearch/aureport"
+        ],
+        "common_commands": [
+            {"cmd": "sudo auditctl -l", "desc": "List current audit rules", "output": """-w /etc/passwd -p wa -k passwd_changes
+-w /etc/shadow -p wa -k shadow_changes
+-w /etc/sudoers -p wa -k sudoers_changes
+-a always,exit -F arch=b64 -S execve -k exec_commands""" },
+            {"cmd": "sudo ausearch -k passwd_changes", "desc": "Search for changes to /etc/passwd", "output": """----
+time->Mon Jan 15 14:35:12 2024
+type=PROCTITLE msg=audit(1705329312.456:1234): proctitle=usermod0010-L0010alice
+type=PATH msg=audit(1705329312.456:1234): item=0 name="/etc/passwd"
+type=SYSCALL msg=audit(1705329312.456:1234): arch=c000003e syscall=257 success=yes
+   ppid=1234 pid=5678 auid=0 uid=0 gid=0 euid=0 comm="usermod" exe="/usr/sbin/usermod"
+   key="passwd_changes" """ },
+            {"cmd": "sudo aureport -au", "desc": "Summary of all authentication events", "output": """Authentication Report
+============================================
+# date time acct host term exe success event
+1. 01/15/2024 14:23:45 alice 192.168.1.50 pts/0 /usr/bin/sudo yes 1234
+2. 01/15/2024 14:25:01 bob   192.168.1.51 pts/1 /usr/bin/su   no  1235""" },
+            {"cmd": "sudo auditctl -w /etc/hosts -p wa -k hosts_changes", "desc": "Add a new watch rule live", "output": """(no output on success)""" }
+        ],
+        "real_world_scenario": {
+            "title": "Audit Trail Catches Rogue Insider",
+            "story": "An employee with sudo access modifies /etc/passwd to grant themselves permanent root. Compliance requires you to prove WHO changed WHAT and WHEN. auditd already has the answer.",
+            "trigger": "A periodic compliance review flags /etc/passwd has been modified outside of a maintenance window.",
+            "steps": [
+                {"step": 1, "title": "Compliance flags change", "cmd": "sudo ausearch -k passwd_changes", "explain": "auditd logs every change to /etc/passwd. Search reveals 1 suspicious change.", "color": "#c0392b"},
+                {"step": 2, "title": "Get details", "cmd": "sudo ausearch -k passwd_changes -i", "explain": "-i flag resolves UIDs to usernames. You see: uid=1000(alice) added UID 0 entry to /etc/passwd.", "color": "#f39c12"},
+                {"step": 3, "title": "See the command run", "cmd": "sudo ausearch -k exec_commands -ui alice", "explain": "Traces alice's executed commands. Found: 'echo \"root2:x:0:0::/root:/bin/bash\" >> /etc/passwd'.", "color": "#e74c3c"},
+                {"step": 4, "title": "Cross-reference time", "cmd": "sudo aureport -au --start recent", "explain": "Cross-checks when alice was logged in. Attack matches her session exactly.", "color": "#9b59b6"},
+                {"step": 5, "title": "Document for HR", "cmd": "sudo ausearch -k passwd_changes > /tmp/incident.txt", "explain": "Audit log exported as evidence. Legal/HR can use it. Cannot be tampered with (kernel-generated).", "color": "#3498db"},
+                {"step": 6, "title": "Lock out + remediate", "cmd": "sudo usermod -L alice && sudo passwd -l root2", "explain": "Account locked. Malicious entry removed. Audit trail preserved for investigation.", "color": "#27ae60"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "Rule loaded in kernel", "desc": "auditd pushes rule to kernel", "from": "auditd", "to": "Kernel", "data": "watch /etc/passwd", "color": "#c0392b"},
+            {"step": 2, "title": "User modifies file", "desc": "usermod edits /etc/passwd", "from": "usermod", "to": "Filesystem", "data": "open + write", "color": "#f39c12"},
+            {"step": 3, "title": "Kernel hook fires", "desc": "Audit subsystem captures event", "from": "Kernel", "to": "Audit Subsystem", "data": "audit event", "color": "#9b59b6"},
+            {"step": 4, "title": "Logged to disk", "desc": "Writes to /var/log/audit/audit.log", "from": "Audit Subsystem", "to": "audit.log", "data": "Persistent", "color": "#3498db"},
+            {"step": 5, "title": "Admin queries", "desc": "ausearch -k passwd_changes", "from": "Admin", "to": "audit.log", "data": "Full details", "color": "#e74c3c"},
+            {"step": 6, "title": "Evidence captured", "desc": "Immutable trail for forensics", "from": "audit.log", "to": "Report", "data": "Case closed ✓", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "lnav",
+        "name": "lnav",
+        "icon": "📊",
+        "color": "#9b59b6",
+        "tagline": "Terminal log viewer with SQL, filtering, and syntax highlighting",
+        "install": "sudo apt install lnav",
+        "difficulty": "Beginner",
+        "category": "Log Viewer",
+        "what_is_it": "lnav is a powerful terminal-based log file navigator. It parses log formats automatically, highlights errors, and lets you run SQL queries against log entries.",
+        "why_used": [
+            "Navigate huge logs comfortably",
+            "Auto-detects log formats (syslog, apache, JSON)",
+            "SQL filtering without knowing awk/grep",
+            "Timeline view across multiple logs",
+            "Perfect for post-incident forensics"
+        ],
+        "common_commands": [
+            {"cmd": "lnav /var/log/auth.log", "desc": "Open auth.log interactively", "output": """lnav: opened 1 file
+(Interactive: arrow keys navigate, / searches, :q quits)""" },
+            {"cmd": "lnav /var/log/auth.log /var/log/syslog", "desc": "Open multiple logs in one timeline", "output": """lnav: opened 2 files
+(Shows interleaved messages by timestamp)""" },
+            {"cmd": "lnav -n", "desc": "Non-interactive: print first lines", "output": """Jan 15 09:00:00 server sshd[1234]: Server listening on 0.0.0.0 port 22.
+Jan 15 09:00:12 server systemd[1]: Started ssh.service.""" }
+        ],
+        "real_world_scenario": {
+            "title": "Filter 50 MB of Apache Logs in Seconds with SQL",
+            "story": "You have 50 MB of Apache logs from a suspected attacker. You want to find every URL they visited in one session. grep + awk would take 20 minutes and require building a script. lnav does it in 30 seconds with a single SQL query.",
+            "trigger": "Post-breach investigation — need to reconstruct the attacker's actions.",
+            "steps": [
+                {"step": 1, "title": "Open the log", "cmd": "lnav /var/log/apache2/access.log", "explain": "lnav parses it automatically. Errors highlighted red, 200s green.", "color": "#9b59b6"},
+                {"step": 2, "title": "Filter by IP", "cmd": ":filter-in 203.0.113.5", "explain": "Type :filter-in to hide all other IPs. Only attacker's requests remain.", "color": "#f39c12"},
+                {"step": 3, "title": "Run SQL query", "cmd": ";SELECT cs_uri_stem, count(*) FROM access_log GROUP BY cs_uri_stem ORDER BY 2 DESC LIMIT 10", "explain": "SQL on the fly. Shows top 10 URLs this IP hit.", "color": "#3498db"},
+                {"step": 4, "title": "Cross-reference time", "cmd": ";SELECT * WHERE sc_status = 200 AND c_ip = '203.0.113.5'", "explain": "Every successful request (200) from attacker. This is their successful recon.", "color": "#e74c3c"},
+                {"step": 5, "title": "Correlate with auth.log", "cmd": "lnav /var/log/apache2/access.log /var/log/auth.log", "explain": "Same timeline. See the exact moment they succeeded via SSH.", "color": "#27ae60"},
+                {"step": 6, "title": "Export evidence", "cmd": ":write-to /tmp/attacker-activity.txt", "explain": "Filtered view saved as evidence file. Ready for the incident report.", "color": "#16a085"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "lnav opens file", "desc": "Reads log, detects format", "from": "lnav", "to": "access.log", "data": "Parse: Apache", "color": "#9b59b6"},
+            {"step": 2, "title": "Index built", "desc": "Log lines indexed by time + fields", "from": "lnav", "to": "Indexer", "data": "Ready to query", "color": "#3498db"},
+            {"step": 3, "title": "Filter applied", "desc": ":filter-in 203.0.113.5", "from": "User", "to": "lnav", "data": "Only attacker visible", "color": "#f39c12"},
+            {"step": 4, "title": "SQL runs", "desc": "Aggregates URLs, status codes", "from": "lnav", "to": "SQL Engine", "data": "Results in ms", "color": "#e74c3c"},
+            {"step": 5, "title": "Timeline view", "desc": "Correlate with auth.log", "from": "lnav", "to": "Multi-file View", "data": "Full picture", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "goaccess",
+        "name": "GoAccess",
+        "icon": "📈",
+        "color": "#e67e22",
+        "tagline": "Real-time web log analyzer with HTML dashboard",
+        "install": "sudo apt install goaccess",
+        "difficulty": "Beginner",
+        "category": "Web Analytics",
+        "what_is_it": "GoAccess is a real-time web log analyzer. It parses Apache/Nginx access logs and produces live statistics — top visitors, top URLs, status codes, bandwidth — in a terminal or HTML dashboard.",
+        "why_used": [
+            "Real-time traffic monitoring",
+            "Find top attackers by request volume",
+            "Visualize 404 floods (directory brute force)",
+            "See status code distribution",
+            "Beautiful HTML reports for stakeholders"
+        ],
+        "common_commands": [
+            {"cmd": "goaccess /var/log/apache2/access.log --log-format=COMBINED", "desc": "Interactive terminal dashboard", "output": """(TUI: shows panels for visitors, requests, status codes, etc.)""" },
+            {"cmd": "goaccess /var/log/apache2/access.log -o /var/www/html/report.html --log-format=COMBINED", "desc": "Generate HTML report", "output": """(report.html written to web root — view in browser)""" },
+            {"cmd": "goaccess /var/log/apache2/access.log --log-format=COMBINED -o report.html --real-time-html", "desc": "Real-time HTML dashboard (auto-refresh)", "output": """(Live dashboard updates as requests come in)""" }
+        ],
+        "real_world_scenario": {
+            "title": "Spot a DDoS Attack from the Dashboard",
+            "story": "Your website is slow. You open goaccess on the access log and instantly see: one IP is making 50,000 requests per minute. It's a DDoS attack — obvious at a glance.",
+            "trigger": "Users complain the site is down.",
+            "steps": [
+                {"step": 1, "title": "Open goaccess", "cmd": "sudo goaccess /var/log/apache2/access.log -o /tmp/report.html --log-format=COMBINED --real-time-html", "explain": "Dashboard generates in /tmp/report.html, refreshing live.", "color": "#e67e22"},
+                {"step": 2, "title": "Open in browser", "cmd": "firefox /tmp/report.html", "explain": "You see live statistics updating every second.", "color": "#3498db"},
+                {"step": 3, "title": "Check top visitors", "cmd": "(dashboard view)", "explain": "One IP is 95% of requests. 50,000 requests/minute from 203.0.113.5.", "color": "#e74c3c"},
+                {"step": 4, "title": "Check status codes", "cmd": "(dashboard view)", "explain": "400% increase in 403/404 — they're hammering /admin and /wp-login.", "color": "#f39c12"},
+                {"step": 5, "title": "Block IP", "cmd": "sudo ufw deny from 203.0.113.5", "explain": "Instant block. Dashboard immediately shows traffic drop.", "color": "#27ae60"},
+                {"step": 6, "title": "Set up rate limiting", "cmd": "# Nginx: limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;", "explain": "Prevents next attacker from DDoS via rate limit at Nginx level.", "color": "#9b59b6"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "goaccess reads log", "desc": "Tails access.log continuously", "from": "goaccess", "to": "access.log", "data": "Tailing...", "color": "#e67e22"},
+            {"step": 2, "title": "Parses each line", "desc": "Extracts IP, URL, status, bytes", "from": "goaccess", "to": "Parser", "data": "Structured data", "color": "#3498db"},
+            {"step": 3, "title": "Updates metrics", "desc": "Increments counters per dimension", "from": "Parser", "to": "Stats DB", "data": "Live counts", "color": "#f39c12"},
+            {"step": 4, "title": "Renders dashboard", "desc": "WebSocket pushes to browser", "from": "Stats DB", "to": "Browser", "data": "Auto-refresh", "color": "#9b59b6"},
+            {"step": 5, "title": "Anomaly visible", "desc": "One IP dominates chart", "from": "Dashboard", "to": "Admin", "data": "Attack spotted!", "color": "#e74c3c"},
+            {"step": 6, "title": "Act on it", "desc": "Block IP, watch chart drop", "from": "Admin", "to": "Firewall", "data": "Fixed", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "multitail",
+        "name": "MultiTail",
+        "icon": "📺",
+        "color": "#16a085",
+        "tagline": "Watch multiple logs in one terminal window",
+        "install": "sudo apt install multitail",
+        "difficulty": "Beginner",
+        "category": "Log Viewer",
+        "what_is_it": "MultiTail is like 'tail -f' on steroids. It opens multiple log files side-by-side in one terminal, each with its own color and filter, updated live.",
+        "why_used": [
+            "Watch auth.log, access.log, syslog simultaneously",
+            "Split terminal into panes automatically",
+            "Color-code different log sources",
+            "Filter each pane independently",
+            "Best tool for real-time incident response"
+        ],
+        "common_commands": [
+            {"cmd": "multitail /var/log/auth.log /var/log/syslog", "desc": "Watch two logs side-by-side", "output": """(Split terminal: left pane = auth.log, right pane = syslog)""" },
+            {"cmd": "multitail -cS apache /var/log/apache2/access.log", "desc": "Watch with Apache color scheme", "output": """(Colorized: 200 green, 404 yellow, 500 red)""" },
+            {"cmd": "multitail -e 'Failed password' /var/log/auth.log", "desc": "Only show lines matching pattern", "output": """(Only SSH failures visible)""" },
+            {"cmd": "multitail -s 2 /var/log/auth.log /var/log/syslog /var/log/kern.log /var/log/apache2/access.log", "desc": "4-pane grid view", "output": """(Split into 2x2 grid)""" }
+        ],
+        "real_world_scenario": {
+            "title": "Spot a Coordinated Multi-Layer Attack in Real Time",
+            "story": "During an incident, you need to watch SSH attempts, web traffic, and kernel events simultaneously. If you open 3 terminals manually, you'll miss correlations. multitail shows all in one screen.",
+            "trigger": "You notice unusual traffic and want to understand the full picture.",
+            "steps": [
+                {"step": 1, "title": "Start multitail with 3 logs", "cmd": "multitail /var/log/auth.log /var/log/apache2/access.log /var/log/syslog", "explain": "Three-pane view. Auth on top, web in middle, system at bottom.", "color": "#16a085"},
+                {"step": 2, "title": "Attacker hits SSH", "cmd": "(observed live)", "explain": "Auth pane shows 'Failed password' lines scrolling rapidly.", "color": "#f39c12"},
+                {"step": 3, "title": "Cross-reference web log", "cmd": "(observed live)", "explain": "Web pane shows same IP scanning /admin. Coordinated attack!", "color": "#e74c3c"},
+                {"step": 4, "title": "Check syslog for OOM/warnings", "cmd": "(observed live)", "explain": "Syslog shows memory warnings — attacker may be DoSing.", "color": "#9b59b6"},
+                {"step": 5, "title": "Filter to attacker IP", "cmd": "In each pane: Alt+S then type IP to filter", "explain": "Only attacker's activity visible. Full attack timeline in one screen.", "color": "#3498db"},
+                {"step": 6, "title": "Act fast", "cmd": "sudo ufw deny from 203.0.113.5", "explain": "Attack stops. All three panes go quiet simultaneously.", "color": "#27ae60"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "multitail starts", "desc": "Opens multiple files", "from": "multitail", "to": "auth.log + syslog", "data": "2 panes", "color": "#16a085"},
+            {"step": 2, "title": "Auth pane alerts", "desc": "Failed SSH logins scroll", "from": "sshd", "to": "auth.log", "data": "Failed password", "color": "#f39c12"},
+            {"step": 3, "title": "Web pane active", "desc": "Scanner hits admin URLs", "from": "Apache", "to": "access.log", "data": "GET /admin", "color": "#e74c3c"},
+            {"step": 4, "title": "You correlate", "desc": "Same IP on both panes", "from": "Admin", "to": "Both panes", "data": "Coordinated attack", "color": "#9b59b6"},
+            {"step": 5, "title": "Block IP", "desc": "UFW deny", "from": "Admin", "to": "Firewall", "data": "Rule added", "color": "#27ae60"}
+        ]
+    },
+    {
+        "id": "tripwire",
+        "name": "Tripwire",
+        "icon": "🚨",
+        "color": "#c0392b",
+        "tagline": "File integrity monitoring — detect any change to critical files",
+        "install": "sudo apt install tripwire",
+        "difficulty": "Intermediate",
+        "category": "File Integrity",
+        "what_is_it": "Tripwire creates a baseline of cryptographic hashes for every critical file (system binaries, configs). Later scans compare against the baseline — any change triggers an alert. It detects rootkits, backdoors, and tampering.",
+        "why_used": [
+            "Detect tampering with system binaries",
+            "Compliance (PCI-DSS 11.5 requires FIM)",
+            "Catch attackers modifying /bin/ls, /etc/passwd, etc.",
+            "Baseline all critical files with checksums",
+            "Get alerted on unauthorized changes"
+        ],
+        "how_it_works": [
+            "Initialize database: hash every file listed in policy",
+            "Store baseline in signed database file",
+            "Later: run check against baseline",
+            "Compare MD5/SHA hashes, permissions, size, mtime",
+            "Report any file that changed"
+        ],
+        "common_commands": [
+            {"cmd": "sudo tripwire --init", "desc": "Create baseline database (first time only)", "output": """Please enter your local passphrase: ****
+Wrote database file: /var/lib/tripwire/hostname.twd""" },
+            {"cmd": "sudo tripwire --check", "desc": "Scan and compare against baseline", "output": """Parsing policy file: /etc/tripwire/tw.pol
+*** Phase 1: Reading configuration file
+*** Phase 2: Generating file list
+*** Phase 3: Creating file information database
+*** Phase 4: Searching for inconsistencies
+
+=======================================
+Total files scanned:           189,456
+Files added:                   0
+Files removed:                 0
+Files changed:                 3
+=======================================
+
+Modified:
+   /etc/passwd
+   /usr/bin/ps
+   /usr/sbin/sshd
+
+Warning: Report saved to /var/lib/tripwire/report/hostname-20240115.twr""" },
+            {"cmd": "sudo twprint --print-report -r /var/lib/tripwire/report/*.twr", "desc": "View details of changes", "output": """Report: hostname-20240115.twr
+Modified: /usr/bin/ps
+  Property:    Expected        Observed
+  MD5:         abc123...       def456...   ← BINARY CHANGED!
+  Size:        65432           67890
+  Modify Time: 2023-01-15      2024-01-15   ← modified today!
+
+⚠️ /usr/bin/ps was modified today — this could be a rootkit!""" }
+        ],
+        "real_world_scenario": {
+            "title": "Tripwire Detects a Rootkit",
+            "story": "An attacker gains root access and installs a rootkit, replacing /bin/ls, /usr/bin/ps, and /usr/sbin/sshd with trojaned versions. Without FIM, you'd never notice. Tripwire's next scan flags all three — MD5 hashes no longer match the baseline.",
+            "trigger": "Daily tripwire check runs at 6 AM via cron.",
+            "steps": [
+                {"step": 1, "title": "Baseline established", "cmd": "sudo tripwire --init", "explain": "Day 1: All 189,456 system files hashed and stored as baseline. Passphrase-protected.", "color": "#27ae60"},
+                {"step": 2, "title": "Attacker compromises system", "cmd": "(attacker actions)", "explain": "Weeks later, attacker gets root. Installs rootkit replacing 3 binaries.", "color": "#e74c3c"},
+                {"step": 3, "title": "Tripwire scan runs", "cmd": "sudo tripwire --check", "explain": "Daily 6 AM scan compares hashes. 3 files don't match! Alert generated.", "color": "#f39c12"},
+                {"step": 4, "title": "You investigate", "cmd": "sudo twprint --print-report -r latest.twr", "explain": "See which files changed, when, and the hash difference. All 3 replacements happened on the same day.", "color": "#9b59b6"},
+                {"step": 5, "title": "Confirm rootkit", "cmd": "sudo md5sum /usr/bin/ps\nrpm -Vf /usr/bin/ps", "explain": "Verifies the file is trojaned. This is a rootkit — system must be rebuilt.", "color": "#c0392b"},
+                {"step": 6, "title": "Incident response", "cmd": "Isolate server, preserve evidence, rebuild", "explain": "Because tripwire caught it early, damage is limited. Attacker's persistence is gone.", "color": "#27ae60"}
+            ]
+        },
+        "simulation": [
+            {"step": 1, "title": "Baseline created", "desc": "All critical files hashed", "from": "tripwire", "to": "Database", "data": "189K file hashes", "color": "#27ae60"},
+            {"step": 2, "title": "Attacker tampers", "desc": "Replaces /bin/ls with trojan", "from": "Rootkit", "to": "/bin/ls", "data": "Binary swapped", "color": "#e74c3c"},
+            {"step": 3, "title": "Daily check runs", "desc": "Hashes files, compares to baseline", "from": "tripwire", "to": "Files", "data": "MD5 mismatch!", "color": "#f39c12"},
+            {"step": 4, "title": "Alert generated", "desc": "Modified file added to report", "from": "tripwire", "to": "Report", "data": "/bin/ls modified", "color": "#9b59b6"},
+            {"step": 5, "title": "Admin alerted", "desc": "Email or notification sent", "from": "Report", "to": "Admin", "data": "⚠️ Rootkit suspected", "color": "#c0392b"},
+            {"step": 6, "title": "Response", "desc": "Investigate + remediate", "from": "Admin", "to": "System", "data": "Rebuild server", "color": "#27ae60"}
+        ]
+    }
+]
+
 # ==================== LINUX: FIREWALL (UFW + IPTABLES) ====================
 # ==================== LINUX: FIREWALL (Interactive) ====================
 LINUX_FIREWALL = {
@@ -9372,7 +9953,8 @@ def linux_processes():
 def linux_logs():
     return render_template('linux_logs.html',
                          log_files=LINUX_LOG_FILES,
-                         attack_simulations=LOG_ATTACK_SIMULATIONS)
+                         attack_simulations=LOG_ATTACK_SIMULATIONS,
+                         log_tools=LINUX_LOG_TOOLS)
 
 @app.route('/linux/firewall')
 def linux_firewall():

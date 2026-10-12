@@ -9546,3 +9546,150 @@ a { color: inherit; }
         align-items: flex-start;
     }
 }
+/* ============================================================
+   SCENARIO CARD (real-world scenarios)
+   ============================================================ */
+.scenario-card {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.06), rgba(124, 58, 237, 0.06));
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.scenario-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.scenario-story {
+    color: var(--text-dim);
+    line-height: 1.7;
+    font-size: 0.92rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.scenario-trigger {
+    background: rgba(243, 156, 18, 0.1);
+    border-left: 3px solid #f39c12;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.88rem;
+    margin-bottom: 1.2rem;
+}
+
+.scenario-trigger strong { color: #f39c12; }
+
+.scenario-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.scenario-step {
+    display: flex;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 1rem;
+    border-left: 3px solid var(--step-color, var(--accent));
+    transition: all 0.2s;
+}
+
+.scenario-step:hover {
+    background: rgba(0, 0, 0, 0.35);
+    transform: translateX(4px);
+}
+
+.scenario-step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--step-color, var(--accent));
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.scenario-step-body { flex: 1; min-width: 0; }
+.scenario-step-body h4 {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+.scenario-step-body code {
+    display: block;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--accent);
+    padding: 0.5rem 0.7rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    margin-bottom: 0.5rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border-left: 3px solid var(--step-color, var(--accent));
+}
+.scenario-step-body p {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Detection commands in modal */
+.detection-cmd {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    border-left: 3px solid var(--accent);
+}
+
+.detection-cmd-text {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+.detection-cmd-desc {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+}
+
+.detection-cmd-output {
+    background: #000;
+    color: #c0ffc0;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.6;
+    margin: 0;
+    border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+    .scenario-step { flex-direction: column; }
+    .scenario-step-num { align-self: flex-start; }
+}
